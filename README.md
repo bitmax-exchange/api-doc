@@ -17,7 +17,7 @@ All data exchanged are in JSON format, (except KYC ID verifiation, which uses mu
 Public RESTful APIs
 ----------------------------------------------
  
-RESTful API entry point: `https://bitmax-sandbox.io/api/`
+RESTful API entry point: `https://bitmax.io/api/`
 
 ### Products
 
