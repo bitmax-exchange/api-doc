@@ -17,7 +17,7 @@ All data exchanged are in JSON format, (except KYC ID verifiation, which uses mu
 Public RESTful APIs
 ----------------------------------------------
  
-RESTful API entry point: `https://bitmax-sandbox.io/api/`
+RESTful API entry point: `https://bitmax.io/api/`
 
 ### Products
 
@@ -286,7 +286,7 @@ The query returns a list order objects.
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax-sandbox.io/api/tradeview/[symbol]` 
+WebSocket entry point: `wss://bitmax.io/api/tradeview/[symbol]` 
 
 Connecting to websocket API follows almost the same authentication process as the authenticated RESTful APIs. You 
 need to add the following headers to your websocket request:
