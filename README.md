@@ -286,7 +286,7 @@ The query returns a list order objects.
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/api/tradeview/[symbol]` 
+WebSocket entry point: `wss://bitmax.io/api/stream/[symbol]` 
 
 Connecting to websocket API follows almost the same authentication process as the authenticated RESTful APIs. You 
 need to add the following headers to your websocket request:
