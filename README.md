@@ -17,11 +17,9 @@ All data exchanged are in JSON format, (except KYC ID verifiation, which uses mu
 Public RESTful APIs
 ----------------------------------------------
  
-RESTful API entry point: `https://bitmax.io/api/`
+Public RESTful API entry point: `https://bitmax.io/api/`
 
-### Products
-
-#### List of all assets
+### List of all assets
 
     GET api/assets
 
@@ -40,11 +38,15 @@ The API returns a List of object, each contains a list of asset property fields:
     ]
 
 
-#### Get a single product
+### Get a single product
 
     GET api/product?symbol=ETH-BTC
 
-The query takes one parameter `symbol` and returns a single object with three parts - `product`, `baseAsset`, and `quoteAsset`. 
+Arguments:
+
+* `symbol`: `string`
+
+Successful response: a single object with three parts - `product`, `baseAsset`, and `quoteAsset`. 
 
     // some fields are omitted for conciseness
     {
@@ -52,17 +54,21 @@ The query takes one parameter `symbol` and returns a single object with three pa
         "symbol":         "ETH/BTC",
         "statusCode":     "Normal",  // enum: Normal, NotTrading
         "pricePrecision":  8,
+        "minQty":         "0.00001",
+        "maxQty":         "1000",
+        "minNotional":    "0.001",
+        "maxNotional":    "100000"
       },
       "baseAsset":  { ... }  // same structure as in GET api/assets
       "quoteAsset": { ... }  // same structure as in GET api/assets
     }
 
 
-#### List all products
+### List all products
 
     GET api/products 
 
-The query returns a List of products. 
+Successful response: a List of products. 
 
     [
       { ... }, // same structure as in GET api/product
@@ -73,14 +79,14 @@ The query returns a List of products.
 
 ### Market Depth
 
-    GET api/marketdepth?symbol=ETH-BTC&n=10
+    GET api/marketdepth
 
 The query takes two parameters:
 
-* `symbol` - a valid symbols
-* `n`      - number of levels to be included in the order book. `n` is currently limited to 100 or fewer. 
+* `symbol` - a valid symbols. Example `symbol=ETH-BTC`
+* `n`      - number of levels to be included in the order book. `n` is currently limited to 100 or fewer. Example `n=10`
 
-The query returns an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book). 
+Successful response: an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book). 
 
     {
        "m": "depth",            // message type
@@ -100,14 +106,14 @@ The query returns an object consists of the inner-most `n` bid levels and `n` as
 
 ### Market Trades 
 
-    GET api/markettrades?symbol=ETH-BTC&n=10
+    GET api/markettrades
 
 The query takes two parameters:
 
-* `symbol` - a valid symbol
-* `n`      - number of trades to be included in the response. `n` is currently limited to 100 or fewer.
+* `symbol` - a valid symbol. Example `symbol=ETH-BTC`
+* `n`      - number of trades to be included in the response. `n` is currently limited to 100 or fewer. Example `n=10`
 
-The query retuns an object containing a list of recent trades. 
+Successful response: an object containing a list of recent trades. 
 
     {
       "m": "marketTrades",       // message type 
@@ -132,6 +138,8 @@ The query retuns an object containing a list of recent trades.
 
 Authenticated RESTful APIs
 ----------------------------------------------
+
+Private RESTful API entry point: `https://bitmax.io/{{accountGroup}}/api/` (see API Entry Point section below for details)
 
 ### Authentication
 
@@ -164,29 +172,33 @@ in python 3.6+ as:
 
     print(signature_b64) // the signature of interest
 
-### API Response Format
+### API Entry Point
 
-One major difference between public RESTful API and the authenticated RESTful API is that the latter returns more structured objects. 
-In the success case, the response will have status code 200 and the returned object will be:  
+BitMax assign dedicated servers to users within the same **account group**. This greatly increases the per-user throughput of each server. 
+API users are expected to specify the account group in the query URL in order to connect to the desired server. Otherwise, the request 
+will be rejected. 
+
+The API entry point for authenticated APIs is `https://bitmax.io/{{accountGroup}}/api`. For instance, the user with account group 3 should 
+use `https://bitmax.io/3/api` to query authenticated data. 
+
+Account group is expected stay the same over time. However, it is recommended that API users check the account group at the begining of the
+program. Refer to `GET user/info` for how to get account group.  
+
+### User Info (`api_path=user/info`)
+
+    GET api/user/info
+
+Successful response: an object with basic user information. 
 
     {
-      "status": "success",
-      "data": ...   // the data of interest, either a JSON object or a JSON list 
+      "accountGroup": 5
     }
-
-In case of failure, the response will have status code not equal to 200 and the returned object will be:  
-
-    { 
-      "status": "error",
-      "msg": "{error message}"   // the actual error message. 
-    }
-
 
 ### Balances (`api_path=balances`)
 
-    GET api/balances
+    GET {{accountGroup}}/api/balances
 
-The API returns a list of all your current balances. 
+Successful response: a list of all your current balances. 
 
     {
       "status": "success",
@@ -206,59 +218,59 @@ The API returns a list of all your current balances.
 
 #### Place a New Order (`api_path=order/new`)
 
-    POST api/order/new 
+    POST {{accountGroup}}/api/order/new 
 
-Arguments:
+Request body schema: `application/json`
     
-    {
-      "status": "success",
-      "data": {
-        "coid":        "xxx...xxx",    // a unique identifier  
-        "time":        1528988100000,  // milliseconds since UNIX epoch in UTC  
-        "symbol":      "ETH/BTC",      
-        "orderPrice":  "13.5",          
-        "orderQty":    "3.5",          
-        "orderType":   "limit",        // currently we only support limit order
-        "side":        "buy"           // buy or sell
-      }
-    }
+    FieldName    FieldType    Example         Description
+    ---------    ---------    -------         -----------
+    coid         string       "xxx...xxx"     a unique identifier  
+    time         long         1528988100000   milliseconds since UNIX epoch in UTC  
+    symbol       string       "ETH/BTC"       
+    orderPrice   string       "13.5"           
+    orderQty     string       "3.5"           
+    orderType    string       "limit"         currently we only support limit order
+    side         string       "buy"           buy or sell
 
 Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`), 
 upper case characters (`A-Z`) and digits (`0-9`).  
 
 Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds 
-ago are deemed as expired and will not be processed. 
+ago are treated as expired and will not be processed. 
+
+Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the 
+status of the order placed.
 
 
 #### Cancel an Order (`api_path=order/cancel`)
 
-    POST api/order/cancel  
+    POST {{accountGroup}}/api/order/cancel  
 
-Arguments 
+Request body schema: `application/json`
 
-    {
-      "status": "success",
-      "data": {
-        "coid":      "xxx...xxx",    // a unique identifier, see POST api/order/new  
-                                     // for details
-        
-        "origCoid":  "yyy...yyy"     // the coid of the order to cancel 
-
-        "time":      1528988100000,  // milliseconds since UNIX epoch in UTC, 
-                                     // see POST api/order/new for details 
-        "symbol":    "ETH/BTC" 
-      }
-    }
+    FieldName   FieldType    Example         Description
+    ---------   ---------    -------         -----------
+    coid        string       "xxx...xxx"     a unique identifier, see POST api/order/new  
+                                             for details
+                                                                              
+    origCoid    string       "yyy...yyy"     the coid of the order to cancel 
+                                                                                    
+    time        long         1528988100000   milliseconds since UNIX epoch in UTC, 
+                                             see POST api/order/new for details 
+                                                                               
+    symbol      string       "ETH/BTC" 
 
 You must correclty specify the `origCoid` in order to cancel an open order. The exchange will reject the request if it cannot find
 any open order using the provided `origCoid`. 
 
+Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the 
+status of the order placed.
 
 #### List Open Orders (`api_path=orders/open`)
 
-    GET api/orders/open?page=1&pagesize=50
+    GET api/orders/open
 
-The query returns a list order objects.
+Successful query returns a list all open orders. (Filtering by symbol will be supported in the next release)
 
     {
       "status": "success"
@@ -283,10 +295,18 @@ The query returns a list order objects.
     }
 
 
+
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/api/stream/[symbol]` 
+WebSocket entry point: `wss://bitmax.io/{{accountGroup}}/api/stream/[symbol]` 
+
+Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
+via websocket. For instance, user in account group 3 will subscribe all `ETH/BTC` messages via:
+
+    `wss://bitmax.io/3/api/stream/[symbol]` 
+
+### Websocket Authentication
 
 Connecting to websocket API follows almost the same authentication process as the authenticated RESTful APIs. You 
 need to add the following headers to your websocket request:
@@ -305,6 +325,7 @@ Currently we stream three type of messages.
 
 All webSocket messages are in JSON format and are very similar to RESTful APIs. However, the field names are shortened 
 to reduce message size.  
+
 
 ### Subscribe to WebSocket Streams
 
