@@ -262,13 +262,12 @@ Request body schema: `application/json`
 
     FieldName   FieldType    Example         Description
     ---------   ---------    -------         -----------
-    coid        string       "xxx...xxx"     a unique identifier, see POST api/order/new  
-                                             for details
+    coid        string       "xxx...xxx"     a unique identifier, see POST api/order for details
 
     origCoid    string       "yyy...yyy"     the coid of the order to cancel
 
     time        long         1528988100000   milliseconds since UNIX epoch in UTC,
-                                             see POST api/order/new for details
+                                             see POST api/order for details
 
     symbol      string       "ETH/BTC"
 
@@ -361,12 +360,12 @@ Successful response: list of all fills of the order specified.
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/<account-group>/api/stream/[symbol]`
+WebSocket entry point: `wss://bitmax.io/<account-group>/api/v1/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH/BTC` messages via:
 
-    `wss://bitmax.io/3/api/stream/[symbol]`
+    `wss://bitmax.io/3/api/v1/stream/[symbol]`
 
 ### Websocket Authentication
 
@@ -494,7 +493,7 @@ contains both order execution report and current balances.
     }
 
 Since only new order updates will be streamed, it is recommendated that you load the initial snap of all you orders
-using the RESTful API `GET api/orders/open`.
+using the RESTful API `GET api/v1/order/open`.
 
 
 #### Place a New Order with WebSocket
