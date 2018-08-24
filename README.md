@@ -268,7 +268,7 @@ status of the order placed.
 
 #### List Open Orders (`api_path=orders/open`)
 
-    GET api/orders/open
+    GET {{accountGroup}}/api/orders/open
 
 Successful query returns a list all open orders. (Filtering by symbol will be supported in the next release)
 
