@@ -1,6 +1,9 @@
 Bitmax | API Document
 ==============================================
 
+Note: we changed our API URLs on 2018-08-24. Even though the old URLs still work, you are strongly recommended to
+use the new URLs as described on this page.
+
 Basics  
 ---------------------------------------------
 
@@ -9,19 +12,15 @@ Basics
 The exchange adopted format `baseAssetCode/quoteAssetCode` for product symbols. For instance, `ETH/BTC = 0.052` means the price of 1 ETH is 0.052 BTC. Althought not required,
 it is recommended to use `ETH-BTC` in API paths to avoid polluting the path string.
 
-### Data Format
-
-All data exchanged are in JSON format, (except KYC ID verifiation, which uses multipart-form).
-
 
 Public RESTful APIs
 ----------------------------------------------
 
-Public RESTful API entry point: `https://bitmax.io/api/`
+Public RESTful API entry point: `https://bitmax.io/api/<version-num>`.
 
 ### List of all assets
 
-    GET api/assets
+    GET api/v1/assets
 
 The API returns a List of object, each contains a list of asset property fields:
 
@@ -38,48 +37,40 @@ The API returns a List of object, each contains a list of asset property fields:
     ]
 
 
-### Get a single product
-
-    GET api/product?symbol=ETH-BTC
-
-Arguments:
-
-* `symbol`: `string`
-
-Successful response: a single object with three parts - `product`, `baseAsset`, and `quoteAsset`.
-
-    // some fields are omitted for conciseness
-    {
-      "product": {
-        "symbol":         "ETH/BTC",
-        "statusCode":     "Normal",  // enum: Normal, NotTrading
-        "pricePrecision":  8,
-        "minQty":         "0.00001",
-        "maxQty":         "1000",
-        "minNotional":    "0.001",
-        "maxNotional":    "100000"
-      },
-      "baseAsset":  { ... }  // same structure as in GET api/assets
-      "quoteAsset": { ... }  // same structure as in GET api/assets
-    }
-
-
 ### List all products
 
-    GET api/products
+    GET api/v1/products
 
-Successful response: a List of products.
+Successful response: a list of all product objects. Each product object contains three parts -
+`product`, `baseAsset`, and `quoteAsset`.
 
+    // some fields are omitted for conciseness
     [
-      { ... }, // same structure as in GET api/product
-      { ... },
-      ...
+      {
+        "product": {
+          "symbol":         "ETH/BTC",
+          "statusCode":     "Normal",  // enum: Normal, NotTrading
+          "pricePrecision":  8,
+          "minQty":         "0.00001",
+          "maxQty":         "1000",
+          "minNotional":    "0.001",
+          "maxNotional":    "100000"
+        },
+        "baseAsset":  { ... }  // same structure as in GET api/assets
+        "quoteAsset": { ... }  // same structure as in GET api/assets
+      }
     ]
 
 
-### Market Depth
+### Market Quote (Level 1 Order Book Data) of One Product
 
-    GET api/marketdepth
+    GET api/v1/quote
+
+This API is not available yet.
+
+### Market Depth (Level 2 Order Book Data) of One Product
+
+    GET api/v1/depth
 
 The query takes two parameters:
 
@@ -106,7 +97,7 @@ Successful response: an object consists of the inner-most `n` bid levels and `n`
 
 ### Market Trades
 
-    GET api/markettrades
+    GET api/v1/trades
 
 The query takes two parameters:
 
@@ -139,7 +130,7 @@ Successful response: an object containing a list of recent trades.
 Authenticated RESTful APIs
 ----------------------------------------------
 
-Private RESTful API entry point: `https://bitmax.io/{{accountGroup}}/api/` (see API Entry Point section below for details)
+Private RESTful API entry point: `https://bitmax.io/<account-group>/api/<version-num>` (see API Entry Point section below for details)
 
 ### Authentication
 
@@ -153,6 +144,7 @@ Each authenticated request must include the following fields in the header:
 * `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key
   on the prehash string `{timestamp}+{api_path}`.
 * `x-auth-timestamp` - milliseconds since UNIX epoch in UTC
+* `x-auth-coid` - this field is only required when placing a new order or canceling an order, see below for details
 
 For instance, to query all your balance through api path `balances` at `2018-06-26 20:49:34.012 UTC` (timestamp=`1530046174012`),
 you could obtain the signature by applying the sha256 algorithm to string `1530046174012+balances`. The signing process can be implemented
@@ -178,7 +170,7 @@ BitMax assign dedicated servers to users within the same **account group**. This
 API users are expected to specify the account group in the query URL in order to connect to the desired server. Otherwise, the request
 will be rejected.
 
-The API entry point for authenticated APIs is `https://bitmax.io/{{accountGroup}}/api`. For instance, the user with account group 3 should
+The API entry point for authenticated APIs is `https://bitmax.io/<account-group>/api`. For instance, the user with account group 3 should
 use `https://bitmax.io/3/api` to query authenticated data.
 
 Account group is expected stay the same over time. However, it is recommended that API users check the account group at the begining of the
@@ -186,7 +178,7 @@ program. Refer to `GET user/info` for how to get account group.
 
 ### User Info (`api_path=user/info`)
 
-    GET api/user/info
+    GET api/v1/user/info
 
 Successful response: an object with basic user information.
 
@@ -194,9 +186,9 @@ Successful response: an object with basic user information.
       "accountGroup": 5
     }
 
-### Balances (`api_path=balances`)
+### List all Balances (`api_path=balance`)
 
-    GET {{accountGroup}}/api/balances
+    GET <account-group>/api/v1/balance
 
 Successful response: a list of all your current balances.
 
@@ -214,11 +206,30 @@ Successful response: a list of all your current balances.
       ]
     }
 
+### Get Balance of one Asset (`api_path=balance`)
+
+    GET <account-group>/api/v1/balance/<asset>
+
+Successful response: one object with current balance data of the asset specified.
+
+    {
+      "status": "success",
+      "data": {
+          "assetCode":       "TSC",
+          "assetName":       "Ethereum",
+          "totalAmount":     "20.03",    // total balance amount
+          "availableAmount": "20.03",    // balance amount available to trade
+          "btcValue":        "70.81"     // the current BTC value of the balance
+        }
+    }
+
 ### Orders
 
-#### Place a New Order (`api_path=order/new`)
+#### Place a New Order (`api_path=order`)
 
-    POST {{accountGroup}}/api/order/new
+    POST <account-group>/api/v1/order
+
+For this API you must include `x-auth-coid` in your request header.
 
 Request body schema: `application/json`
 
@@ -241,10 +252,11 @@ ago are treated as expired and will not be processed.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
+#### Cancel an Order (`api_path=order`)
 
-#### Cancel an Order (`api_path=order/cancel`)
+    DELETE <account-group>/api/v1/order
 
-    POST {{accountGroup}}/api/order/cancel  
+For this API you must include `x-auth-coid` in your request header.
 
 Request body schema: `application/json`
 
@@ -266,11 +278,12 @@ any open order using the provided `origCoid`.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
-#### List Open Orders (`api_path=orders/open`)
 
-    GET {{accountGroup}}/api/orders/open
+#### List of All Open Orders (`api_path=order/open`)
 
-Successful query returns a list all open orders. (Filtering by symbol will be supported in the next release)
+    GET <account-group>/api/v1/order/open
+
+Successful response: List of all your open orders. (Filtering by symbol will be supported in the next release)
 
     {
       "status": "success"
@@ -294,12 +307,61 @@ Successful query returns a list all open orders. (Filtering by symbol will be su
       ]
     }
 
+#### Get Basic Order Data of One Order (`api_path=order`)
+
+    GET <account-group>/api/v1/order/<coid>
+
+Successful response: basic data of an open orders.
+
+    {
+      "status": "success"
+      "data": {
+          "time":        1528988100000,
+          "coid":        "xxx...xxx",     // the unique identifier, you will need
+                                          // this value to cancel this order
+          "symbol":      "ETH/BTC",
+          "baseAsset":   "ETH",
+          "quoteAsset":  "BTC",
+          "side":        "buy",
+          "orderPrice":  "13.45",
+          "orderQty":    "3.5",
+          "filled":      "1.5",           // filled quantity
+          "fee":         "0.00012",       // cumulative fee paid for this order
+          "feeAsset":    "ETH",           // the asset
+          "status":      "pending"
+        }
+    }
+
+#### Get Fills of One Order (`api_path=order/fills`)
+
+    GET <account-group>/api/v1/order/fills/<coid>
+
+Successful response: list of all fills of the order specified.
+
+    {
+      "status": "success"
+      "data": {
+          "time":        1528988100000,
+          "coid":        "xxx...xxx",     // the unique identifier, you will need
+                                          // this value to cancel this order
+          "symbol":      "ETH/BTC",
+          "baseAsset":   "ETH",
+          "quoteAsset":  "BTC",
+          "side":        "buy",
+          "orderPrice":  "13.45",
+          "orderQty":    "3.5",
+          "filled":      "1.5",           // filled quantity
+          "fee":         "0.00012",       // cumulative fee paid for this order
+          "feeAsset":    "ETH",           // the asset
+          "status":      "pending"
+        }
+    }
 
 
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/{{accountGroup}}/api/stream/[symbol]`
+WebSocket entry point: `wss://bitmax.io/<account-group>/api/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH/BTC` messages via:
