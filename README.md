@@ -6,7 +6,7 @@ Basics
 
 ### Product Symbols
 
-The exchange adopted format `baseAssetCode/quoteAssetCode` for product symbols. For instance, `ETH/BTC = 13.25` means the price of 1 BTC is 13.25 ETH. Althought not required, 
+The exchange adopted format `baseAssetCode/quoteAssetCode` for product symbols. For instance, `ETH/BTC = 0.052` means the price of 1 ETH is 0.052 BTC. Althought not required,
 it is recommended to use `ETH-BTC` in API paths to avoid polluting the path string.
 
 ### Data Format
@@ -16,14 +16,14 @@ All data exchanged are in JSON format, (except KYC ID verifiation, which uses mu
 
 Public RESTful APIs
 ----------------------------------------------
- 
+
 Public RESTful API entry point: `https://bitmax.io/api/`
 
 ### List of all assets
 
     GET api/assets
 
-The API returns a List of object, each contains a list of asset property fields: 
+The API returns a List of object, each contains a list of asset property fields:
 
     // some fields are omitted for conciseness
     [
@@ -46,7 +46,7 @@ Arguments:
 
 * `symbol`: `string`
 
-Successful response: a single object with three parts - `product`, `baseAsset`, and `quoteAsset`. 
+Successful response: a single object with three parts - `product`, `baseAsset`, and `quoteAsset`.
 
     // some fields are omitted for conciseness
     {
@@ -66,9 +66,9 @@ Successful response: a single object with three parts - `product`, `baseAsset`, 
 
 ### List all products
 
-    GET api/products 
+    GET api/products
 
-Successful response: a List of products. 
+Successful response: a List of products.
 
     [
       { ... }, // same structure as in GET api/product
@@ -86,7 +86,7 @@ The query takes two parameters:
 * `symbol` - a valid symbols. Example `symbol=ETH-BTC`
 * `n`      - number of levels to be included in the order book. `n` is currently limited to 100 or fewer. Example `n=10`
 
-Successful response: an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book). 
+Successful response: an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book).
 
     {
        "m": "depth",            // message type
@@ -104,7 +104,7 @@ Successful response: an object consists of the inner-most `n` bid levels and `n`
     }
 
 
-### Market Trades 
+### Market Trades
 
     GET api/markettrades
 
@@ -113,10 +113,10 @@ The query takes two parameters:
 * `symbol` - a valid symbol. Example `symbol=ETH-BTC`
 * `n`      - number of trades to be included in the response. `n` is currently limited to 100 or fewer. Example `n=10`
 
-Successful response: an object containing a list of recent trades. 
+Successful response: an object containing a list of recent trades.
 
     {
-      "m": "marketTrades",       // message type 
+      "m": "marketTrades",       // message type
       "s": "ETH/BTC",            // symbol
       "trades": [
         {
@@ -143,19 +143,19 @@ Private RESTful API entry point: `https://bitmax.io/{{accountGroup}}/api/` (see 
 
 ### Authentication
 
-To use the authenticated RESTful APIs, you need to first apply for an API key and a secret key to sign the message. You should 
+To use the authenticated RESTful APIs, you need to first apply for an API key and a secret key to sign the message. You should
 include the API key in each of your request along with a signature signed using the secret key. Please don't share the secret
 key with anyone. (Please contact us to obtain your keys.)
 
 Each authenticated request must include the following fields in the header:
 
-* `x-auth-key` - the API key 
-* `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key 
-  on the prehash string `{timestamp}+{api_path}`. 
+* `x-auth-key` - the API key
+* `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key
+  on the prehash string `{timestamp}+{api_path}`.
 * `x-auth-timestamp` - milliseconds since UNIX epoch in UTC
 
-For instance, to query all your balance through api path `balances` at `2018-06-26 20:49:34.012 UTC` (timestamp=`1530046174012`), 
-you could obtain the signature by applying the sha256 algorithm to string `1530046174012+balances`. The signing process can be implemented 
+For instance, to query all your balance through api path `balances` at `2018-06-26 20:49:34.012 UTC` (timestamp=`1530046174012`),
+you could obtain the signature by applying the sha256 algorithm to string `1530046174012+balances`. The signing process can be implemented
 in python 3.6+ as:
 
     // python 3.6+
@@ -174,12 +174,12 @@ in python 3.6+ as:
 
 ### API Entry Point
 
-BitMax assign dedicated servers to users within the same **account group**. This greatly increases the per-user throughput of each server. 
-API users are expected to specify the account group in the query URL in order to connect to the desired server. Otherwise, the request 
-will be rejected. 
+BitMax assign dedicated servers to users within the same **account group**. This greatly increases the per-user throughput of each server.
+API users are expected to specify the account group in the query URL in order to connect to the desired server. Otherwise, the request
+will be rejected.
 
-The API entry point for authenticated APIs is `https://bitmax.io/{{accountGroup}}/api`. For instance, the user with account group 3 should 
-use `https://bitmax.io/3/api` to query authenticated data. 
+The API entry point for authenticated APIs is `https://bitmax.io/{{accountGroup}}/api`. For instance, the user with account group 3 should
+use `https://bitmax.io/3/api` to query authenticated data.
 
 Account group is expected stay the same over time. However, it is recommended that API users check the account group at the begining of the
 program. Refer to `GET user/info` for how to get account group.  
@@ -188,7 +188,7 @@ program. Refer to `GET user/info` for how to get account group.
 
     GET api/user/info
 
-Successful response: an object with basic user information. 
+Successful response: an object with basic user information.
 
     {
       "accountGroup": 5
@@ -198,30 +198,30 @@ Successful response: an object with basic user information.
 
     GET {{accountGroup}}/api/balances
 
-Successful response: a list of all your current balances. 
+Successful response: a list of all your current balances.
 
     {
       "status": "success",
       "data": [
         {
             "assetCode":       "TSC",
-            "assetName":       "Ethereum", 
-            "totalAmount":     "20.03",    // total balance amount 
-            "availableAmount": "20.03",    // balance amount available to trade 
+            "assetName":       "Ethereum",
+            "totalAmount":     "20.03",    // total balance amount
+            "availableAmount": "20.03",    // balance amount available to trade
             "btcValue":        "70.81"     // the current BTC value of the balance
         },
         ...
       ]
     }
 
-### Orders 
+### Orders
 
 #### Place a New Order (`api_path=order/new`)
 
-    POST {{accountGroup}}/api/order/new 
+    POST {{accountGroup}}/api/order/new
 
 Request body schema: `application/json`
-    
+
     FieldName    FieldType    Example         Description
     ---------    ---------    -------         -----------
     coid         string       "xxx...xxx"     a unique identifier  
@@ -232,13 +232,13 @@ Request body schema: `application/json`
     orderType    string       "limit"         currently we only support limit order
     side         string       "buy"           buy or sell
 
-Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`), 
+Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`),
 upper case characters (`A-Z`) and digits (`0-9`).  
 
-Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds 
-ago are treated as expired and will not be processed. 
+Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds
+ago are treated as expired and will not be processed.
 
-Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the 
+Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
 
@@ -252,18 +252,18 @@ Request body schema: `application/json`
     ---------   ---------    -------         -----------
     coid        string       "xxx...xxx"     a unique identifier, see POST api/order/new  
                                              for details
-                                                                              
-    origCoid    string       "yyy...yyy"     the coid of the order to cancel 
-                                                                                    
-    time        long         1528988100000   milliseconds since UNIX epoch in UTC, 
-                                             see POST api/order/new for details 
-                                                                               
-    symbol      string       "ETH/BTC" 
+
+    origCoid    string       "yyy...yyy"     the coid of the order to cancel
+
+    time        long         1528988100000   milliseconds since UNIX epoch in UTC,
+                                             see POST api/order/new for details
+
+    symbol      string       "ETH/BTC"
 
 You must correclty specify the `origCoid` in order to cancel an open order. The exchange will reject the request if it cannot find
-any open order using the provided `origCoid`. 
+any open order using the provided `origCoid`.
 
-Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the 
+Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
 #### List Open Orders (`api_path=orders/open`)
@@ -274,10 +274,10 @@ Successful query returns a list all open orders. (Filtering by symbol will be su
 
     {
       "status": "success"
-      "data": [ 
+      "data": [
         {
           "time":        1528988100000,
-          "coid":        "xxx...xxx",     // the unique identifier, you will need 
+          "coid":        "xxx...xxx",     // the unique identifier, you will need
                                           // this value to cancel this order
           "symbol":      "ETH/BTC",
           "baseAsset":   "ETH",
@@ -285,9 +285,9 @@ Successful query returns a list all open orders. (Filtering by symbol will be su
           "side":        "buy",
           "orderPrice":  "13.45",
           "orderQty":    "3.5",
-          "filled":      "1.5",           // filled quantity 
+          "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
-          "feeAsset":    "ETH",           // the asset 
+          "feeAsset":    "ETH",           // the asset
           "status":      "pending"
         },
         ...
@@ -299,63 +299,63 @@ Successful query returns a list all open orders. (Filtering by symbol will be su
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/{{accountGroup}}/api/stream/[symbol]` 
+WebSocket entry point: `wss://bitmax.io/{{accountGroup}}/api/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH/BTC` messages via:
 
-    `wss://bitmax.io/3/api/stream/[symbol]` 
+    `wss://bitmax.io/3/api/stream/[symbol]`
 
 ### Websocket Authentication
 
-Connecting to websocket API follows almost the same authentication process as the authenticated RESTful APIs. You 
+Connecting to websocket API follows almost the same authentication process as the authenticated RESTful APIs. You
 need to add the following headers to your websocket request:
 
 * `x-auth-key`
-* `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key 
+* `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key
   on the prehash string `{timestamp}+api/stream"`.  
-* `x-auth-timestamp` 
+* `x-auth-timestamp`
 
-Once the websocket is connected, you need to send a `subscribe` message in order to start receiving data streams. 
-Currently we stream three type of messages. 
+Once the websocket is connected, you need to send a `subscribe` message in order to start receiving data streams.
+Currently we stream three type of messages.
 
 * `depth` - market depth
-* `marketTrades` - market trades 
+* `marketTrades` - market trades
 * `order` - client's own orders.
 
-All webSocket messages are in JSON format and are very similar to RESTful APIs. However, the field names are shortened 
+All webSocket messages are in JSON format and are very similar to RESTful APIs. However, the field names are shortened
 to reduce message size.  
 
 
 ### Subscribe to WebSocket Streams
 
-After connecting to websocket, you need to send an `subscribe` message in order to start receiving data streams. 
+After connecting to websocket, you need to send an `subscribe` message in order to start receiving data streams.
 
     {
-      "messageType":         "subscribe",  // message type 
-      
-      "marketDepthLevel":    20,           // max number of price levels on 
-                                           // each side to be included in 
+      "messageType":         "subscribe",  // message type
+
+      "marketDepthLevel":    20,           // max number of price levels on
+                                           // each side to be included in
                                            // the first market depth message  
-      
-      "recentTradeMaxCount": 20,           // max number of recent trades to 
-                                           // be included in the first market 
+
+      "recentTradeMaxCount": 20,           // max number of recent trades to
+                                           // be included in the first market
                                            // trades message  
-    } 
+    }
 
 
 ### Market depth
 
-Each market depth message is a JSON object containing the current quantity at specific 
-prices levels. There is no direct way of getting the top-of-the-book data. You need to maintain the 
+Each market depth message is a JSON object containing the current quantity at specific
+prices levels. There is no direct way of getting the top-of-the-book data. You need to maintain the
 current depth book and derive the best bid/ask. This can be done by two steps:
 
 1. Use the first `depth` message to build the initial depth book.  
-2. Use later messages to update the depth book. Messages contain the new total size at the 
-   indicated price level. You should replace the old quantity using message received. When the 
+2. Use later messages to update the depth book. Messages contain the new total size at the
+   indicated price level. You should replace the old quantity using message received. When the
    replacement quantity is zero, it means there is no order sitting on the corresponding price level.
 
-All `depth` messages have the same structure: 
+All `depth` messages have the same structure:
 
     {
        "m": "depth",             // message type
@@ -373,13 +373,13 @@ All `depth` messages have the same structure:
     }
 
 
-### Market Trades 
+### Market Trades
 
-Once you send the `subscribe` message, you will start receiving continuous market trade stream. All market trades messages 
-follow the same structure, which contains one or more trades. 
+Once you send the `subscribe` message, you will start receiving continuous market trade stream. All market trades messages
+follow the same structure, which contains one or more trades.
 
     {
-      "m": "marketTrades",      // message type 
+      "m": "marketTrades",      // message type
       "s": "ETH/BTC",           // symbol
       "trades": [
         {
@@ -399,25 +399,25 @@ follow the same structure, which contains one or more trades.
     }
 
 
-### Order Management 
+### Order Management
 
-With our websocket API, you can monitor the status of all your active orders, place new orders, and 
-cancel existing orders. 
+With our websocket API, you can monitor the status of all your active orders, place new orders, and
+cancel existing orders.
 
 
-#### Order updates 
+#### Order updates
 
-Once connected to websocket streams, you will start receiving real time updated of your own orders. It 
-contains both order execution report and current balances. 
+Once connected to websocket streams, you will start receiving real time updated of your own orders. It
+contains both order execution report and current balances.
 
     {
       "m":      "order",        // message type
       "coid":   "xxx...xxx",    // client order id, need to cancel order
       "s":      "ETH/BTC",      // symbol
-      "ba":     "ETH",          // base asset 
-      "qa":     "BTC",          // quote asset 
+      "ba":     "ETH",          // base asset
+      "qa":     "BTC",          // quote asset
       "t":       1528988100000, // timestamp
-      "p":      "13.45",        // order price 
+      "p":      "13.45",        // order price
       "q":      "3.5",          // order quantity
       "f":      "1.5",          // filled quantity
       "ap":     "13.45",        // average price
@@ -431,7 +431,7 @@ contains both order execution report and current balances.
       "status": "completed"     // order status
     }
 
-Since only new order updates will be streamed, it is recommendated that you load the initial snap of all you orders 
+Since only new order updates will be streamed, it is recommendated that you load the initial snap of all you orders
 using the RESTful API `GET api/orders/open`.
 
 
@@ -443,7 +443,7 @@ To place a new order, you need to send to the server a `newOrderRequest`:
        "messageType": "newOrderRequest",
        "time":        1528988100000,  // current timestamp
        "coid":        "xxxx...xxx"    // a 32-character unique client order Id
-       "symbol":      "ETH/BTC",      // symbol 
+       "symbol":      "ETH/BTC",      // symbol
        "orderPrice":  "2.23",         // order price
        "orderQty":    "34.3",         // order quantity
        "orderType":   "limit",        // always limit
@@ -451,19 +451,18 @@ To place a new order, you need to send to the server a `newOrderRequest`:
     }
 
 The client order Id field (`coid`) is a unique id to identify your order. Once the order
-is successfully placed, this Id will be echod back in the `origCoid` field of the order update 
-message. 
+is successfully placed, this Id will be echod back in the `origCoid` field of the order update
+message.
 
 
 #### Cancel an Order with WebSocket
 
-To cancel an order, you need send to the server a `cancelOrderRequest`: 
+To cancel an order, you need send to the server a `cancelOrderRequest`:
 
     {
-      "messageType": "cancelOrderRequest",   // message type 
+      "messageType": "cancelOrderRequest",   // message type
       "time":        1528988100000,          // current timestamp
       "coid":        "xxxx...xxx",           // a 32-character unique client order Id
       "origCoid":    "yyyy...yyy",           // the coid of the order to be canceled   
       "symbol":      "ETH/BTC"               // symbol
     }
-
