@@ -363,9 +363,11 @@ WebSocket API
 WebSocket entry point: `wss://bitmax.io/<account-group>/api/v1/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
-via websocket. For instance, user in account group 3 will subscribe all `ETH/BTC` messages via:
+via websocket. For instance, user in account group 3 will subscribe all `ETH-BTC` messages via:
 
     `wss://bitmax.io/3/api/v1/stream/[symbol]`
+
+**Note:** [symbol] in websocket connections must be seperated by a hyphen(-), e.g, ETH-BTC. Slash(/) is treated specially in URLs as path separators.
 
 ### Websocket Authentication
 
