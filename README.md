@@ -164,6 +164,11 @@ in python 3.6+ as:
 
     print(signature_b64) // the signature of interest
 
+Remark: to place a new order or to cancel an order, you should include order ID in the message:
+
+    coid = "lx3r...R9Lo"
+    msg = bytearray("1530047198600+order+{}".format(coid).encode("utf-8"))
+
 ### API Entry Point
 
 BitMax assign dedicated servers to users within the same **account group**. This greatly increases the per-user throughput of each server.
@@ -224,6 +229,16 @@ Successful response: one object with current balance data of the asset specified
     }
 
 ### Orders
+
+#### Stages of an Order's Life Cycle 
+
+An order may be in one of the following `status`:
+
+* `New`
+* `PartiallyFilled`
+* `Filled`
+* `Canceled`
+* `Rejected` 
 
 #### Place a New Order (`api_path=order`)
 
@@ -300,7 +315,7 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
           "feeAsset":    "ETH",           // the asset
-          "status":      "pending"
+          "status":      "PartiallyFilled"
         },
         ...
       ]
@@ -327,7 +342,7 @@ Successful response: basic data of an open orders.
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
           "feeAsset":    "ETH",           // the asset
-          "status":      "pending"
+          "status":      "PartiallyFilled"
         }
     }
 
@@ -352,7 +367,7 @@ Successful response: list of all fills of the order specified.
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
           "feeAsset":    "ETH",           // the asset
-          "status":      "pending"
+          "status":      "PartiallyFilled"
         }
     }
 
@@ -474,24 +489,24 @@ Once connected to websocket streams, you will start receiving real time updated 
 contains both order execution report and current balances.
 
     {
-      "m":      "order",        // message type
-      "coid":   "xxx...xxx",    // client order id, need to cancel order
-      "s":      "ETH/BTC",      // symbol
-      "ba":     "ETH",          // base asset
-      "qa":     "BTC",          // quote asset
-      "t":       1528988100000, // timestamp
-      "p":      "13.45",        // order price
-      "q":      "3.5",          // order quantity
-      "f":      "1.5",          // filled quantity
-      "ap":     "13.45",        // average price
-      "bb":     "10.00",        // base asset total balance
-      "bpb":    "12.00",        // base asset pending balance
-      "qb":     "1.0",          // quote asset total balance
-      "qpb":    "0.8513",       // quote asset pending balance
-      "fee":    "0.00012",      // fee
-      "fa":     "ETH",          // fee asset
-      "side":   "buy",          // side
-      "status": "completed"     // order status
+      "m":      "order",            // message type
+      "coid":   "xxx...xxx",        // client order id, need to cancel order
+      "s":      "ETH/BTC",          // symbol
+      "ba":     "ETH",              // base asset
+      "qa":     "BTC",              // quote asset
+      "t":       1528988100000,     // timestamp
+      "p":      "13.45",            // order price
+      "q":      "3.5",              // order quantity
+      "f":      "1.5",              // filled quantity
+      "ap":     "13.45",            // average price
+      "bb":     "10.00",            // base asset total balance
+      "bpb":    "12.00",            // base asset pending balance
+      "qb":     "1.0",              // quote asset total balance
+      "qpb":    "0.8513",           // quote asset pending balance
+      "fee":    "0.00012",          // fee
+      "fa":     "ETH",              // fee asset
+      "side":   "buy",              // side
+      "status": "PartiallyFilled"   // order status
     }
 
 Since only new order updates will be streamed, it is recommendated that you load the initial snap of all you orders
