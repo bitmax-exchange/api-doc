@@ -127,6 +127,49 @@ Successful response: an object containing a list of recent trades.
     }
 
 
+### 24-hour Rolling Statistics of All Products
+
+    GET api/v1/ticker/24hr
+
+Successful response: list of objects containing 24-hour rolling statistics for all products.
+
+    [
+       {  
+          "symbol":       "LTC/ETH",
+          "interval":     "1d",
+          "barStartTime":  1536869696784,
+          "openPrice":    "10.32",
+          "closePrice":   "9.83",
+          "highPrice":    "11.9",
+          "lowPrice":     "7.23",
+          "volume":       "123.45"
+       }
+    ]
+
+
+### 24-hour Rolling Statistics of one Product
+
+    GET api/v1/ticker/24hr?symbol=<sym>
+
+The query takes one parameter:
+
+* `symbol` - a valid symbol. Example `symbol=ETH-BTC`
+
+Successful response: the 24-hour rolling statistics of the product specified.
+
+   {  
+      "symbol":       "LTC/ETH",
+      "interval":     "1d",
+      "barStartTime":  1536869696784,
+      "openPrice":    "10.32",
+      "closePrice":   "9.83",
+      "highPrice":    "11.9",
+      "lowPrice":     "7.23",
+      "volume":       "123.45"
+   }
+
+
+
 Authenticated RESTful APIs
 ----------------------------------------------
 
@@ -291,6 +334,20 @@ any open order using the provided `origCoid`.
 
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
+
+
+### Cancel All Open Orders (`order/all`)
+
+    DELETE <account-group>/api/v1/order/all
+
+This query sends cancel request for all open orders. 
+
+
+### Cancel All Open Orders of a Symbol (`order/all`)
+
+    DELETE <account-group>/api/v1/order/all?symbol=<sym>
+
+This query tries to cancel all open orders of a particular symbol. 
 
 
 #### List of All Open Orders (`api_path=order/open`)
