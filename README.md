@@ -193,24 +193,27 @@ For instance, to query all your balance through api path `balances` at `2018-06-
 you could obtain the signature by applying the sha256 algorithm to string `1530046174012+balances`. The signing process can be implemented
 in python 3.6+ as:
 
-    // python 3.6+
+    # python 3.6+
     import hmac, hashlib, base64
 
-    key = "eb1vhzkNbG...Gw19EsWP6x"  // a secret key that you should
-                                     // never share with others
+    key = "eb1vhzkNbG...Gw19EsWP6x"  # a secret key that you should never share with others
 
     msg = bytearray("1530047198600+balances".encode("utf-8"))
 
-    hmac_key = base64.b64decode(key)
-    signature = hmac.new(hmac_key, msg, hashlib.sha256)
-    signature_b64 = base64.b64encode(signature.digest()).decode("utf-8")  
+    hmac_key = bytearray(secret.encode("utf-8"))  
+    signature = base64.b64encode(hmac.new(hmac_key, msg, digestmod=hashlib.sha256).digest())
 
-    print(signature_b64) // the signature of interest
+    print(signature) # the signature of interest
 
 Remark: to place a new order or to cancel an order, you should include order ID in the message:
 
     coid = "lx3r...R9Lo"
     msg = bytearray("1530047198600+order+{}".format(coid).encode("utf-8"))
+
+Remark: to place or cancel multiple orders, you should include all order IDs in the message:
+
+    coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
+    msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
 
 ### API Entry Point
 
@@ -310,6 +313,45 @@ ago are treated as expired and will not be processed.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
+#### Placing Multiple Orders (`api_path=order/batch`)
+
+You may combine multiple orders into one request
+
+    POST <account-group>/api/v1/batch
+
+For this API, you must include `x-auth-coid` in your request header. You must concatenate IDs of all orders with character `+`. The order of IDs in the header 
+must match the orders in the request. 
+
+You may submit up to 10 orders at a time. Server will respond with `InvalidRequest` if you submit more than 10 orders.
+
+Request body: `application/json`
+
+    {
+      "orders": [
+        {
+          "coid":       "xxx...xxx",
+          "time":       1528988100000,  // timestamp, must be the same for all orders 
+          "symbol":     "ETH/BTC",
+          "orderPrice": "13.5",
+          "orderQty":   "3.5",
+          "orderType":  "limit",
+          "side":       "buy"
+        },
+        ...
+      ]
+    }
+
+Successful response: an object containing a list of `(symbol, orderId)` 
+
+    {
+      "status": "success",
+      "data": [
+        ["ETH/BTC", "xxx...xxx"],
+        ...
+      ]
+    }
+
+
 #### Cancel an Order (`api_path=order`)
 
     DELETE <account-group>/api/v1/order
@@ -335,15 +377,49 @@ any open order using the provided `origCoid`.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
+### Cancel Multiple Orders (`api_path=order/batch`)
 
-### Cancel All Open Orders (`order/all`)
+You may delete multiple orders in the single request:
+
+    DELETE <account-group>/api/v1/order/batch
+
+For this API you must include `x-auth-coid` in your request header. You must concatenate IDs of all orders with character `+`. The order of IDs in the header 
+must match the orders in the request. 
+
+You may submit up to 10 orders at a time. Server will respond with `InvalidRequest` if you submit more than 10 orders.
+
+Request body: `application/json`
+
+    {
+      "orders": [
+        {
+          "coid":       "xxx...xxx",
+          "origCoid":   "yyy...yyy",
+          "time":       1528988100000,  // timestamp, must be the same for all orders 
+          "symbol":     "ETH/BTC",
+        },
+        ...
+      ]
+    }
+
+Successful response: an object containing a list of `(symbol, orderId)` 
+
+    {
+      "status": "success",
+      "data": [
+        ["ETH/BTC", "xxx...xxx"],
+        ...
+      ]
+    }
+
+### Cancel All Open Orders (`api_path=order/all`)
 
     DELETE <account-group>/api/v1/order/all
 
 This query sends cancel request for all open orders. 
 
 
-### Cancel All Open Orders of a Symbol (`order/all`)
+### Cancel All Open Orders of a Symbol (`api_path=order/all`)
 
     DELETE <account-group>/api/v1/order/all?symbol=<sym>
 
