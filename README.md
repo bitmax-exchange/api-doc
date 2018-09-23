@@ -196,14 +196,16 @@ in python 3.6+ as:
     # python 3.6+
     import hmac, hashlib, base64
 
-    key = "eb1vhzkNbG...Gw19EsWP6x"  # a secret key that you should never share with others
+    key = "eb1vhzkNbG...Gw19EsWP6x"  # a secret key that you should
+                                     # never share with others
 
     msg = bytearray("1530047198600+balances".encode("utf-8"))
 
-    hmac_key = bytearray(secret.encode("utf-8"))  
-    signature = base64.b64encode(hmac.new(hmac_key, msg, digestmod=hashlib.sha256).digest())
+    hmac_key = base64.b64decode(key)
+    signature = hmac.new(hmac_key, msg, hashlib.sha256)
+    signature_b64 = base64.b64encode(signature.digest()).decode("utf-8")  
 
-    print(signature) # the signature of interest
+    print(signature_b64) # the signature of interest
 
 Remark: to place a new order or to cancel an order, you should include order ID in the message:
 
@@ -215,6 +217,20 @@ Remark: to place or cancel multiple orders, you should include all order IDs in 
     coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
     msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
 
+Please note that we will switch to a new signing method from 2018-09-26 onward. Although you can still use the algorithm above, you are encouraged to switch 
+to the new signing method.
+
+    # python 3.6+
+    import hmac, hashlib, base64
+
+    key = "eb1vhzkNbG...Gw19EsWP6x"  # a secret key that you should never share with others
+
+    msg = bytearray("1530047198600+balances".encode("utf-8"))
+
+    hmac_key = bytearray(secret.encode("utf-8"))  
+    signature = base64.b64encode(hmac.new(hmac_key, msg, digestmod=hashlib.sha256).digest())
+
+    print(signature) # the signature of interest
 
 
 ### API Entry Point
