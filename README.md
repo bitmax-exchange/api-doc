@@ -522,6 +522,67 @@ Successful response: list of all fills of the order specified.
         }
     }
 
+### Get Deposit address of one Asset (`api_path=deposit`)
+
+    POST <account-group>/api/v1/deposit/<asset>
+
+The following are required in the request body
+
+Request body schema: `application/json`
+
+    FieldName    FieldType    Example         Description
+    ---------    ---------    -------         -----------
+    requestId    string       "xxx...xxx"     a unique identifier  
+    time         long         1528988100000   milliseconds since UNIX epoch in UTC  
+    assetCode    string       "ETH"       
+    
+Successful response: one object with the the deposit address associated with the authenticated user.
+
+    {
+        "data": {
+            "address": "0x481de74994f2ebf85d29b5462026af73b0d4e062"
+        },
+        "email": "<your-email-address>",
+        "status": "success"
+    }
+
+### Request withdrawal of one Asset (`api_path=withdraw`)
+
+        POST <account-group>/api/v1/withdraw/<asset>
+        
+The following are required in the request body
+
+Request body schema: `application/json`
+
+    FieldName    FieldType    Example         Description
+    ---------    ---------    -------         -----------
+    requestId    string       "xxx...xxx"     a unique identifier  
+    time         long         1528988100000   milliseconds since UNIX epoch in UTC  
+    assetCode    string       "ETH"
+    amount       string       "5.0"
+    address      string       "0x481de74994f2ebf85d29b5462026af73b0d4e062"
+    
+A withdrawl requet can have 3 possible states:
+
+Success:
+
+    {
+        "msg": "Your withdrawal request is being processed.",
+        "status": "success"
+    }
+Rejected:
+
+    {
+        "msg": "Your withdrawal request has been rejected.not enough position",
+        "status": "error"
+    }
+Need manual review:
+
+    {
+        "msg": "We have received your withdrawal request and it is currently under manual review.",
+        "status": "success"
+    }
+
 
 WebSocket API
 ----------------------------------------------
