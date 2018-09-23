@@ -215,6 +215,8 @@ Remark: to place or cancel multiple orders, you should include all order IDs in 
     coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
     msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
 
+
+
 ### API Entry Point
 
 BitMax assign dedicated servers to users within the same **account group**. This greatly increases the per-user throughput of each server.
@@ -313,7 +315,7 @@ ago are treated as expired and will not be processed.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
-#### Placing Multiple Orders (`api_path=order/batch`)
+#### Placing Multiple Orders (`api_path=order/batch`)  (comming soon)
 
 You may combine multiple orders into one request
 
@@ -377,7 +379,7 @@ any open order using the provided `origCoid`.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
-### Cancel Multiple Orders (`api_path=order/batch`)
+### Cancel Multiple Orders (`api_path=order/batch`)  (comming soon)
 
 You may delete multiple orders in the single request:
 
