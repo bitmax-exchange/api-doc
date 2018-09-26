@@ -1,4 +1,4 @@
-# Demo code for Place an Order at https://bitmax.io
+# Demo code for Place an Order using BitMax API
 
 ## Node.js
 
