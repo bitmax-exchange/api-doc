@@ -153,7 +153,7 @@ The query takes one parameter:
 
 Successful response: the 24-hour rolling statistics of the product specified.
 
-   {  
+    {  
       "symbol":       "LTC/ETH",
       "interval":     "1d",
       "barStartTime":  1536869696784,
@@ -162,7 +162,7 @@ Successful response: the 24-hour rolling statistics of the product specified.
       "highPrice":    "11.9",
       "lowPrice":     "7.23",
       "volume":       "123.45"
-   }
+    }
 
 
 
