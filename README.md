@@ -46,19 +46,15 @@ Successful response: a list of all product objects. Each product object contains
 
     // some fields are omitted for conciseness
     [
-      {
-        "product": {
-          "symbol":         "ETH/BTC",
-          "statusCode":     "Normal",  // enum: Normal, NotTrading
-          "pricePrecision":  8,
-          "minQty":         "0.00001",
-          "maxQty":         "1000",
-          "minNotional":    "0.001",
-          "maxNotional":    "100000"
+        {
+            "symbol" : "LBA/BTC",
+            "baseAsset" : "LBA",
+            "quoteAsset" : "BTC",
+            "priceScale" : 8,
+            "qtyScale" : 2,
+            "status" : "Normal"
         },
-        "baseAsset":  { ... }  // same structure as in GET api/assets
-        "quoteAsset": { ... }  // same structure as in GET api/assets
-      }
+        ...
     ]
 
 
