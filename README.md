@@ -324,7 +324,9 @@ upper case characters (`A-Z`) and digits (`0-9`).
 Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds
 ago are treated as expired and will not be processed.
 
-Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
+Response code `200 OK` means the order has been placed successfully in our system. API users should use 
+
+to monitor the
 status of the order placed.
 
 #### Placing Multiple Orders (`api_path=order/batch`)  (comming soon)
@@ -583,12 +585,12 @@ Need manual review:
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/<account-group>/api/v1/stream/[symbol]`
+WebSocket entry point: `wss://bitmax.io/<account-group>/api/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH-BTC` messages via:
 
-    `wss://bitmax.io/3/api/v1/stream/[symbol]`
+    `wss://bitmax.io/3/api/stream/[symbol]`
 
 **Note:** [symbol] in websocket connections must be seperated by a hyphen(-), e.g, ETH-BTC. Slash(/) is treated specially in URLs as path separators.
 
