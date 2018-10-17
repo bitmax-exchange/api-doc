@@ -165,6 +165,55 @@ Successful response: the 24-hour rolling statistics of the product specified.
     }
 
 
+### Bar History 
+
+#### Bar History Info
+
+    GET api/v1/barhist/info
+
+Successful response: the `(intervalName, intervalMilliseconds)` pair current supported by the exchange.
+
+    {
+      "1":   60000,
+      "5":   300000,
+      "30":  1800000,
+      "60":  3600000,
+      "360": 21600000,
+      "1d":  86400000
+    }
+
+#### Bar History Data
+
+    GET api/v1/barhist/info
+
+Parameters:
+
+    FieldName    Example         Description
+    ---------    -------         -----------
+    symbol       ETH-BTC         the product symbol
+    startTime    1539654780000   start time, milliseconds since UNIX epoch in UTC
+    endTime      1539645600000   end time, milliseconds since UNIX epoch in UTC
+    interval     1               the length of the bar
+
+Successful response: list of bars from startTime to endTime, 
+
+    [
+      {
+        "m":  "bar",          // message 
+        "s":  "ETH/BTC",      // symbol
+        "ba": "ETH",          // base asset 
+        "qa": "BTC",          // quote asset 
+        "i":  "1",            // interval: 1/5/30/60/360/1d
+        "t":  1531911360000,  // time
+        "o":  "0.00745",      // open
+        "c":  "0.00762",      // close 
+        "h":  "0.00771",      // high
+        "l":  "0.00742",      // low 
+        "v":  "12.334"        // volume 
+      },
+      ...
+    ]
+
 
 Authenticated RESTful APIs
 ----------------------------------------------
@@ -287,6 +336,42 @@ Successful response: one object with current balance data of the asset specified
           "btcValue":        "70.81"     // the current BTC value of the balance
         }
     }
+
+
+### Get Deposit/Withdraw History (`api_path=transaction`)
+
+    GET <account-group>/api/v1/transaction
+
+Parameters:
+
+    FieldName    Example         Description
+    ---------    -------         -----------
+    assetCode    "BTC"           Optional
+    page         1               the page index, starts at 1
+    pageSize     10              the page size
+    txType       "deposit"       Optional, accepted values: deposit, withdrawal
+
+Successful response contains:
+
+    {
+      'page':     1,
+      'pageSize': 2,
+      'hasNext':  False, 
+      'data': [
+        {
+          'time': 1539125157899,
+          'asset': 'BTC',
+          'transactionType': 'withdrawal',
+          'amount':          '1.00000000',
+          'commission':      '0.00000000',
+          'networkTransactionId': '12E729B2B0283170C5D61B2EAF672186060EDE4D9EF8FDA78DEE2A76BD5B07A6',
+          'status': 'completed'
+        },
+        ...
+      ]
+    }
+
+
 
 ### Orders
 
@@ -684,6 +769,52 @@ follow the same structure, which contains one or more trades.
         },
         ...
       ]
+    }
+
+### Market Summary
+
+Each market summary data record contains current information about a single product. The data is streamed in batches - we stream 
+out market data of all products every 5 seconds. 
+
+    {
+      "m":  "summary",
+      "s":  "ETH/BTC",     // product symbol
+      "ba": "ETH",         // base asset
+      "qa": "BTC",         // quote asset 
+      "i":  "1d",          // for market summary data, the interval is always 1d
+      "t":  1528988000000, // timestamp in UTC
+      "o":  "3.24",        // open
+      "c":  "3.56",        // close
+      "h":  "3.77",        // high
+      "l":  "3.21",        // low
+      "v":  "10.234",      // volume
+    }
+
+
+### Bar Chart Data
+
+Bar data is almost the same as the market summary data, except that:
+  
+* Message type is `bar` 
+* There is only one symbol per websocket session
+* The interval field `i` may take multiple values: `1`, `5`, `30`, `160`, `360`, `1d`.  
+
+We stream bar data in batches. Every 10 seconds, we stream bar data messages at all interval levels. You may use 
+these data to update bar chart directly (replace bars). However, you should also update the bar chart using the 
+market trade messages.  
+
+    {
+      "m":  "summary",
+      "s":  "ETH/BTC",     // product symbol
+      "ba": "ETH",         // base asset
+      "qa": "BTC",         // quote asset 
+      "i":  "5",           // 1/5/30/60/360/1d
+      "t":  1528988500000, // timestamp in UTC
+      "o":  "3.24",        // open
+      "c":  "3.56",        // close
+      "h":  "3.77",        // high
+      "l":  "3.21",        // low
+      "v":  "10.234",      // volume
     }
 
 
