@@ -184,15 +184,15 @@ Successful response: the `(intervalName, intervalMilliseconds)` pair current sup
 
 #### Bar History Data
 
-    GET api/v1/barhist/
+    GET api/barhist/
 
 Parameters:
 
     FieldName    Example         Description
     ---------    -------         -----------
     symbol       ETH-BTC         the product symbol
-    startTime    1539654780000   start time, milliseconds since UNIX epoch in UTC
-    endTime      1539645600000   end time, milliseconds since UNIX epoch in UTC
+    from         1539654780000   start time, milliseconds since UNIX epoch in UTC
+    to           1539645600000   end time, milliseconds since UNIX epoch in UTC
     interval     1               the length of the bar
 
 Successful response: list of bars from startTime to endTime, 
