@@ -184,7 +184,7 @@ Successful response: the `(intervalName, intervalMilliseconds)` pair current sup
 
 #### Bar History Data
 
-    GET api/v1/barhist/info
+    GET api/v1/barhist/
 
 Parameters:
 
