@@ -406,13 +406,23 @@ Request body schema: `application/json`
 Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`),
 upper case characters (`A-Z`) and digits (`0-9`).  
 
-Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds
-ago are treated as expired and will not be processed.
+Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds ago are treated as expired and will not be processed.
 
-Response code `200 OK` means the order has been placed successfully in our system. API users should use 
+Success response:
 
-to monitor the
-status of the order placed.
+    {
+      "status": "success",   // status = success means the server has processed the request
+      data: {
+        "coid": "xxx...xxx",
+        "action": "new",
+        "success": true  // success = true means the order has been submitted to the matching engine. 
+      }
+    }
+
+Response code `200 OK` means the order has been received by the server. However, it doesn't imply that the order has been successfully 
+submitted to the matching engine. API users should use the `success: boolean` field in the API response to check if the order has been successfully passed to the system. For instance, if one doesn't have enough balance, he/she will get `success = false`.
+
+API users should use the list open order API to monitor the status of the order placed.
 
 #### Placing Multiple Orders (`api_path=order/batch`)  (comming soon)
 
