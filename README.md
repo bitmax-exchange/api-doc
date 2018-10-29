@@ -290,6 +290,12 @@ use `https://bitmax.io/3/api` to query authenticated data.
 Account group is expected stay the same over time. However, it is recommended that API users check the account group at the begining of the
 program. Refer to `GET user/info` for how to get account group.  
 
+### API Calls with Input Data
+
+Some API calls require user input data. The server only accept JSON as input type, please make sure you specify the data type in the request header:
+
+    Content-Type: application/json
+
 ### User Info (`api_path=user/info`)
 
     GET api/v1/user/info
