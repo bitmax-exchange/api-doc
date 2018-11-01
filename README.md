@@ -70,7 +70,7 @@ This API is not available yet.
 
 The query takes two parameters:
 
-* `symbol` - a valid symbols. Example `symbol=ETH-BTC`
+* `symbol` - a valid symbol. Example `symbol=ETH-BTC`
 * `n`      - number of levels to be included in the order book. `n` is currently limited to 100 or fewer. Example `n=10`
 
 Successful response: an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book).
@@ -570,6 +570,51 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
         ...
       ]
     }
+
+### Get All Orders history (`api_path=order`)
+
+    GET <account-group>/api/v1/order/history
+
+The query takes four parameters:
+
+* `startTime` - milliseconds since UNIX epoch representing the start of the range
+* `endTime` - milliseconds since UNIX epoch representing the end of the range
+* `symbol` - a valid symbol or null. Example `symbol=ETH-BTC`
+* `n`      - number of orders to return. `n` is currently limited to 50 or fewer. Example `n=10`
+
+Successful response: List of all your orders history.
+
+    {
+        'code': 0,
+        'data': {
+            'data': [
+                        {
+                            'avgPrice': '6378.900000000',
+                            'baseAsset': 'BTC',
+                            'btmxCommission': '0.000000000',
+                            'coid': 'qTp21ZxXDvkfojPp9eybzdLX5CHW08gh',
+                            'fee': '0.051031200',
+                            'feeAsset': 'USDT',
+                            'filledQty': '0.010000000',
+                            'notional': '127.578000000',
+                            'orderPrice': '6378.900000000',
+                            'orderQty': '0.010000000',
+                            'quoteAsset': 'USDT',
+                            'side': 'Sell',
+                            'status': 'Filled',
+                            'symbol': 'BTC/USDT',
+                            'time': 1541100302446,
+                        },
+                        ...
+                    ],
+                'endTime': 1541111092827,
+                'size': 49,
+                'startTime': 1541100302446
+                },
+        'status': 'success'
+    }
+
+Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
 
 #### Get Basic Order Data of One Order (`api_path=order`)
 
