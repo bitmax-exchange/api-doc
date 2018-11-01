@@ -494,7 +494,7 @@ any open order using the provided `origCoid`.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
-### Cancel Multiple Orders (`api_path=order/batch`)  (comming soon)
+#### Cancel Multiple Orders (`api_path=order/batch`)  (comming soon)
 
 You may delete multiple orders in the single request:
 
@@ -529,14 +529,14 @@ Successful response: an object containing a list of `(symbol, orderId)`
       ]
     }
 
-### Cancel All Open Orders (`api_path=order/all`)
+#### Cancel All Open Orders (`api_path=order/all`)
 
     DELETE <account-group>/api/v1/order/all
 
 This query sends cancel request for all open orders. 
 
 
-### Cancel All Open Orders of a Symbol (`api_path=order/all`)
+#### Cancel All Open Orders of a Symbol (`api_path=order/all`)
 
     DELETE <account-group>/api/v1/order/all?symbol=<sym>
 
