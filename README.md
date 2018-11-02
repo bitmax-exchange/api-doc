@@ -670,16 +670,16 @@ Successful response: list of all fills of the order specified.
 
     POST <account-group>/api/v1/deposit/<asset>
 
-The following are required in the request body
-
 Request body schema: `application/json`
 
-    FieldName    FieldType    Example         Description
-    ---------    ---------    -------         -----------
-    requestId    string       "xxx...xxx"     a unique identifier  
-    time         long         1528988100000   milliseconds since UNIX epoch in UTC  
-    assetCode    string       "ETH"       
-    
+    {
+      "requestId": "xxx...xxx",     # a unique identifier  
+      "time":       1528988100000,  # milliseconds since UNIX epoch in UTC  
+      "assetCode": "ETH"
+    }
+
+You must sign the message `"<timestamp>+deposit+<requestId>"`, and set `x-auth-coid=<requestId>` in the header.
+
 Successful response: one object with the the deposit address associated with the authenticated user.
 
     {
@@ -694,19 +694,23 @@ Successful response: one object with the the deposit address associated with the
 
         POST <account-group>/api/v1/withdraw/<asset>
         
-The following are required in the request body
-
 Request body schema: `application/json`
 
-    FieldName    FieldType    Example         Description
-    ---------    ---------    -------         -----------
-    requestId    string       "xxx...xxx"     a unique identifier  
-    time         long         1528988100000   milliseconds since UNIX epoch in UTC  
-    assetCode    string       "ETH"
-    amount       string       "5.0"
-    address      string       "0x481de74994f2ebf85d29b5462026af73b0d4e062"
-    
-A withdrawl requet can have 3 possible states:
+    {
+      "requestId": "xxx...xxx",      # a unique identifier  
+      "time":       1528988100000,   # milliseconds since UNIX epoch in UTC  
+      "assetCode": "ETH",
+      "amount":    "1.23",
+      "address": {
+        "address": "0x1234..."
+      }
+    }
+
+You must sign the message `"<timestamp>+withdraw+<requestId>"`, and set `x-auth-coid=<requestId>` in the header.
+
+The address is a key/value pair object, the object structure for each asset should be the same as the deposit response. For most asset, such as `BTC` and `ETH`, the address contains a single key `address`. For other assets, the address might contain more fields. 
+
+A withdrawal requet can have 3 possible states:
 
 Success:
 
