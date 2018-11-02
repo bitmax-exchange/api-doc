@@ -571,7 +571,7 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
       ]
     }
 
-### Get All Orders history (`api_path=order`)
+### List Historical Orders (`api_path=order/history`)
 
     GET <account-group>/api/v1/order/history
 
@@ -582,7 +582,7 @@ The query takes four parameters:
 * `symbol` - a valid symbol or null. Example `symbol=ETH-BTC`
 * `n`      - number of orders to return. `n` is currently limited to 50 or fewer. Example `n=10`
 
-Successful response: List of all your orders history.
+Successful response: list of all your orders history, (current open orders are not included.)
 
     {
         'code': 0,
