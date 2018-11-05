@@ -17,6 +17,7 @@ Public RESTful APIs
 ----------------------------------------------
 
 Public RESTful API entry point: `https://bitmax.io/api/<version-num>`.
+Public RESTful API entry point for the test site: `https://bitmax-test.io/api/<version-num>`.
 
 ### List of all assets
 
