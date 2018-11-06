@@ -840,7 +840,7 @@ follow the same structure, which contains one or more trades.
 ### Market Summary
 
 Each market summary data record contains current information about a single product. The data is streamed in batches - we stream 
-out market data of all products every 5 seconds. 
+out market data of all products every 30 seconds. 
 
     {
       "m":  "summary",
@@ -865,7 +865,7 @@ Bar data is almost the same as the market summary data, except that:
 * There is only one symbol per websocket session
 * The interval field `i` may take multiple values: `1`, `5`, `30`, `160`, `360`, `1d`.  
 
-We stream bar data in batches. Every 10 seconds, we stream bar data messages at all interval levels. You may use 
+We stream bar data in batches. Every 30 seconds, we stream bar data messages at all interval levels. You may use 
 these data to update bar chart directly (replace bars). However, you should also update the bar chart using the 
 market trade messages.  
 
