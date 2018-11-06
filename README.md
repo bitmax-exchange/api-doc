@@ -588,6 +588,9 @@ Successful response: list of all your orders history, (current open orders are n
     {
         'code': 0,
         'data': {
+            'startTime': 1541100302446
+            'endTime': 1541111092827,
+            'size': 49,
             'data': [
                         {
                             'avgPrice': '6378.900000000',
@@ -608,10 +611,7 @@ Successful response: list of all your orders history, (current open orders are n
                         },
                         ...
                     ],
-                'endTime': 1541111092827,
-                'size': 49,
-                'startTime': 1541100302446
-                },
+        },
         'status': 'success'
     }
 
