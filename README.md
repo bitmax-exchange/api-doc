@@ -253,12 +253,12 @@ in python 3.6+ as:
 
     print(signature_b64) # the signature of interest
 
-Remark: to place a new order or to cancel an order, you should include order ID in the message:
+__Remark__: to place a new order or to cancel an order, you should include order ID in the message:
 
     coid = "lx3r...R9Lo"
     msg = bytearray("1530047198600+order+{}".format(coid).encode("utf-8"))
 
-Remark: to place or cancel multiple orders, you should include all order IDs in the message:
+__Remark__: to place or cancel multiple orders, you should include all order IDs in the message:
 
     coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
     msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
