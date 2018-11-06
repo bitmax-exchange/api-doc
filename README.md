@@ -231,7 +231,7 @@ Each authenticated request must include the following fields in the header:
 
 * `x-auth-key` - the API key
 * `x-auth-signature` - the message signed using __sha256__ using the __base64-decoded__ secret key
-  on the prehash string `{timestamp}+{api_path}`.
+  on the prehash string `{timestamp}+{api_path}`, or `{timestamp}+{api_path}+{coid}` for placing/canceling orders.
 * `x-auth-timestamp` - milliseconds since UNIX epoch in UTC
 * `x-auth-coid` - this field is only required when placing a new order or canceling an order, see below for details
 
