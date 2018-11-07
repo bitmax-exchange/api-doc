@@ -138,3 +138,10 @@
         side = "sell")
 
       pprint(res)
+
+
+## c++
+  https://github.com/bitmax-exchange/api-doc/blob/master/example/cpp/main.cpp
+
+## golang
+  https://github.com/bitmax-exchange/api-doc/blob/master/example/golang/main.go
