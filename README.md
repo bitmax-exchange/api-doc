@@ -79,9 +79,21 @@ Successful response:
 
 ### Market Quote (Level 1 Order Book Data) of One Product
 
-    GET api/v1/quote
+    GET api/v1/quote?symbol=<symbol>
 
-This API is not available yet.
+The query takes one parameter
+
+* `symbol` - a valid sample. Example: `symbol=ETH-BTC`
+
+Successful response:
+
+    {
+      "symbol":   "ETH/BTC",
+      "bidPrice": "0.033048",
+      "bidSize":  "1.56",
+      "askPrice": "0.033057",
+      "askSize":  "0.108"
+    }
 
 ### Market Depth (Level 2 Order Book Data) of One Product
 
