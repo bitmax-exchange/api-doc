@@ -58,6 +58,24 @@ Successful response: a list of all product objects. Each product object contains
         ...
     ]
 
+### Get Current Trading Fees
+
+    GET api/v1/fees
+    
+Successful response:
+
+    {
+      "maker": {
+        "mining": "0.001",
+        "noMining": "0.001",
+        "rebate": "0.0004"
+      },
+      "taker": {
+        "mining": "0.001",
+        "noMining": "0.001"
+      }
+    }
+
 
 ### Market Quote (Level 1 Order Book Data) of One Product
 
