@@ -72,7 +72,7 @@ Successful response:
       },
       "taker": {
         "mining": "0.001",
-        "noMining": "0.001"
+        "noMining": "0.0004"
       }
     }
 
