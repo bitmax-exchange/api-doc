@@ -1,5 +1,3 @@
-# Python 3.6+
-
 import json 
 import requests
 from datetime import datetime
@@ -17,14 +15,14 @@ def utc_timestamp():
 def make_auth_header(timestamp, api_path, api_key, secret, coid=None): 
     # convert timestamp to string   
     if isinstance(timestamp, bytes):
-    timestamp = timestamp.decode("utf-8")
+        timestamp = timestamp.decode("utf-8")
     elif isinstance(timestamp, int):
-    timestamp = str(timestamp)
+        timestamp = str(timestamp)
 
     if coid is None:
-    msg = bytearray(f"{timestamp}+{api_path}".encode("utf-8"))
+        msg = bytearray(f"{timestamp}+{api_path}".encode("utf-8"))
     else:
-    msg = bytearray(f"{timestamp}+{api_path}+{coid}".encode("utf-8"))
+        msg = bytearray(f"{timestamp}+{api_path}+{coid}".encode("utf-8"))
 
     hmac_key = base64.b64decode(secret)
     signature = hmac.new(hmac_key, msg, hashlib.sha256)
@@ -36,30 +34,41 @@ def make_auth_header(timestamp, api_path, api_key, secret, coid=None):
     }
 
     if coid is not None:
-    header["x-auth-coid"] = coid
+        header["x-auth-coid"] = coid
 
     return header
 
 
 def POST(url, *args, **kwargs):
-    def __parse_response(res):
-    if res is None:
-        return None 
-
-    if res.status_code == 200:
-        data = json.loads(res.text)
-        return data
-    else:
-        print(f"request failed, error code = {res.status_code}")
-        print(res.text)
     try: 
-    res = requests.post(url, *args, **kwargs)
-    return __parse_response(res)
+        res = requests.post(url, *args, **kwargs)
+        return __parse_response(res)
     except requests.exceptions.ConnectionError: 
+        print(f"[WARN] Failed to connect {url}")
+        return None
+    except: 
+        raise
+
+def GET(url, *args, **kwargs):
+  try: 
+    res = requests.get(url, *args, **kwargs)
+    return __parse_response(res)
+  except requests.exceptions.ConnectionError: 
     print(f"[WARN] Failed to connect {url}")
     return None
-    except: 
+  except: 
     raise
+
+def __parse_response(res):
+  if res is None:
+    return None 
+
+  if res.status_code == 200:
+    data = json.loads(res.text)
+    return data
+  else:
+    print(f"request failed, error code = {res.status_code}")
+    print(res.text)
 
 def place_new_order(url, api_key, secret, account_group, symbol, price, quantity, side):
     ts = utc_timestamp()
@@ -79,17 +88,28 @@ def place_new_order(url, api_key, secret, account_group, symbol, price, quantity
 
     return POST(f"{url}/{account_group}/api/v1/order", json=order, headers=headers)
 
+def user_info(url, api_key, secret): 
+    ts = utc_timestamp()
+    headers = make_auth_header(ts, "user/info", api_key, secret)
+    return GET(f"{url}/api/v1/user/info", headers=headers)
 
 if __name__ == "__main__":
 
+    url = "https://bitmax.io"
+    apiKey = "[[api-key]]"
+    secret = "[[secret]]"
+    
+    account_group = user_info(url, apiKey, secret)
+    account_group = account_group['accountGroup']
+    
     res = place_new_order(
-    "https://bitmax.io",  # replace 1 with your account group
-    "[[api-key]]",
-    "[[secret]]",
-    account_group = 1,
-    symbol = "ETH/BTC",
-    price = "0.03",
-    quantity = "0.2",
-    side = "sell")
+        url,
+        apiKey,
+        secret,   
+        account_group,
+        symbol = "ETH/BTC",
+        price = "0.03",
+        quantity = "0.2",
+        side = "sell")
 
     pprint(res)
