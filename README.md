@@ -807,7 +807,7 @@ After connecting to websocket, you need to send an `subscribe` message in order 
                                            // each side to be included in
                                            // the first market depth message  
 
-      "recentTradeMaxCount": 20,           // max number of recent trades to
+      "recentTradeMaxCount": 20            // max number of recent trades to
                                            // be included in the first market
                                            // trades message  
     }
