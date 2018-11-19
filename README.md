@@ -439,6 +439,7 @@ Request body schema: `application/json`
     orderQty     string       "3.5"           
     orderType    string       "limit"         currently we only support limit order
     side         string       "buy"           buy or sell
+    postOnly     boolean      true            Optional, if true, the order will either be posted to the limit order book or be cancelled, i.e. the order cannot take liquidity; default value is false
 
 Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`),
 upper case characters (`A-Z`) and digits (`0-9`).  
