@@ -459,7 +459,7 @@ Success response:
 Response code `200 OK` means the order has been received by the server. However, it doesn't imply that the order has been successfully 
 submitted to the matching engine. API users should use the `success: boolean` field in the API response to check if the order has been successfully passed to the system. For instance, if one doesn't have enough balance, he/she will get `success = false`.
 
-Even if the order has been passed to the matching engine, it might still be rejected. API users should use the list open order API to monitor the status of the order placed. (see below)
+Even if the order has been passed to the matching engine, it might still be rejected. For example, postOnly order can be rejected if the order would otherwise take liquidity. API users should use the list open order API to monitor the status of the order placed. (see below)
 
 #### Placing Multiple Orders (`api_path=order/batch`)  (comming soon)
 
@@ -807,7 +807,7 @@ After connecting to websocket, you need to send an `subscribe` message in order 
                                            // each side to be included in
                                            // the first market depth message  
 
-      "recentTradeMaxCount": 20            // max number of recent trades to
+      "recentTradeMaxCount": 20,           // max number of recent trades to
                                            // be included in the first market
                                            // trades message  
     }
