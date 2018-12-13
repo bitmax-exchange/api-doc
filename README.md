@@ -722,9 +722,11 @@ Successful response: one object with the the deposit address associated with the
         "status": "success"
     }
 
-### Request withdrawal of one Asset (`api_path=withdraw`)
+### Request 
 
-        POST <account-group>/api/v1/withdraw/<asset>
+al of one Asset (`api_path=withdraw`)
+
+        POST <account-group>/api/v1/withdraw
         
 Request body schema: `application/json`
 
