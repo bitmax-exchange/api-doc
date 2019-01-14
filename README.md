@@ -462,7 +462,7 @@ submitted to the matching engine. API users should use the `success: boolean` fi
 
 Even if the order has been passed to the matching engine, it might still be rejected. For example, postOnly order can be rejected if the order would otherwise take liquidity. API users should use the list open order API to monitor the status of the order placed. (see below)
 
-#### Placing Multiple Orders (`api_path=order/batch`)  (comming soon)
+#### Placing Multiple Orders (`api_path=order/batch`)
 
 You may combine multiple orders into one request
 
@@ -526,7 +526,7 @@ any open order using the provided `origCoid`.
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
 
-#### Cancel Multiple Orders (`api_path=order/batch`)  (comming soon)
+#### Cancel Multiple Orders (`api_path=order/batch`)
 
 You may delete multiple orders in the single request:
 
