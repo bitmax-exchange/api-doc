@@ -609,7 +609,8 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
           "baseAsset":   "ETH",
           "quoteAsset":  "BTC",
           "side":        "buy",
-          "orderPrice":  "13.45",
+          "orderPrice":  "13.45",         // only available for limit and stop limit orders
+          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
           "orderQty":    "3.5",
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
@@ -634,33 +635,34 @@ The query takes four parameters:
 Successful response: list of all your orders history, (current open orders are not included.)
 
     {
-        'code': 0,
-        'data': {
-            'startTime': 1541100302446
-            'endTime': 1541111092827,
-            'size': 49,
-            'data': [
-                        {
-                            'avgPrice': '6378.900000000',
-                            'baseAsset': 'BTC',
-                            'btmxCommission': '0.000000000',
-                            'coid': 'qTp21ZxXDvkfojPp9eybzdLX5CHW08gh',
-                            'fee': '0.051031200',
-                            'feeAsset': 'USDT',
-                            'filledQty': '0.010000000',
-                            'notional': '127.578000000',
-                            'orderPrice': '6378.900000000',
-                            'orderQty': '0.010000000',
-                            'quoteAsset': 'USDT',
-                            'side': 'Sell',
-                            'status': 'Filled',
-                            'symbol': 'BTC/USDT',
-                            'time': 1541100302446,
-                        },
-                        ...
-                    ],
-        },
-        'status': 'success'
+      "code": 0,
+      "data": {
+        "startTime": 1541100302446
+        "endTime": 1541111092827,
+        "size": 49,
+        "data": [
+            {
+              "coid":           "qTp21ZxXDvkfojPp9eybzdLX5CHW08gh",
+              "time":            1541100302446,
+              "symbol":         "BTC/USDT",
+              "baseAsset":      "BTC",
+              "quoteAsset":     "USDT",
+              "side":           "Sell",
+              "orderPrice":     "6378.9",  // only available for limit and stop limit orders
+              "stopPrice":      "20.05",   // only available for stop market and stop limit orders
+              "orderQty":       "0.01",
+              "notional":       "127.578",
+              "avgPrice":       "6378.9",
+              "filledQty":      "0.01",
+              "fee":            "0.051031200",
+              "feeAsset":       "USDT",
+              "btmxCommission": "0",
+              "status":         "Filled",
+            },
+            ...
+          ],
+      },
+      "status": "success"
     }
 
 Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
@@ -681,7 +683,8 @@ Successful response: basic data of an open orders.
           "baseAsset":   "ETH",
           "quoteAsset":  "BTC",
           "side":        "buy",
-          "orderPrice":  "13.45",
+          "orderPrice":  "13.45",         // only available for limit and stop limit orders
+          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
           "orderQty":    "3.5",
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
@@ -706,7 +709,8 @@ Successful response: list of all fills of the order specified.
           "baseAsset":   "ETH",
           "quoteAsset":  "BTC",
           "side":        "buy",
-          "orderPrice":  "13.45",
+          "orderPrice":  "13.45",         // only available for limit and stop limit orders
+          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
           "orderQty":    "3.5",
           "filled":      "1.5",           // filled quantity
           "fee":         "0.00012",       // cumulative fee paid for this order
@@ -952,7 +956,8 @@ contains both order execution report and current balances.
       "ba":     "ETH",              // base asset
       "qa":     "BTC",              // quote asset
       "t":       1528988100000,     // timestamp
-      "p":      "13.45",            // order price
+      "p":      "13.45",            // limit price, only available for limit and stop limit orders
+      "sp":     "14.5",             // stop price, only available for stop market and stop limit orders
       "q":      "3.5",              // order quantity
       "f":      "1.5",              // filled quantity
       "ap":     "13.45",            // average price
@@ -976,13 +981,16 @@ To place a new order, you need to send to the server a `newOrderRequest`:
 
     {
        "messageType": "newOrderRequest",
-       "time":        1528988100000,  // current timestamp
+       "time":         1528988100000, // current timestamp
        "coid":        "xxxx...xxx"    // a 32-character unique client order Id
        "symbol":      "ETH/BTC",      // symbol
        "orderPrice":  "2.23",         // order price
        "orderQty":    "34.3",         // order quantity
        "orderType":   "limit",        // always limit
-       "side":        "buy"           // buy / sell
+       "side":        "buy",          // buy / sell
+       "postOnly":     false,         // optional, boolean
+       "stopPrice":   "2.50",         // optional, only needed for stop market and stop limit orders
+       "timeInForce": "GTC"           // optional, default is "GTC", also supports "IOC"
     }
 
 The client order Id field (`coid`) is a unique id to identify your order. Once the order
