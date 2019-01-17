@@ -20,4 +20,5 @@ Stable version
 
 [doc](bitmax-api-doc-v1.0.md)
 
-
+* First release
+* Support RESTful and websocket APIs
