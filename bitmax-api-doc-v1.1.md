@@ -32,7 +32,7 @@ The API returns a List of object, each contains a list of asset property fields:
         "assetName":        "Ethereum",
         "withdrawalFee":     0.0001,
         "minWithdrawalAmt":  0.1,
-        "statusCode":       "Normal"     // enum: Normal, NotTrading
+        "statusCode":       "Normal"     // enum: Normal, NoTransaction
       },
       ...
     ]
