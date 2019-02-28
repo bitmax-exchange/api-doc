@@ -344,7 +344,9 @@ Successful response: an object with basic user information.
 Successful response: a list of all your current balances.
 
     {
-      "status": "success",
+      "code": 0,
+      "status": "success",     // this field will be deprecated soon
+      "email": "foo@bar.com",  // this field will be deprecated soon
       "data": [
         {
             "assetCode":       "TSC",
@@ -364,7 +366,9 @@ Successful response: a list of all your current balances.
 Successful response: one object with current balance data of the asset specified.
 
     {
-      "status": "success",
+      "code": 0,
+      "status": "success",     // this field will be deprecated soon
+      "email": "foo@bar.com",  // this field will be deprecated soon
       "data": {
           "assetCode":       "TSC",
           "assetName":       "Ethereum",
@@ -466,12 +470,21 @@ timeInForce |        |   x    |            |
 Success response:
 
     {
-      "status": "success",   // status = success means the server has processed the request
+      "code": 0,
+      "email": "foo@bar.com",  // this field will be deprecated soon
+      "status": "success",     // this field will be deprecated soon
       data: {
         "coid": "xxx...xxx",
         "action": "new",
         "success": true  // success = true means the order has been submitted to the matching engine. 
       }
+    }
+
+Example of a failed response:
+
+    {
+      'code': 6010, 
+      'message': 'Not enough balance.'
     }
 
 Response code `200 OK` means the order has been received by the server. However, it doesn't imply that the order has been successfully 
@@ -510,13 +523,13 @@ Request body: `application/json`
 Successful response: an object containing a list of `(symbol, orderId)` 
 
     {
-      "status": "success",
-      "data": [
-        ["ETH/BTC", "xxx...xxx"],
-        ...
-      ]
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
+      'data': [['ZIL/BTC', 'Ykfs1bh5jhsT0ON0XTSNthoXkwuQ7UOy'],
+               ['ZIL/BTC', 'Ch2bu4QHLtxLExDcSIR7e3m25UUoudya'],
+               ['ZIL/BTC', 'AUYsHr8oeyPoUUE9Vi6W7dQOZqueDiVt']]
     }
-
 
 #### Cancel an Order (`api_path=order`)
 
@@ -542,6 +555,24 @@ any open order using the provided `origCoid`.
 
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
+
+Successful response:
+
+    {
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
+      'data': {'action': 'cancel',
+               'coid': 'gaSRTi3o3Yo4PaXpVK0NSLP47vmJuLea',
+               'success': True}
+    }
+
+Example of a failed response:
+
+    {
+      'code': 60060, 
+      'message': 'The order is already filled or canceled.'
+    }
 
 #### Cancel Multiple Orders (`api_path=order/batch`)
 
@@ -571,7 +602,9 @@ Request body: `application/json`
 Successful response: an object containing a list of `(symbol, orderId)` 
 
     {
-      "status": "success",
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": [
         ["ETH/BTC", "xxx...xxx"],
         ...
@@ -599,7 +632,9 @@ This query tries to cancel all open orders of a particular symbol.
 Successful response: List of all your open orders. (Filtering by symbol will be supported in the next release)
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": [
         {
           "time":        1528988100000,
@@ -636,6 +671,8 @@ Successful response: list of all your orders history, (current open orders are n
 
     {
       "code": 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
         "startTime": 1541100302446
         "endTime": 1541111092827,
@@ -661,8 +698,7 @@ Successful response: list of all your orders history, (current open orders are n
             },
             ...
           ],
-      },
-      "status": "success"
+      }
     }
 
 Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
@@ -674,7 +710,9 @@ Remark, the query returns the latest `n` orders within the specified range. To q
 Successful response: basic data of an open orders.
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
           "time":        1528988100000,
           "coid":        "xxx...xxx",     // the unique identifier, you will need
@@ -700,7 +738,9 @@ Successful response: basic data of an open orders.
 Successful response: list of all fills of the order specified.
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
           "time":        1528988100000,
           "coid":        "xxx...xxx",     // the unique identifier, you will need
