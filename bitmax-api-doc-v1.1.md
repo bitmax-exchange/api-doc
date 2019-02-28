@@ -353,7 +353,9 @@ Successful response: a list of all your current balances.
             "assetName":       "Ethereum",
             "totalAmount":     "20.03",    // total balance amount
             "availableAmount": "20.03",    // balance amount available to trade
-            "btcValue":        "70.81"     // the current BTC value of the balance
+            "inOrderAmount":   "0.000",    // in order amount
+            "btcValue":        "70.81"     // the current BTC value of the balance 
+                                           // ("btcValue" might not be available when price is missing)
         },
         ...
       ]
