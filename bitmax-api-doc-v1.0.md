@@ -291,7 +291,7 @@ __Remark__: to place a new order or to cancel an order, you should include order
 __Remark__: to place or cancel multiple orders, you should include all order IDs in the message:
 
     coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
-    msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
+    msg = bytearray("1530047198600+order/batch+{}".format(coids).encode("utf-8"))
 
 Please note that we will switch to a new signing method from 2018-09-26 onward. Although you can still use the algorithm above, you are encouraged to switch 
 to the new signing method.
@@ -466,7 +466,7 @@ Even if the order has been passed to the matching engine, it might still be reje
 
 You may combine multiple orders into one request
 
-    POST <account-group>/api/v1/batch
+    POST <account-group>/api/v1/order/batch
 
 For this API, you must include `x-auth-coid` in your request header. You must concatenate IDs of all orders with character `+`. The order of IDs in the header 
 must match the orders in the request. 

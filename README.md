@@ -8,9 +8,8 @@ Beta version
 
 [doc](bitmax-api-doc-v1.1.md)
 
-* Currently only available on our test site https://bitmax-test.io
 * Added support for additional order types: market, stop_market, stop_limit
-* Added new order Time-in-force instructions: good-till-canceled (GTC), immediate-or-kill (IOC)
+* Added new order Time-in-force instructions: good-till-canceled (GTC), immediate-or-cancel (IOC)
 
 
 Stable version

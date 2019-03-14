@@ -291,7 +291,7 @@ __Remark__: to place a new order or to cancel an order, you should include order
 __Remark__: to place or cancel multiple orders, you should include all order IDs in the message:
 
     coids = "+".join(["lx3r...R9Lo", "ck8e...pE91", "Xlds...1Sce"])
-    msg = bytearray("1530047198600+order+{}".format(coids).encode("utf-8"))
+    msg = bytearray("1530047198600+order/batch+{}".format(coids).encode("utf-8"))
 
 Please note that we will switch to a new signing method from 2018-09-26 onward. Although you can still use the algorithm above, you are encouraged to switch 
 to the new signing method.
@@ -344,14 +344,18 @@ Successful response: an object with basic user information.
 Successful response: a list of all your current balances.
 
     {
-      "status": "success",
+      "code": 0,
+      "status": "success",     // this field will be deprecated soon
+      "email": "foo@bar.com",  // this field will be deprecated soon
       "data": [
         {
             "assetCode":       "TSC",
             "assetName":       "Ethereum",
             "totalAmount":     "20.03",    // total balance amount
             "availableAmount": "20.03",    // balance amount available to trade
-            "btcValue":        "70.81"     // the current BTC value of the balance
+            "inOrderAmount":   "0.000",    // in order amount
+            "btcValue":        "70.81"     // the current BTC value of the balance 
+                                           // ("btcValue" might not be available when price is missing)
         },
         ...
       ]
@@ -364,7 +368,9 @@ Successful response: a list of all your current balances.
 Successful response: one object with current balance data of the asset specified.
 
     {
-      "status": "success",
+      "code": 0,
+      "status": "success",     // this field will be deprecated soon
+      "email": "foo@bar.com",  // this field will be deprecated soon
       "data": {
           "assetCode":       "TSC",
           "assetName":       "Ethereum",
@@ -467,12 +473,21 @@ timeInForce |        |   x    |            |
 Success response:
 
     {
-      "status": "success",   // status = success means the server has processed the request
+      "code": 0,
+      "email": "foo@bar.com",  // this field will be deprecated soon
+      "status": "success",     // this field will be deprecated soon
       data: {
         "coid": "xxx...xxx",
         "action": "new",
         "success": true  // success = true means the order has been submitted to the matching engine. 
       }
+    }
+
+Example of a failed response:
+
+    {
+      'code': 6010, 
+      'message': 'Not enough balance.'
     }
 
 Response code `200 OK` means the order has been received by the server. However, it doesn't imply that the order has been successfully 
@@ -484,7 +499,7 @@ Even if the order has been passed to the matching engine, it might still be reje
 
 You may combine multiple orders into one request
 
-    POST <account-group>/api/v1/batch
+    POST <account-group>/api/v1/order/batch
 
 For this API, you must include `x-auth-coid` in your request header. You must concatenate IDs of all orders with character `+`. The order of IDs in the header 
 must match the orders in the request. 
@@ -511,13 +526,13 @@ Request body: `application/json`
 Successful response: an object containing a list of `(symbol, orderId)` 
 
     {
-      "status": "success",
-      "data": [
-        ["ETH/BTC", "xxx...xxx"],
-        ...
-      ]
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
+      'data': [['ZIL/BTC', 'Ykfs1bh5jhsT0ON0XTSNthoXkwuQ7UOy'],
+               ['ZIL/BTC', 'Ch2bu4QHLtxLExDcSIR7e3m25UUoudya'],
+               ['ZIL/BTC', 'AUYsHr8oeyPoUUE9Vi6W7dQOZqueDiVt']]
     }
-
 
 #### Cancel an Order (`api_path=order`)
 
@@ -543,6 +558,24 @@ any open order using the provided `origCoid`.
 
 Response code `200 OK` means the order has been placed successfully in our system. API users should use websocket to monitor the
 status of the order placed.
+
+Successful response:
+
+    {
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
+      'data': {'action': 'cancel',
+               'coid': 'gaSRTi3o3Yo4PaXpVK0NSLP47vmJuLea',
+               'success': True}
+    }
+
+Example of a failed response:
+
+    {
+      'code': 60060, 
+      'message': 'The order is already filled or canceled.'
+    }
 
 #### Cancel Multiple Orders (`api_path=order/batch`)
 
@@ -572,7 +605,9 @@ Request body: `application/json`
 Successful response: an object containing a list of `(symbol, orderId)` 
 
     {
-      "status": "success",
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": [
         ["ETH/BTC", "xxx...xxx"],
         ...
@@ -600,7 +635,9 @@ This query tries to cancel all open orders of a particular symbol.
 Successful response: List of all your open orders. (Filtering by symbol will be supported in the next release)
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": [
         {
           "time":        1528988100000,
@@ -637,6 +674,8 @@ Successful response: list of all your orders history, (current open orders are n
 
     {
       "code": 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
         "startTime": 1541100302446
         "endTime": 1541111092827,
@@ -662,8 +701,7 @@ Successful response: list of all your orders history, (current open orders are n
             },
             ...
           ],
-      },
-      "status": "success"
+      }
     }
 
 Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
@@ -675,7 +713,9 @@ Remark, the query returns the latest `n` orders within the specified range. To q
 Successful response: basic data of an open orders.
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
           "time":        1528988100000,
           "coid":        "xxx...xxx",     // the unique identifier, you will need
@@ -701,7 +741,9 @@ Successful response: basic data of an open orders.
 Successful response: list of all fills of the order specified.
 
     {
-      "status": "success"
+      'code': 0,
+      'status': 'success',     // this field will be deprecated soon
+      'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
           "time":        1528988100000,
           "coid":        "xxx...xxx",     // the unique identifier, you will need
@@ -791,7 +833,10 @@ Need manual review:
 WebSocket API
 ----------------------------------------------
 
-WebSocket entry point: `wss://bitmax.io/<account-group>/api/stream/[symbol]`
+WebSocket entry point: 
+
+* Public: `wss://bitmax.io/api/public/[symbol]`
+* Authenticated (View and Trade permission needed): `wss://bitmax.io/<account-group>/api/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH-BTC` messages via:
