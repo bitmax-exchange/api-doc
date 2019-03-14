@@ -416,6 +416,7 @@ Successful response contains:
 
 An order may be in one of the following `status`:
 
+* `PendingNew` - only available for stop orders.  
 * `New`
 * `PartiallyFilled`
 * `Filled`
