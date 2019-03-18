@@ -256,10 +256,9 @@ Reference prices are used by BitMax to calculate the risk profile of margin acco
 Successful response: 
     
     {
-        "BTMXD":  "0.066125218",
+        "BTMX":   "0.066125218",
         "ZEC":    "51.82",
         "USDC":   "1.007",
-        "BTMXD2": "0.066125218",
         "XRP":    "0.311085",
         ...
     }
