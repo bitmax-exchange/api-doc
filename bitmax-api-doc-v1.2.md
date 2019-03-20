@@ -17,7 +17,7 @@ GET     | N     | api/v1/trades              | Market trades
 GET     | N     | api/v1/ticker/24hr         | 24-hour rolling statistics of all products
 GET     | N     | api/v1/barhist/info        | Bar history meta data
 GET     | N     | api/v1/barhist             | Bar history data
-GET     | Y*    | api/v1/user/info           | Basic user data
+GET     | Y*    | api/v1/user/info           | Basic user data (no need to provide account group)
 GET     | Y     | api/v1/transaction         | Deposit/Withdraw history
 
 Cash Account APIs
