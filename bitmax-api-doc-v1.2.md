@@ -59,9 +59,7 @@ Public RESTful APIs
 The exchange adopted format `baseAssetCode/quoteAssetCode` for product symbols. For instance, `ETH/BTC = 0.052` means the price of 1 ETH is 0.052 BTC. Althought not required,
 it is recommended to use `ETH-BTC` in API paths to avoid polluting the path string.
 
-
-Public RESTful APIs
-----------------------------------------------
+### RESTful Entry Point
 
 Public RESTful API entry point: `https://bitmax.io/api/<version-num>`.
 Public RESTful API entry point for the test site: `https://bitmax-test.io/api/<version-num>`.
