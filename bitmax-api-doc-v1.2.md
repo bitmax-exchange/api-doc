@@ -768,7 +768,7 @@ Parameters:
 * `symbol` - optional, string type. 
 * `category` - optional, string type. 
 * `orderType` - optional, string type. 
-* `page` - optional, integer type. 
+* `page` - optional, integer type. Page starts at 1.
 * `pageSize` - optional, integer type. 
 * `side` - optional, string type. buy or sell, case insensitive.
 * `startTime` - optional, integer type. Milliseconds since UNIX epoch representing the start of the range
