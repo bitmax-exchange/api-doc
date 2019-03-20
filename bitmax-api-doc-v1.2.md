@@ -1,10 +1,57 @@
 Bitmax | API Document v1.2
 ==============================================
 
-Note: we changed our API URLs on 2018-08-24. Even though the old URLs still work, you are strongly recommended to
-use the new URLs as described on this page.
+Note: we changed our API URLs on 2018-08-24. Even though the old URLs still work, you are strongly recommended to use the new URLs as described on this page.
 
-Basics  
+RESTful APIs: Bird's-eye View
+---------------------------------------------
+
+Method  | Auth? | URL                        | Description
+------- | ----- | -------------------------- | ---------------------
+GET     | N     | api/v1/assets              | List all assets 
+GET     | N     | api/v1/products            | List all products
+GET     | N     | api/v1/fees                | Current trading fees (mining)
+GET     | N     | api/v1/quote               | Level 1 order book data 
+GET     | N     | api/v1/depth               | Level 2 order book data
+GET     | N     | api/v1/trades              | Market trades
+GET     | N     | api/v1/ticker/24hr         | 24-hour rolling statistics of all products
+GET     | N     | api/v1/barhist/info        | Bar history meta data
+GET     | N     | api/v1/barhist             | Bar history data
+GET     | Y*    | api/v1/user/info           | Basic user data
+GET     | Y     | api/v1/transaction         | Deposit/Withdraw history
+
+Cash Account APIs
+
+Method  | Auth? | URL                        | Description
+------- | ----- | -------------------------- | ---------------------
+GET     | Y     | api/v1/balance             | Cash account balance
+GET     | Y     | api/v1/order/open          | List all cash account open orders
+GET     | Y     | api/v1/order/<coid>        | Retrieve a cash order with order id
+POST    | Y     | api/v1/order               | Place an order from the cash account
+POST    | Y     | api/v1/order/batch         | Place multiple orders from the cash account
+DELETE  | Y     | api/v1/order               | Cancel a cash account open order
+DELETE  | Y     | api/v1/order/batch         | Cancel multiple orders from the cash account
+DELETE  | Y     | api/v1/order/all           | Cancel all cash account open orders
+
+Margin Account APIs
+
+Method  | Auth? | URL                        | Description
+------- | ----- | -------------------------- | ---------------------
+GET     | N     | api/v1/margin/ref-price    | Reference prices (margin account)
+GET     | Y     | api/v1/margin/balance      | Margin account balance
+GET     | Y     | api/v1/margin/order/open   | List margin account open orders
+GET     | Y     | api/v1/margin/order/<coid> | Retrieve a margin order with order id
+POST    | Y     | api/v1/margin/order        | Place an order from the margin account
+DELETE  | Y     | api/v1/margin/order        | Cancel a margin account open order
+
+Cash & Margin Account APIs
+
+Method  | Auth? | URL                        | Description
+------- | ----- | -------------------------- | ---------------------
+GET     | Y     | api/v2/order/history       | (v2) List historical orders (cash + margin)
+
+
+Public RESTful APIs
 ---------------------------------------------
 
 ### Product Symbols
@@ -672,14 +719,12 @@ Successful response: an object containing a list of `(symbol, orderId)`
 
     DELETE <account-group>/api/v1/order/all
 
-This query sends cancel request for all open orders. 
+This query sends cancel request for all open orders as specified by the user. 
 
+Parameters
 
-#### Cancel All Open Orders of a Symbol (`api_path=order/all`)
-
-    DELETE <account-group>/api/v1/order/all?symbol=<sym>
-
-This query tries to cancel all open orders of a particular symbol. 
+* `symbol` - optional string field. Example `symbol=ETH-BTC`.
+* `side`   - optional string field (case-insensitive). Either "buy" or "sell".
 
 
 #### List of All Open Orders
@@ -716,48 +761,66 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
 
 ### List Historical Orders (`api_path=order/history`)
 
-    GET <account-group>/api/v1/order/history
+    GET <account-group>/api/v2/order/history
 
-The query takes four parameters:
+(Experimental: the parameters below are subject to change)
 
-* `startTime` - milliseconds since UNIX epoch representing the start of the range
-* `endTime` - milliseconds since UNIX epoch representing the end of the range
-* `symbol` - a valid symbol or null. Example `symbol=ETH-BTC`
-* `n`      - number of orders to return. `n` is currently limited to 50 or fewer. Example `n=10`
+Parameters:
+
+* `symbol` - optional, string type. 
+* `category` - optional, string type. 
+* `orderType` - optional, string type. 
+* `page` - optional, integer type. 
+* `pageSize` - optional, integer type. 
+* `side` - optional, string type. buy or sell, case insensitive.
+* `startTime` - optional, integer type. Milliseconds since UNIX epoch representing the start of the range
+* `endTime` - optional, integer type. Milliseconds since UNIX epoch representing the end of the range
+* `status` - optional, string type. Status can only be one of "Filled", "Canceled", "Rejected".
+
+Please note that we exclude all canceled / rejected orders with no fill from the result set. 
 
 Successful response: list of all your orders history, (current open orders are not included.)
 
     {
-      "code": 0,
+      'code': 0,
       'status': 'success',     // this field will be deprecated soon
       'email': 'foo@bar.com',  // this field will be deprecated soon
-      "data": {
-        "startTime": 1541100302446
-        "endTime": 1541111092827,
-        "size": 49,
-        "data": [
-            {
-              "coid":           "qTp21ZxXDvkfojPp9eybzdLX5CHW08gh",
-              "time":            1541100302446,
-              "symbol":         "BTC/USDT",
-              "baseAsset":      "BTC",
-              "quoteAsset":     "USDT",
-              "side":           "Sell",
-              "orderPrice":     "6378.9",  // only available for limit and stop limit orders
-              "stopPrice":      "20.05",   // only available for stop market and stop limit orders
-              "orderQty":       "0.01",
-              "notional":       "127.578",
-              "avgPrice":       "6378.9",
-              "filledQty":      "0.01",
-              "fee":            "0.051031200",
-              "feeAsset":       "USDT",
-              "btmxCommission": "0",
-              "status":         "Filled",
-            },
-            ...
-          ],
+      'data': {
+        'page': 1,
+        'pageSize': 20,
+        'limit': 500,
+        'hasNext': False,
+        'data': [
+          {
+            'time':             1553100213658,
+            'coid':            'QgQIMJhPFrYfUf60ZTihmseTqhzzwOCx',
+            'execId':          '331',
+            'symbol':          'BTMX/USDT',
+            'orderType':       'Market',
+            'baseAsset':       'BTMX',
+            'quoteAsset':      'USDT',
+            'side':            'Buy',
+            'stopPrice':       '0.000000000',     // only meaningful for stop market and stop limit orders
+            'orderPrice':      '0.123000000',     // only meaningful for limit and stop limit orders
+            'orderQty':        '9229.409000000',  
+            'filledQty':       '9229.409000000',
+            'avgPrice':        '0.095500000',
+            'fee':             '0.352563424',
+            'feeAsset':        'USDT',
+            'btmxCommission':  '0.000000000',
+            'status':          'Filled',
+            'notional':        '881.408559500',
+            'userId':          '5DNEppWy33SayHjFQpgQUTjwNMSjEhD3',
+            'accountId':       'ACPHERRWRIA3VQADMEAB2ZTLYAXNM3PJ',
+            'accountCategory': 'CASH',
+            'errorCode':       'NULL_VAL',
+            'execInst':        'NULL_VAL'
+          },
+          ...
+        ]
       }
     }
+
 
 Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
 
