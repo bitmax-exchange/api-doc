@@ -9,7 +9,9 @@ Current Release
 [doc](bitmax-api-doc-v1.2.md)
 
 * Added support for margin trading
-
+* Added new API (v1) for obtaining bar history, with performance improvements.
+* Added symbol and order side filter to the cancel all API.
+* Added new API (v2) for retrieving historical orders. 
 
 Older Releases
 ----------------------------------------------
