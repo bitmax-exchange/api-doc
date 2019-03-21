@@ -271,6 +271,8 @@ Parameters:
     to           1539645600000   end time, milliseconds since UNIX epoch in UTC
     interval     1               the length of the bar
 
+Requesting more than 1000 bars might result in error.
+
 Successful response: list of bars from `from` to `to`:
 
     [
