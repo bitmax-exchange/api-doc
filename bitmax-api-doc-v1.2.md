@@ -904,48 +904,9 @@ Successful response: one object with the the deposit address associated with the
         "status": "success"
     }
 
-### Request 
+### Withdrawal Request 
 
-al of one Asset (`api_path=withdraw`)
-
-        POST <account-group>/api/v1/withdraw
-        
-Request body schema: `application/json`
-
-    {
-      "requestId": "xxx...xxx",      # a unique identifier  
-      "time":       1528988100000,   # milliseconds since UNIX epoch in UTC  
-      "assetCode": "ETH",
-      "amount":    "1.23",
-      "address": {
-        "address": "0x1234..."
-      }
-    }
-
-You must sign the message `"<timestamp>+withdraw+<requestId>"`, and set `x-auth-coid=<requestId>` in the header.
-
-The address is a key/value pair object, the object structure for each asset should be the same as the deposit response. For most asset, such as `BTC` and `ETH`, the address contains a single key `address`. For other assets, the address might contain more fields. 
-
-A withdrawal requet can have 3 possible states:
-
-Success:
-
-    {
-        "msg": "Your withdrawal request is being processed.",
-        "status": "success"
-    }
-Rejected:
-
-    {
-        "msg": "Your withdrawal request has been rejected.not enough position",
-        "status": "error"
-    }
-Need manual review:
-
-    {
-        "msg": "We have received your withdrawal request and it is currently under manual review.",
-        "status": "success"
-    }
+This API is currently unavailable. 
 
 
 WebSocket API
