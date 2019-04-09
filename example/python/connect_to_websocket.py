@@ -96,8 +96,8 @@ def run(url, api_key, secret):
 
 
 if __name__ == '__main__':
-    apiKey = "[[api-key]]"
-    secret = "[[secret]]"
+    api_key = "[[api-key]]"
+    secret  = "[[secret]]"
     group   = "[[account-group]]"
 
     # Make sure your API key has view and trade permissions
