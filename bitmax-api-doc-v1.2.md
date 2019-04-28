@@ -548,7 +548,9 @@ Request body schema: `application/json`
     timeInForce  string       "GTC"           Optional, default is "GTC". Currently, we support "GTC" (good-till-canceled) and "IOC" (immediate-or-cancel). 
 
 Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`),
-upper case characters (`A-Z`) and digits (`0-9`).  Please note that you must provide valid numbers for `orderPrice`, `stopPrice`, and `orderQty`. The number of decimal places for `orderPrice`/`stopPrice` must not exceed `priceScale`, and that for `orderQty` must not exceed `qtyScale`. (`priceScale`/`qtyScale` for each symbol can be obtained from API `GET api/v1/products`.)
+upper case characters (`A-Z`) and digits (`0-9`).  
+
+Please note that you should be careful about decimal places for `orderPrice`, `stopPrice`, and `orderQty`. The number of decimal places for `orderPrice`/`stopPrice` should not exceed `priceScale`, and that for `orderQty` should not exceed `qtyScale`, otherwise, they will be rounded. (`priceScale`/`qtyScale` for each symbol can be obtained from API `GET api/v1/products`.)
 
 Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds ago are treated as expired and will not be processed.
 
