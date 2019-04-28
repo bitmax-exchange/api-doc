@@ -96,8 +96,8 @@ Successful response: a list of all product objects. Each product object contains
             "symbol" : "LBA/BTC",
             "baseAsset" : "LBA",
             "quoteAsset" : "BTC",
-            "priceScale" : 8,
-            "qtyScale" : 2,
+            "priceScale" : 8,  // maximum precision for order price allowed to place an order, see below for details
+            "qtyScale" : 2,    // maximum precision for order quantity allowed to place an order, see below for details 
             "status" : "Normal"
         },
         ...
@@ -539,7 +539,7 @@ Request body schema: `application/json`
     coid         string       "xxx...xxx"     a unique identifier of length 32
     time         long         1528988100000   milliseconds since UNIX epoch in UTC  
     symbol       string       "ETH/BTC"       
-    orderPrice   string       "13.5"          optional, limit price of the order. This field is required for limit orders and stop limit orders.
+    orderPrice   string       "13.5"          optional, limit price of the order. This field is required for limit orders and stop limit orders. 
     stopPrice    string       "15.7"          optional, stop price of the order. This field is required for stop market orders and stop limit orders.
     orderQty     string       "3.5"           
     orderType    string       "limit"         order type, you shall specify one of the following: "limit", "market", "stop_market", "stop_limit".
@@ -548,7 +548,7 @@ Request body schema: `application/json`
     timeInForce  string       "GTC"           Optional, default is "GTC". Currently, we support "GTC" (good-till-canceled) and "IOC" (immediate-or-cancel). 
 
 Each request should contain a unique identifier `coid`. `coid` is no more than 32-charaters and consists of only lower case characters (`a-z`),
-upper case characters (`A-Z`) and digits (`0-9`).  
+upper case characters (`A-Z`) and digits (`0-9`).  Please note that you must provide valid numbers for `orderPrice`, `stopPrice`, and `orderQty`. The number of decimal places for `orderPrice`/`stopPrice` must not exceed `priceScale`, and that for `orderQty` must not exceed `qtyScale`. (`priceScale`/`qtyScale` for each symbol can be obtained from API `GET api/v1/products`.)
 
 Each request should also specify `time` - the request time as the total milliseconds since UNIX epoch in UTC. Requests placed more than 30 seconds ago are treated as expired and will not be processed.
 
