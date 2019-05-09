@@ -152,8 +152,10 @@ The query takes two parameters:
 Successful response: an object consists of the inner-most `n` bid levels and `n` ask levels (top-of-the-book).
 
     {
-       "m": "depth",            // message type
-       "s": "ETH/BTC",          // symbol
+       "m":      "depth",       // message type
+       "s":      "ETH/BTC",     // symbol
+       "ts":     1557422548511, // timestamp, 64-bit integer
+       "seqnum": 604599926,     // sequence number, 64-bit integer 
        "asks": [                // ask levels (list of individual levels)
            ["9924", "59.16"],   // [price, quantity]
            ["9914", "95.04"],
@@ -165,6 +167,13 @@ Successful response: an object consists of the inner-most `n` bid levels and `n`
            ...
        ]
     }
+
+Each `depth` message contains a timestamp `ts` field and a sequence number `seqnum` field.
+
+* timestamp (`ts`) - the UTC timestamp in milliseconds of the latest depth update contained in message.
+* sequence number (`seqnum`) - a strictly increasing integer number for each depth update assigned by the server. 
+
+Both timestamp and sequence number are set for each symbol. Please do not compare values from difference symbols.
 
 
 ### Market Trades
@@ -975,11 +984,13 @@ current depth book and derive the best bid/ask. This can be done by two steps:
    indicated price level. You should replace the old quantity using message received. When the
    replacement quantity is zero, it means there is no order sitting on the corresponding price level.
 
-All `depth` messages have the same structure:
+All `depth` messages have the same structure, see [depth](https://github.com/bitmax-exchange/api-doc/blob/master/bitmax-api-doc-v1.2.md#market-depth-level-2-order-book-data-of-one-product) for more details.
 
     {
-       "m": "depth",             // message type
-       "s": "ETH/BTC",           // symbol
+       "m":      "depth",        // message type
+       "s":      "ETH/BTC",      // symbol
+       "ts":     1557422548511,  // timestamp, 64-bit integer
+       "seqnum": 604599926,      // sequence number, 64-bit integer 
        "asks": [                 // ask levels, could be empty
            ["13.45", "59.16"],   // price, quantity
            ["13.37", "95.04"],   
