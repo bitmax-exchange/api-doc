@@ -170,8 +170,8 @@ Successful response: an object consists of the inner-most `n` bid levels and `n`
 
 Each `depth` message contains a timestamp `ts` field and a sequence number `seqnum` field. 
 
-* timestamp (`ts`) - the UTC timestamp in milliseconds of the latest depth update contained in message.
-* sequence number (`seqnum`) - a strictly increasing integer number for each depth update assigned by the server. 
+* timestamp (`ts`) - the UTC timestamp in milliseconds of the latest depth update contained in the message.
+* sequence number (`seqnum`) - the sequence number is a strictly increasing integer number for each depth update assigned by the server. In the message, it is the `seqnum` of the lastest depth update.
 
 Both timestamp and sequence number are set for each symbol. Please do not compare values from difference symbols. Note that these fields are **experimental** and may be changed in the future.
 
