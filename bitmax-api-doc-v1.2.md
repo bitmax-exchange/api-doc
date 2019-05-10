@@ -972,10 +972,10 @@ After connecting to websocket, you need to send an `subscribe` message in order 
                                            // trades message  
       
       "skipSummary":  false,  // optional, set to true if you don't want to
-                              // receive summary messages
+                              // receive summary messages, default false
       
       "skipBars":     false   // optional, set to true if you don't want to 
-                              // receive bar messages
+                              // receive bar messages, default false
 
     }
 
