@@ -970,6 +970,13 @@ After connecting to websocket, you need to send an `subscribe` message in order 
       "recentTradeMaxCount": 20,           // max number of recent trades to
                                            // be included in the first market
                                            // trades message  
+      
+      "skipSummary":  false,  // optional, set to true if you don't want to
+                              // receive summary messages
+      
+      "skipBars":     false   // optional, set to true if you don't want to 
+                              // receive bar messages
+
     }
 
 
