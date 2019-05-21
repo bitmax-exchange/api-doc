@@ -256,7 +256,7 @@ Successful response: the 24-hour rolling statistics of the product specified.
 
     GET api/v1/barhist/info
 
-Successful response: the `(intervalName, intervalMilliseconds)` pair current supported by the exchange.
+Successful response: list of all intervals currently supported by the exchange.
 
     [
       "1",   //   1 minute 
