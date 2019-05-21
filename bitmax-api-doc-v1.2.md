@@ -258,14 +258,20 @@ Successful response: the 24-hour rolling statistics of the product specified.
 
 Successful response: the `(intervalName, intervalMilliseconds)` pair current supported by the exchange.
 
-    {
-      "1":   60000,
-      "5":   300000,
-      "30":  1800000,
-      "60":  3600000,
-      "360": 21600000,
-      "1d":  86400000
-    }
+    [
+      "1",   //   1 minute 
+      "5",   //   5 minutes
+      "15",  //  15 minutes
+      "30",  //  30 minutes
+      "60",  //  60 minutes
+      "120", // 120 minutes
+      "240", // 240 minutes
+      "360", // 360 minutes
+      "720", // 720 minutes
+      "1d",  //   1 day 
+      "1w",  //   1 week 
+      "1m",  //   1 month
+    ]
 
 #### Bar History Data
 
