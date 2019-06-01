@@ -1101,25 +1101,32 @@ Once connected to websocket streams, you will start receiving real time updated 
 contains both order execution report and current balances.
 
     {
-      "m":      "order",            // message type
-      "coid":   "xxx...xxx",        // client order id, need to cancel order
-      "s":      "ETH/BTC",          // symbol
-      "ba":     "ETH",              // base asset
-      "qa":     "BTC",              // quote asset
-      "t":       1528988100000,     // timestamp
-      "p":      "13.45",            // limit price, only available for limit and stop limit orders
-      "sp":     "14.5",             // stop price, only available for stop market and stop limit orders
-      "q":      "3.5",              // order quantity
-      "f":      "1.5",              // filled quantity
-      "ap":     "13.45",            // average price
-      "bb":     "10.00",            // base asset total balance
-      "bpb":    "12.00",            // base asset pending balance
-      "qb":     "1.0",              // quote asset total balance
-      "qpb":    "0.8513",           // quote asset pending balance
-      "fee":    "0.00012",          // fee
-      "fa":     "ETH",              // fee asset
-      "side":   "buy",              // side
-      "status": "PartiallyFilled"   // order status
+      "m":        "order",            // message type
+      "execId":   "12345",            // for each user, this is a strictly increasing long integer (represented as string)
+      "coid":     "xxx...xxx",        // client order id, (needed to cancel order)
+      "origCoid": "yyy...yyy",        // optional, the original order id, see canceling orders for more details
+      "orderType":"Limit",            // Limit, Market, StopLimit, StopMarket 
+      "s":        "ETH/BTC",          // symbol
+      "t":         1528988100000,     // timestamp
+      "p":        "13.45",            // limit price, only available for limit and stop limit orders
+      "sp":       "14.5",             // stop price, only available for stop market and stop limit orders
+      "q":        "3.5",              // order quantity
+      "l":        "0.15",             // last quantity, the quantity executed by the last fill  
+      "f":        "1.5",              // filled quantity, this is the aggregated quantity executed by all past fills
+      "ap":       "13.45",            // average filled price
+      "bb":       "10.00",            // base asset total balance
+      "bpb":      "12.00",            // base asset pending balance
+      "qb":       "1.0",              // quote asset total balance
+      "qpb":      "0.8513",           // quote asset pending balance
+      "fee":      "0.00012",          // fee
+      "fa":       "BTC",              // fee asset
+      "bc":       "0.0024",           // if possitive, this is the BTMX commission charged by reverse mining, if negative, this is the mining output of the current fill.
+      "btmxBal":  "983",              // optional, the BTMX balance of the current account. This field is only available when bc is non-zero.
+      "side":     "Buy",              // side
+      "status":   "PartiallyFilled",  // order status
+      "errorCode":"",                 // if the order is rejected, this field explains why
+      "cat":      "CASH",             // account category: CASH/MARGIN
+      "ei":       "POST"              // execution instruction               
     }
 
 Since only new order updates will be streamed, it is recommendated that you load the initial snap of all you orders
