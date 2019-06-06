@@ -270,7 +270,7 @@ Successful response: list of all intervals currently supported by the exchange.
       "720", // 720 minutes
       "1d",  //   1 day 
       "1w",  //   1 week 
-      "1m",  //   1 month
+      "1m"   //   1 month
     ]
 
 #### Bar History Data
@@ -714,7 +714,7 @@ Request body: `application/json`
           "coid":       "xxx...xxx",
           "origCoid":   "yyy...yyy",
           "time":       1528988100000,  // timestamp, must be the same for all orders 
-          "symbol":     "ETH/BTC",
+          "symbol":     "ETH/BTC"
         },
         ...
       ]
@@ -1058,7 +1058,7 @@ out market data of all products every 30 seconds.
       "c":  "3.56",        // close
       "h":  "3.77",        // high
       "l":  "3.21",        // low
-      "v":  "10.234",      // volume
+      "v":  "10.234"       // volume
     }
 
 
@@ -1085,7 +1085,7 @@ market trade messages.
       "c":  "3.56",        // close
       "h":  "3.77",        // high
       "l":  "3.21",        // low
-      "v":  "10.234",      // volume
+      "v":  "10.234"       // volume
     }
 
 
@@ -1133,7 +1133,7 @@ To place a new order, you need to send to the server a `newOrderRequest`:
     {
        "messageType": "newOrderRequest",
        "time":         1528988100000, // current timestamp
-       "coid":        "xxxx...xxx"    // a 32-character unique client order Id
+       "coid":        "xxxx...xxx",   // a 32-character unique client order Id
        "symbol":      "ETH/BTC",      // symbol
        "orderPrice":  "2.23",         // order price
        "orderQty":    "34.3",         // order quantity
