@@ -1,19 +1,20 @@
 package io.bitmax.api.rest;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import io.bitmax.api.JavaAuthClient;
 import io.bitmax.api.Mapper;
 import io.bitmax.api.rest.response.templates.UserInfo;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.util.Map;
 
-public class RestBitmax {
+public class RestBitMax {
 
     private JavaAuthClient authClient;
     private OkHttpClient client;
 
-    public RestBitmax(String apiKey, String secret, String baseUrl) {
+    public RestBitMax(String apiKey, String secret, String baseUrl) {
         authClient = new JavaAuthClient(baseUrl, apiKey, secret);
         client = new OkHttpClient();
     }
