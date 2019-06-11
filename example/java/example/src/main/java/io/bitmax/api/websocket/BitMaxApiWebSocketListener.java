@@ -82,6 +82,17 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     }
 
 
+    public void send(Object message) {
+        writeExecutor.execute(() -> {
+            try {
+                webSocket.sendMessage(RequestBody.create(TEXT, mapper.writeValueAsString(message)));
+            } catch (IOException e) {
+                System.err.println("Unable to send messages: " + e.getMessage());
+            }
+        });
+    }
+
+
     @Override
     public void onMessage(ResponseBody message) throws IOException {
         String text;
