@@ -1,14 +1,14 @@
 package io.bitmax.api.examples.common;
 
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.websocket.messages.outcome.SubscribeMessage;
+import io.bitmax.api.websocket.messages.outcome.Subscribe;
 
 public class PublicWebSocketExample {
 
     public static void main(String[] args) {
         String url = "wss://bitmax.io/api/public/EOS-ETH";
 
-        SubscribeMessage subscribeMessage = new SubscribeMessage();
+        Subscribe subscribeMessage = new Subscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
         subscribeMessage.setRecentTradeMaxCount(200);

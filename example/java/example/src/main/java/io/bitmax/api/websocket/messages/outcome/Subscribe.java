@@ -2,7 +2,7 @@ package io.bitmax.api.websocket.messages.outcome;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SubscribeMessage {
+public class Subscribe {
 
     @JsonProperty("messageType")
     private String messageType;

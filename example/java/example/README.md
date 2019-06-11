@@ -5,16 +5,17 @@ Current Release v0.7
 ----------------------------------------------
 
 Was created according to 
-[official documentation api v1.2](bitmax-api-doc-v1.2.md)
+[official documentation api v1.2](https://github.com/bitmax-exchange/api-doc/blob/master/bitmax-api-doc-v1.2.md)
 
 ----------------------------------------------
-##### v0.7 Release Note:
+##### v0.8 Release Note:
 * Added rest api method for getting account-group number.
 * Added connect to **public** webSocket entry point method.
 * Added connect to **authenticated** webSocket entry point method.
+* Added *"Place a New Order with WebSocket"* method.
+* Added *"Cancel an Order with WebSocket"* method.
+* Added **Java Object (POJO)** for socket data, allows more simple communication with webSocket api.
 
 ----------------------------------------------
 ##### Next release:
-* Will be added *"Place a New Order with WebSocket"* method.
-* Will be added *"Cancel an Order with WebSocket"* method.
-* All socket/rest data will be converted to **Java Object (POJO)**, for more simple communication with api.
+* Will be added **Java Object (POJO)** for rest API, will allow more simple communication with rest API.
