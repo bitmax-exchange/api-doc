@@ -2,7 +2,7 @@ package io.bitmax.api.rest;
 
 import io.bitmax.api.Authorization;
 import io.bitmax.api.Mapper;
-import io.bitmax.api.rest.response.templates.UserInfo;
+import io.bitmax.api.rest.messages.responses.UserInfo;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

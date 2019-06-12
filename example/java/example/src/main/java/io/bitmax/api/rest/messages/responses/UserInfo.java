@@ -1,4 +1,4 @@
-package io.bitmax.api.rest.response.templates;
+package io.bitmax.api.rest.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
