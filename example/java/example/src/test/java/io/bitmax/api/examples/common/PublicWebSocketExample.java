@@ -1,7 +1,7 @@
 package io.bitmax.api.examples.common;
 
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.websocket.messages.outcome.Subscribe;
+import io.bitmax.api.websocket.messages.requests.Subscribe;
 
 public class PublicWebSocketExample {
 

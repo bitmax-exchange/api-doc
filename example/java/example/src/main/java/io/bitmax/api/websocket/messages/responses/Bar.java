@@ -1,10 +1,10 @@
-package io.bitmax.api.websocket.messages.income;
+package io.bitmax.api.websocket.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Summary {
+public class Bar {
 
     @JsonProperty("s")
     private String symbol;
@@ -118,7 +118,7 @@ public class Summary {
 
     @Override
     public String toString() {
-        return "Summary:\n\tsymbol: " + symbol + '\n' +
+        return "Bar:\n\tsymbol: " + symbol + '\n' +
                 "\tbaseAsset: " + baseAsset + '\n' +
                 "\tquoteAsset: " + quoteAsset + '\n' +
                 "\tinterval: " + interval + '\n' +

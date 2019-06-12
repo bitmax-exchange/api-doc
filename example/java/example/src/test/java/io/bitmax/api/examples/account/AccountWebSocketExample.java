@@ -3,7 +3,7 @@ package io.bitmax.api.examples.account;
 import io.bitmax.api.JavaAuthClient;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
 import io.bitmax.api.rest.RestBitMax;
-import io.bitmax.api.websocket.messages.outcome.Subscribe;
+import io.bitmax.api.websocket.messages.requests.Subscribe;
 
 import java.util.Map;
 

@@ -2,9 +2,8 @@ package io.bitmax.api.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bitmax.api.websocket.client.BitMaxApiCallback;
-import io.bitmax.api.websocket.messages.income.*;
-import io.bitmax.api.websocket.messages.outcome.PlaceOrder;
-import io.bitmax.api.websocket.messages.outcome.Subscribe;
+import io.bitmax.api.websocket.messages.responses.*;
+import io.bitmax.api.websocket.messages.requests.Subscribe;
 import okhttp3.*;
 import okhttp3.ws.WebSocket;
 import okhttp3.ws.WebSocketCall;

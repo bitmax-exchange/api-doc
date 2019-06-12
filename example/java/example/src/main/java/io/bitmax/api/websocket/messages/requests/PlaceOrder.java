@@ -1,4 +1,4 @@
-package io.bitmax.api.websocket.messages.outcome;
+package io.bitmax.api.websocket.messages.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
