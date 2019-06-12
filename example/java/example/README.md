@@ -1,7 +1,7 @@
 Bitmax | Java API Examples
 ==============================================
 
-Current Release v0.7
+Current Release v0.8
 ----------------------------------------------
 
 Was created according to 
@@ -18,4 +18,7 @@ Was created according to
 
 ----------------------------------------------
 ##### Next release:
-* Will be added **Java Object (POJO)** for rest API, will allow more simple communication with rest API.
+* Will be added *Bar history data "candlesticks"* rest API method.
+* Will be added *"Retrieve a cash orders"* rest API method.
+* Will be added *"Place an orders"* rest API method.
+* Will be added *"Cancel a cash account open orders"* rest API method.
