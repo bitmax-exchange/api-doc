@@ -1,6 +1,6 @@
 package io.bitmax.api.websocket;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.bitmax.api.Mapper;
 import io.bitmax.api.websocket.client.BitMaxApiCallback;
 import io.bitmax.api.websocket.messages.responses.*;
 import io.bitmax.api.websocket.messages.requests.Subscribe;
@@ -38,8 +38,6 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
 
     private Subscribe message;
 
-    private ObjectMapper mapper = new ObjectMapper();
-
     public BitMaxApiWebSocketListener(Subscribe message, Map<String, String> headersMap, String url) {
         this.message = message;
 
@@ -73,7 +71,7 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
         writeExecutor.execute(() -> {
             try {
                 this.webSocket = webSocket;
-                webSocket.sendMessage(RequestBody.create(TEXT, mapper.writeValueAsString(message)));
+                webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
             } catch (IOException e) {
                 System.err.println("Unable to send messages: " + e.getMessage());
             }
@@ -84,7 +82,7 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     public void send(Object message) {
         writeExecutor.execute(() -> {
             try {
-                webSocket.sendMessage(RequestBody.create(TEXT, mapper.writeValueAsString(message)));
+                webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
             } catch (IOException e) {
                 System.err.println("Unable to send messages: " + e.getMessage());
             }
@@ -105,27 +103,27 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
         if (pongPattern.matcher(text).find()) return;
         else if (summaryPattern.matcher(text).find()) {
             if (summaryCallback != null) {
-                summaryCallback.onResponse(mapper.readValue(text, Summary.class));
+                summaryCallback.onResponse(Mapper.asObject(text, Summary.class));
                 return;
             }
         } else if (depthPattern.matcher(text).find()) {
             if (depthCallback != null) {
-                depthCallback.onResponse(mapper.readValue(text, Depth.class));
+                depthCallback.onResponse(Mapper.asObject(text, Depth.class));
                 return;
             }
         } else if (marketTradesPattern.matcher(text).find()) {
             if (marketTradesCallback != null) {
-                marketTradesCallback.onResponse(mapper.readValue(text, MarketTrades.class));
+                marketTradesCallback.onResponse(Mapper.asObject(text, MarketTrades.class));
                 return;
             }
         } else if (barPattern.matcher(text).find()) {
             if (barCallback != null) {
-                barCallback.onResponse(mapper.readValue(text, Bar.class));
+                barCallback.onResponse(Mapper.asObject(text, Bar.class));
                 return;
             }
         } else if (orderPattern.matcher(text).find()) {
             if (orderCallback != null) {
-                orderCallback.onResponse(mapper.readValue(text, Order.class));
+                orderCallback.onResponse(Mapper.asObject(text, Order.class));
                 return;
             }
         }

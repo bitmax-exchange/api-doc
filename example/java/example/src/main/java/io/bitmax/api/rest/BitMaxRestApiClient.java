@@ -33,7 +33,7 @@ public class BitMaxRestApiClient {
         try {
             Response response = client.newCall(builder.build()).execute();
 
-            return Mapper.readObjectFromString(response.body().string(), UserInfo.class);
+            return Mapper.asObject(response.body().string(), UserInfo.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
