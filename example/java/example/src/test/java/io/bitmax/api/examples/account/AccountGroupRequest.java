@@ -1,6 +1,6 @@
 package io.bitmax.api.examples.account;
 
-import io.bitmax.api.rest.BitMaxRestApiClient;
+import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 
 public class AccountGroupRequest {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class AccountGroupRequest {
         String secret = "<secret>";
         String baseUrl = "https://bitmax.io";
 
-        BitMaxRestApiClient restClient = new BitMaxRestApiClient(apiKey, secret, baseUrl);
+        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
 
         System.out.println(restClient.getUserInfo());
     }

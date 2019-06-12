@@ -129,7 +129,7 @@ public class BarHist {
 
     @Override
     public String toString() {
-        return "BarHist:\n\tmessage: " + message + '\n' +
+        return "\nBarHist:\n\tmessage: " + message + '\n' +
                 "\tsymbol: " + symbol + '\n' +
                 "\tbaseAsset: " + baseAsset + '\n' +
                 "\tquoteAsset: " + quoteAsset + '\n' +

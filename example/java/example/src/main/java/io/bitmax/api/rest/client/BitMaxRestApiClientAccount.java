@@ -1,4 +1,4 @@
-package io.bitmax.api.rest;
+package io.bitmax.api.rest.client;
 
 import io.bitmax.api.Authorization;
 import io.bitmax.api.Mapper;
@@ -9,21 +9,20 @@ import okhttp3.Response;
 
 import java.util.Map;
 
-public class BitMaxRestApiClient {
+public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     private Authorization authClient;
-    private OkHttpClient client;
 
-    public BitMaxRestApiClient(String apiKey, String secret, String baseUrl) {
+    public BitMaxRestApiClientAccount(String apiKey, String secret, String baseUrl) {
         authClient = new Authorization(baseUrl, apiKey, secret);
         client = new OkHttpClient();
     }
 
     public UserInfo getUserInfo() {
-        Map<String, String> headers = authClient.getHeaderMap("user/info", System.currentTimeMillis());
+        Map<String, String> headers = authClient.getHeaderMap(PATH_INFO, System.currentTimeMillis());
 
         Request.Builder builder = new Request.Builder()
-                .url("https://bitmax.io/api/v1/user/info")
+                .url(URL + PATH_INFO)
                 .get();
 
         for (Map.Entry<String, String> entry : headers.entrySet()) {

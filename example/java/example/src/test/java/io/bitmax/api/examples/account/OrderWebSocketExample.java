@@ -1,7 +1,7 @@
 package io.bitmax.api.examples.account;
 
 import io.bitmax.api.Authorization;
-import io.bitmax.api.rest.BitMaxRestApiClient;
+import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
 import io.bitmax.api.websocket.messages.requests.CancelOrder;
 import io.bitmax.api.websocket.messages.requests.PlaceOrder;
@@ -15,7 +15,7 @@ public class OrderWebSocketExample {
         String secret = "<secret>";
         String baseUrl = "https://bitmax.io";
 
-        BitMaxRestApiClient restClient = new BitMaxRestApiClient(apiKey, secret, baseUrl);
+        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
 
         int accountGroup = restClient.getUserInfo().getAccountGroup();
 
