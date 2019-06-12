@@ -1,6 +1,6 @@
 package io.bitmax.api.rest;
 
-import io.bitmax.api.JavaAuthClient;
+import io.bitmax.api.Authorization;
 import io.bitmax.api.Mapper;
 import io.bitmax.api.rest.response.templates.UserInfo;
 import okhttp3.OkHttpClient;
@@ -9,13 +9,13 @@ import okhttp3.Response;
 
 import java.util.Map;
 
-public class RestBitMax {
+public class BitMaxRestApiClient {
 
-    private JavaAuthClient authClient;
+    private Authorization authClient;
     private OkHttpClient client;
 
-    public RestBitMax(String apiKey, String secret, String baseUrl) {
-        authClient = new JavaAuthClient(baseUrl, apiKey, secret);
+    public BitMaxRestApiClient(String apiKey, String secret, String baseUrl) {
+        authClient = new Authorization(baseUrl, apiKey, secret);
         client = new OkHttpClient();
     }
 

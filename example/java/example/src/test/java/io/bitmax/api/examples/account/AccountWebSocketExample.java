@@ -1,8 +1,8 @@
 package io.bitmax.api.examples.account;
 
-import io.bitmax.api.JavaAuthClient;
+import io.bitmax.api.Authorization;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.rest.RestBitMax;
+import io.bitmax.api.rest.BitMaxRestApiClient;
 import io.bitmax.api.websocket.messages.requests.Subscribe;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public class AccountWebSocketExample {
         String secret = "<secret>";
         String baseUrl = "https://bitmax.io";
 
-        RestBitMax restClient = new RestBitMax(apiKey, secret, baseUrl);
+        BitMaxRestApiClient restClient = new BitMaxRestApiClient(apiKey, secret, baseUrl);
 
         int accountGroup = restClient.getUserInfo().getAccountGroup();
 
@@ -25,7 +25,7 @@ public class AccountWebSocketExample {
         subscribeMessage.setRecentTradeMaxCount(200);
 
         try {
-            JavaAuthClient authClient = new JavaAuthClient(baseUrl, apiKey, secret);
+            Authorization authClient = new Authorization(baseUrl, apiKey, secret);
             Map<String, String> headers = authClient.getHeaderMap("api/stream", System.currentTimeMillis());
 
             BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, headers, url);

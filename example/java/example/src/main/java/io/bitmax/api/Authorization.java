@@ -7,7 +7,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JavaAuthClient {
+public class Authorization {
 
     private String baseUrl;
     private String apiKey;
@@ -16,7 +16,7 @@ public class JavaAuthClient {
     private byte[] hmacKey;
     private SecretKeySpec keySpec;
 
-    public JavaAuthClient(String baseUrl, String apiKey, String secretKey) {
+    public Authorization(String baseUrl, String apiKey, String secretKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
