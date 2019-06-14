@@ -2,6 +2,7 @@ package io.bitmax.api.rest.client;
 
 import io.bitmax.api.Mapper;
 import io.bitmax.api.rest.messages.responses.BarHist;
+import io.bitmax.api.rest.messages.responses.Product;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -11,6 +12,7 @@ import java.io.IOException;
 public abstract class BitMaxRestApiClient {
     final String URL = "https://bitmax.io/api/v1/";
     final String PATH_BARS = "barhist";
+    final String PATH_PRODUCTS = "products";
     final String PATH_INFO = "user/info";
 
     OkHttpClient client;
@@ -27,6 +29,21 @@ public abstract class BitMaxRestApiClient {
             ).execute();
 
             return Mapper.asObject(result.body().string(), BarHist[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Product[] getProducts() {
+        try {
+            Response result = client.newCall(new Request.Builder()
+                    .url(URL + PATH_PRODUCTS)
+                    .get()
+                    .build()
+            ).execute();
+
+            return Mapper.asObject(result.body().string(), Product[].class);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
