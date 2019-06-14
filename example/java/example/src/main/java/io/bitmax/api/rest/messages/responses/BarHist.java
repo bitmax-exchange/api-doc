@@ -139,6 +139,6 @@ public class BarHist {
                 "\tclose: " + close + '\n' +
                 "\thigh: " + high + '\n' +
                 "\tlow: " + low + '\n' +
-                "\tvolume: " + volume ;
+                "\tvolume: " + volume;
     }
 }

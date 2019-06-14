@@ -6,7 +6,7 @@ import io.bitmax.api.rest.messages.responses.BarHist;
 
 import java.util.Arrays;
 
-public class BarHistRequest {
+public class BarHistRequestExample {
     public static void main(String[] args) {
 
         BitMaxRestApiClientPublic restClient = new BitMaxRestApiClientPublic();
