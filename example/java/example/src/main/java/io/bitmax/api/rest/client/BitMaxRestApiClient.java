@@ -10,10 +10,12 @@ import okhttp3.Response;
 import java.io.IOException;
 
 public class BitMaxRestApiClient {
-    final String URL = "https://bitmax.io/api/v1/";
+    final String URL = "https://bitmax.io/";
+    final String API = "api/v1/";
     final String PATH_BARS = "barhist";
     final String PATH_PRODUCTS = "products";
     final String PATH_INFO = "user/info";
+    final String PATH_ORDERS = "order/open";
 
     OkHttpClient client;
 
@@ -23,7 +25,7 @@ public class BitMaxRestApiClient {
 
         try {
             Response result = client.newCall(new Request.Builder()
-                    .url(URL + PATH_BARS + params)
+                    .url(URL + API + PATH_BARS + params)
                     .get()
                     .build()
             ).execute();
@@ -38,7 +40,7 @@ public class BitMaxRestApiClient {
     public Product[] getProducts() {
         try {
             Response result = client.newCall(new Request.Builder()
-                    .url(URL + PATH_PRODUCTS)
+                    .url(URL + API + PATH_PRODUCTS)
                     .get()
                     .build()
             ).execute();
