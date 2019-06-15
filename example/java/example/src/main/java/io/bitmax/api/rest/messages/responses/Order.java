@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenOrder {
+public class Order {
 
     @JsonProperty("time")
     private long time;
@@ -151,7 +151,7 @@ public class OpenOrder {
 
     @Override
     public String toString() {
-        return "\nOpenOrder:\n\ttime: " + time + '\n' +
+        return "\nOrder:\n\ttime: " + time + '\n' +
                 "\tcoid: " + coid + '\n' +
                 "\tsymbol: " + symbol + '\n' +
                 "\tbaseAsset: " + baseAsset + '\n' +

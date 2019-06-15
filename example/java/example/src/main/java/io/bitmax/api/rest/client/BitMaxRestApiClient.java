@@ -16,6 +16,7 @@ public class BitMaxRestApiClient {
     final String PATH_PRODUCTS = "products";
     final String PATH_INFO = "user/info";
     final String PATH_ORDERS = "order/open";
+    final String PATH_ORDER = "order";
 
     OkHttpClient client;
 

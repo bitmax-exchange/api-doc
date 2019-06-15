@@ -2,7 +2,7 @@ package io.bitmax.api.examples.account.rest;
 
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 
-public class GetAccountOrdersExample {
+public class GetOpenOrdersExample {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";

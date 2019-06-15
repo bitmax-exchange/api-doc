@@ -3,6 +3,7 @@ package io.bitmax.api.rest.client;
 import io.bitmax.api.Authorization;
 import io.bitmax.api.Mapper;
 import io.bitmax.api.rest.messages.responses.OpenOrdersList;
+import io.bitmax.api.rest.messages.responses.OrderDetails;
 import io.bitmax.api.rest.messages.responses.UserInfo;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -57,6 +58,27 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
             Response response = client.newCall(builder.build()).execute();
 
             return Mapper.asObject(response.body().string(), OpenOrdersList.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public OrderDetails getOrder(String coid) {
+        Map<String, String> headers = authClient.getHeaderMap(PATH_ORDER, System.currentTimeMillis());
+
+        Request.Builder builder = new Request.Builder()
+                .url(URL + accountGroup + '/' + API + PATH_ORDER + '/' + coid)
+                .get();
+
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            builder.header(entry.getKey(), entry.getValue());
+        }
+
+        try {
+            Response response = client.newCall(builder.build()).execute();
+
+            return Mapper.asObject(response.body().string(), OrderDetails.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

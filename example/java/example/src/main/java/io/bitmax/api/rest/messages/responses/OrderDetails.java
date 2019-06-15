@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenOrdersList {
+public class OrderDetails {
 
     @JsonProperty("code")
     private int code;
@@ -18,7 +18,7 @@ public class OpenOrdersList {
     private String email;
 
     @JsonProperty("data")
-    private Order[] data;
+    private Order data;
 
     public int getCode() {
         return code;
@@ -44,19 +44,19 @@ public class OpenOrdersList {
         this.email = email;
     }
 
-    public Order[] getData() {
+    public Order getData() {
         return data;
     }
 
-    public void setData(Order[] data) {
+    public void setData(Order data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "\nOpenOrdersList:\n\tcode: " + code + '\n' +
+        return "\nOrderDetails:\n\tcode: " + code + '\n' +
                 "\tstatus: " + status + '\n' +
                 "\temail: " + email + '\n' +
-                "\tdata: " + Arrays.toString(data);
+                "\tdata: " + data;
     }
 }
