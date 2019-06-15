@@ -1,11 +1,11 @@
-package io.bitmax.api.examples.common;
+package io.bitmax.api.examples.common.rest;
 
 import io.bitmax.api.rest.client.BitMaxRestApiClient;
 import io.bitmax.api.rest.messages.responses.Product;
 
 import java.util.Arrays;
 
-public class ProductRestExample {
+public class ProductExample {
     public static void main(String[] args) {
 
         BitMaxRestApiClient restClient = new BitMaxRestApiClient();

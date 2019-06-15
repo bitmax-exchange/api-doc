@@ -1,4 +1,4 @@
-package io.bitmax.api.examples.account;
+package io.bitmax.api.examples.account.socket;
 
 import io.bitmax.api.Authorization;
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
@@ -9,7 +9,7 @@ import io.bitmax.api.websocket.messages.requests.Subscribe;
 
 import java.util.Map;
 
-public class OrderWebSocketExample {
+public class OrderExample {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";

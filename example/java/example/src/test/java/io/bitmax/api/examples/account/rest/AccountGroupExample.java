@@ -1,8 +1,8 @@
-package io.bitmax.api.examples.account;
+package io.bitmax.api.examples.account.rest;
 
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 
-public class GetAccountOrdersRest {
+public class AccountGroupExample {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";
@@ -10,6 +10,6 @@ public class GetAccountOrdersRest {
 
         BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
 
-        System.out.println(restClient.getOpenOrders());
+        System.out.println(restClient.getUserInfo());
     }
 }
