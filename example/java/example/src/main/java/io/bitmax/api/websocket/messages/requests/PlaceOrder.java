@@ -127,7 +127,7 @@ public class PlaceOrder {
 
     @Override
     public String toString() {
-        return "PlaceOrderMessage:\n\tmessageType: " + messageType +
+        return "PlaceOrder:\n\tmessageType: " + messageType +
                 "\n\ttime: " + time +
                 "\n\tcoid: " + coid +
                 "\n\tsymbol: " + symbol +

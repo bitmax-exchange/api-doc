@@ -62,7 +62,7 @@ public class CancelOrder {
 
     @Override
     public String toString() {
-        return "PlaceOrderMessage:\n\tmessageType: " + messageType +
+        return "CancelOrder:\n\tmessageType: " + messageType +
                 "\n\ttime: " + time +
                 "\n\tcoid: " + coid +
                 "\n\tsymbol: " + symbol +

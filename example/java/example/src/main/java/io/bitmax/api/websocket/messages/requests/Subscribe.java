@@ -39,7 +39,7 @@ public class Subscribe {
 
     @Override
     public String toString() {
-        return "Trade:\n\tmessageType: " + messageType +
+        return "Subscribe:\n\tmessageType: " + messageType +
                 "\n\tmarketDepthLevel: " + marketDepthLevel +
                 "\n\trecentTradeMaxCount: " + recentTradeMaxCount;
     }
