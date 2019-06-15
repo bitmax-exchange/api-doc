@@ -10,6 +10,6 @@ public class GetOneOrderExample {
 
         BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
 
-        System.out.println(restClient.getOrder("IRFJ1WgqpHLRrWa8iHIGj7tFRLtK69KL"));
+        System.out.println(restClient.getOrder("<order_coid>"));
     }
 }
