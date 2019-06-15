@@ -9,7 +9,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public abstract class BitMaxRestApiClient {
+public class BitMaxRestApiClient {
     final String URL = "https://bitmax.io/api/v1/";
     final String PATH_BARS = "barhist";
     final String PATH_PRODUCTS = "products";
