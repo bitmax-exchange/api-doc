@@ -2,7 +2,7 @@ package io.bitmax.api.examples.account;
 
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 
-public class AccountGroupRequest {
+public class AccountGroupRest {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";
