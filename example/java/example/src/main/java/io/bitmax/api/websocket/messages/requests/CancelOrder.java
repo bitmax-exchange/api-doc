@@ -2,21 +2,38 @@ package io.bitmax.api.websocket.messages.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+/**
+ * Cancel an Order with WebSocket
+ */
 public class CancelOrder {
 
+    /**
+     * message type
+     */
     @JsonProperty("messageType")
     private String messageType;
 
+    /**
+     * milliseconds since UNIX epoch in UTC
+     */
     @JsonProperty("time")
     private long time;
 
+    /**
+     * a 32-character unique client order Id
+     */
     @JsonProperty("coid")
     private String coid;
 
+    /**
+     * the coid of the order to be canceled
+     */
     @JsonProperty("origCoid")
     private String origCoid;
 
+    /**
+     * symbol
+     */
     @JsonProperty("symbol")
     private String symbol;
 
