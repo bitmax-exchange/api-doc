@@ -6,7 +6,7 @@
 
     <groupId>bitmax-api</groupId>
     <artifactId>bitmax-api-example</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.9-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
