@@ -37,8 +37,8 @@ public class Authorization {
 
     /**
      * @return authorization headers
-     * @param url - path for generating specific signature
-     * @param timestamp - milliseconds since UNIX epoch in UTC
+     * @param url path for generating specific signature
+     * @param timestamp milliseconds since UNIX epoch in UTC
      */
     public Map<String, String> getHeaderMap(String url, long timestamp) {
         Map<String, String> headers = new HashMap<>();
