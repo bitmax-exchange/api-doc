@@ -16,6 +16,9 @@ public class Authorization {
     private byte[] hmacKey;
     private SecretKeySpec keySpec;
 
+    /**
+     * An Authorization API Key Header for requests.
+     */
     public Authorization(String baseUrl, String apiKey, String secretKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
@@ -32,6 +35,11 @@ public class Authorization {
         }
     }
 
+    /**
+     * @return authorization headers
+     * @param url - path for generating specific signature
+     * @param timestamp - milliseconds since UNIX epoch in UTC
+     */
     public Map<String, String> getHeaderMap(String url, long timestamp) {
         Map<String, String> headers = new HashMap<>();
         headers.put("x-auth-key", apiKey);
@@ -40,6 +48,9 @@ public class Authorization {
         return headers;
     }
 
+    /**
+     * @return signature, signed using sha256 using the base64-decoded secret key
+     */
     private String generateSig(String url, long timestamp) {
         String prehash = timestamp + "+" + url;
         byte[] encoded = Base64.getEncoder().encode(hmac.doFinal(prehash.getBytes(StandardCharsets.UTF_8)));
