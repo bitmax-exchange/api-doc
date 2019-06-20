@@ -6,59 +6,155 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
+    /**
+     * client order id, (needed to cancel order)
+     */
     @JsonProperty("coid")
     private String coid;
 
+    /**
+     * for each user, this is a strictly increasing long integer (represented as string)
+     */
+    @JsonProperty("execId")
+    private String execId;
+
+    /**
+     * optional, the original order id, see canceling orders for more details
+     */
+    @JsonProperty("origCoid")
+    private String origCoid;
+
+    /**
+     * Limit, Market, StopLimit, StopMarket
+     */
+    @JsonProperty("orderType")
+    private String orderType;
+
+    /**
+     * symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
-    @JsonProperty("ba")
-    private String baseAsset;
-
-    @JsonProperty("qa")
-    private String quoteAsset;
-
+    /**
+     * timestamp
+     */
     @JsonProperty("t")
     private long timestamp;
 
+    /**
+     * limit price, only available for limit and stop limit orders
+     */
     @JsonProperty("p")
     private String limitPrice;
 
+    /**
+     * stop price, only available for stop market and stop limit orders
+     */
     @JsonProperty("sp")
     private String stopPrice;
 
+    /**
+     * order quantity
+     */
     @JsonProperty("q")
     private String orderQuantity;
 
+    /**
+     * last quantity, the quantity executed by the last fill
+     */
+    @JsonProperty("q")
+    private String lastQuantity;
+
+    /**
+     * filled quantity, this is the aggregated quantity executed by all past fills
+     */
     @JsonProperty("f")
     private String filledQuantity;
 
+    /**
+     * average filled price
+     */
     @JsonProperty("ap")
     private String averagePrice;
 
+    /**
+     * base asset total balance
+     */
     @JsonProperty("bb")
     private String baseAssetTotalBalance;
 
+    /**
+     * base asset pending balance
+     */
     @JsonProperty("bpb")
     private String baseAssetPendingBalance;
 
+    /**
+     * quote asset total balance
+     */
     @JsonProperty("qp")
     private String quoteAssetTotalBalance;
 
+    /**
+     * quote asset pending balance
+     */
     @JsonProperty("qpb")
     private String quoteAssetPendingBalance;
 
+    /**
+     * fee
+     */
     @JsonProperty("fee")
     private String fee;
 
+    /**
+     * fee asset
+     */
     @JsonProperty("fa")
     private String feeAsset;
 
+    /**
+     * if possitive, this is the BTMX commission charged by reverse mining, if negative, this is the mining output of the current fill.
+     */
+    @JsonProperty("bc")
+    private String bitmaxComission;
+
+    /**
+     * optional, the BTMX balance of the current account. This field is only available when bc is non-zero.
+     */
+    @JsonProperty("btmxBal")
+    private String bitmaxBalance;
+
+    /**
+     * side
+     */
     @JsonProperty("side")
     private String side;
 
+    /**
+     * order status
+     */
     @JsonProperty("status")
     private String orderStatus;
+
+    /**
+     *  if the order is rejected, this field explains why
+     */
+    @JsonProperty("errorCode")
+    private String errorCode;
+
+    /**
+     * account category: CASH/MARGIN
+     */
+    @JsonProperty("cat")
+    private String category;
+
+    /**
+     * execution instruction
+     */
+    @JsonProperty("ei")
+    private String instruction;
 
     public String getCoid() {
         return coid;
@@ -74,22 +170,6 @@ public class Order {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
-    }
-
-    public String getBaseAsset() {
-        return baseAsset;
-    }
-
-    public void setBaseAsset(String baseAsset) {
-        this.baseAsset = baseAsset;
-    }
-
-    public String getQuoteAsset() {
-        return quoteAsset;
-    }
-
-    public void setQuoteAsset(String quoteAsset) {
-        this.quoteAsset = quoteAsset;
     }
 
     public long getTimestamp() {
@@ -204,12 +284,40 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public String getExecId() {
+        return execId;
+    }
+
+    public void setExecId(String execId) {
+        this.execId = execId;
+    }
+
+    public String getOrigCoid() {
+        return origCoid;
+    }
+
+    public void setOrigCoid(String origCoid) {
+        this.origCoid = origCoid;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
     @Override
     public String toString() {
         return "\n\tOrder:\n\t\tcoid: " + coid +
+                "\n\t\torigCoid: " + origCoid +
                 "\n\t\tsymbol: " + symbol +
-                "\n\t\tbaseAsset: " + baseAsset +
-                "\n\t\tquoteAsset: " + quoteAsset +
+                "\n\t\texecId: " + execId +
+                "\n\t\torderType: " + orderType +
+                "\n\t\tlastQuantity: " + lastQuantity +
+                "\n\t\tbitmaxComission: " + bitmaxComission +
+                "\n\t\tbitmaxBalance: " + bitmaxBalance +
                 "\n\t\ttimestamp: " + timestamp +
                 "\n\t\tlimitPrice: " + limitPrice +
                 "\n\t\tstopPrice: " + stopPrice +
@@ -223,6 +331,9 @@ public class Order {
                 "\n\t\tfee: " + fee +
                 "\n\t\tfeeAsset: " + feeAsset +
                 "\n\t\tside: " + side +
-                "\n\t\torderStatus: " + orderStatus;
+                "\n\t\torderStatus: " + orderStatus +
+                "\n\t\tcategory: " + category +
+                "\n\t\terrorCode: " + errorCode +
+                "\n\t\tinstruction: " + instruction;
     }
 }
