@@ -19,10 +19,24 @@ import java.util.regex.Pattern;
 
 import static okhttp3.ws.WebSocket.TEXT;
 
+/**
+ * Represents a Listener of webSocket channels
+ */
 public class BitMaxApiWebSocketListener implements WebSocketListener {
-    private final ExecutorService writeExecutor = Executors.newSingleThreadExecutor();
+
+    /**
+     * WebSocket executor service, execute webSocket tasks such as open/close channel and send message
+     */
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    /**
+     * WebSocket executor service, execute webSocket tasks such as open/close channel and send message
+     */
     private WebSocket webSocket;
 
+    /**
+     * patterns to determine type of message
+     */
     private final Pattern summaryPattern = Pattern.compile("\\s*\\{\\s*\"m\"\\s*:\\s*\"summary\"\\s*");
     private final Pattern depthPattern = Pattern.compile("\\s*\\{\\s*\"m\"\\s*:\\s*\"depth\"\\s*");
     private final Pattern marketTradesPattern = Pattern.compile("\\s*\\{\\s*\"m\"\\s*:\\s*\"marketTrades\"\\s*");
@@ -30,14 +44,23 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     private final Pattern pongPattern = Pattern.compile("\\s*\\{\\s*\"m\"\\s*:\\s*\"pong\"\\s*}");
     private final Pattern orderPattern = Pattern.compile("\\s*\\{\\s*\"m\"\\s*:\\s*\"order\"\\s*");
 
+    /**
+     * callBacks or every message type
+     */
     private BitMaxApiCallback<Summary> summaryCallback;
     private BitMaxApiCallback<Depth> depthCallback;
     private BitMaxApiCallback<MarketTrades> marketTradesCallback;
     private BitMaxApiCallback<Bar> barCallback;
     private BitMaxApiCallback<Order> orderCallback;
 
+    /**
+     * message for subscribe to channels
+     */
     private Subscribe message;
 
+    /**
+     * Initialize listener for authorized user
+     */
     public BitMaxApiWebSocketListener(Subscribe message, Map<String, String> headersMap, String url) {
         this.message = message;
 
@@ -49,9 +72,13 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
                 .url(url)
                 .headers(Headers.of(headersMap))
                 .build();
+
         WebSocketCall.create(client, request).enqueue(this);
     }
 
+    /**
+     * Initialize listener for common messages
+     */
     public BitMaxApiWebSocketListener(Subscribe message, String url) {
         this.message = message;
 
@@ -62,13 +89,14 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
+
         WebSocketCall.create(client, request).enqueue(this);
     }
 
 
     @Override
     public void onOpen(final WebSocket webSocket, Response response) {
-        writeExecutor.execute(() -> {
+        executor.execute(() -> {
             try {
                 this.webSocket = webSocket;
                 webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
@@ -80,7 +108,7 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
 
 
     public void send(Object message) {
-        writeExecutor.execute(() -> {
+        executor.execute(() -> {
             try {
                 webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
             } catch (IOException e) {
@@ -137,13 +165,13 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     @Override
     public void onClose(int code, String reason) {
         System.out.println("CLOSE: " + code + " " + reason);
-        writeExecutor.shutdown();
+        executor.shutdown();
     }
 
     @Override
     public void onFailure(IOException e, Response response) {
         e.printStackTrace();
-        writeExecutor.shutdown();
+        executor.shutdown();
     }
 
     public void setSummaryCallback(BitMaxApiCallback<Summary> summaryCallback) {
