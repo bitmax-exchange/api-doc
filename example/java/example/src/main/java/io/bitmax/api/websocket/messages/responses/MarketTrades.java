@@ -8,9 +8,15 @@ import java.util.Arrays;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MarketTrades {
 
+    /**
+     * symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
+    /**
+     * array of objects with info about every trade
+     */
     @JsonProperty("trades")
     private Trade[] trades;
 

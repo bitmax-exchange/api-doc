@@ -6,33 +6,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Bar {
 
+    /**
+     * product symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
+    /**
+     * base asset
+     */
     @JsonProperty("ba")
     private String baseAsset;
 
+    /**
+     * quote asset
+     */
     @JsonProperty("qa")
     private String quoteAsset;
 
+    /**
+     * for market summary data, the interval is always 1d
+     */
     @JsonProperty("i")
     private String interval;
 
+    /**
+     * timestamp in UTC
+     */
     @JsonProperty("t")
     private long timestamp;
 
+    /**
+     * open
+     */
     @JsonProperty("o")
     private double open;
 
+    /**
+     * open
+     */
     @JsonProperty("c")
     private double close;
 
+    /**
+     * high
+     */
     @JsonProperty("h")
     private double high;
 
+    /**
+     * low
+     */
     @JsonProperty("l")
     private double low;
 
+    /**
+     * volume
+     */
     @JsonProperty("v")
     private double volume;
 
