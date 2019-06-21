@@ -157,12 +157,12 @@ Successful response: an object consists of the inner-most `n` bid levels and `n`
        "ts":     1557422548511, // timestamp, 64-bit integer
        "seqnum": 604599926,     // sequence number, 64-bit integer 
        "asks": [                // ask levels (list of individual levels)
-           ["14180", "60.17"],   // [price, quantity]
+           ["14180", "60.17"],  // [price, quantity]
            ["14190", "13.39"],
            ...
        ],
        "bids": [                // bid levels (list of individual levels)
-           ["9924", "59.16"],  // [price, quantity]
+           ["9924", "59.16"],   // [price, quantity]
            ["9914", "95.04"],
            ...
        ]
