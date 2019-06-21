@@ -756,22 +756,32 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
       'status': 'success',     // this field will be deprecated soon
       'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": [
-        {
-          "time":        1528988100000,
-          "coid":        "xxx...xxx",     // the unique identifier, you will need
-                                          // this value to cancel this order
-          "symbol":      "ETH/BTC",
-          "baseAsset":   "ETH",
-          "quoteAsset":  "BTC",
-          "side":        "buy",
-          "orderPrice":  "13.45",         // only available for limit and stop limit orders
-          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
-          "orderQty":    "3.5",
-          "filled":      "1.5",           // filled quantity
-          "fee":         "0.00012",       // cumulative fee paid for this order
-          "feeAsset":    "ETH",           // the asset
-          "status":      "PartiallyFilled"
-        },
+        { 
+          "accountCategory":    "CASH",
+          "accountId":          "cshKAhmTHQNUKhR1pQyrDOdotE3Tsnz4",
+          "avgPrice":           "0.000000000",
+          "baseAsset":          "ETH",
+          "btmxCommission":     "0.000000000",
+          "coid":               "41g6wtPRFrJXgg6Y7vpIkcCyWhgcK0cF", // the unique identifier, you will need
+                                                                    // this value to cancel this order
+          "errorCode":          "NULL_VAL",
+          "execId":             "12452288",
+          "execInst":           "NULL_VAL",
+          "fee":                "0.000000000",                      // cumulative fee paid for this order
+          "feeAsset":           "",                                 // the asset
+          "filledQty":          "0.000000000",                      // filled quantity
+          "notional":           "0.000000000",
+          "orderPrice":         "0.310000000",                      // only available for limit and stop limit orders
+          "orderQty":           "1.000000000",
+          "orderType":          "StopLimit",
+          "quoteAsset":         "BTC",
+          "side":               "Buy",
+          "status":             "PendingNew",
+          "stopPrice":          "0.300000000",                      // only available for stop market and stop limit orders
+          "symbol":             "ETH/BTC",
+          "time":               1561129468172,
+          "userId":             "supEQeSJQllKkxYSgLOoVk7hJAX59WSz"
+        },        
         ...
       ]
     }
@@ -852,20 +862,30 @@ Successful response: basic data of an open orders.
       'status': 'success',     // this field will be deprecated soon
       'email': 'foo@bar.com',  // this field will be deprecated soon
       "data": {
-          "time":        1528988100000,
-          "coid":        "xxx...xxx",     // the unique identifier, you will need
-                                          // this value to cancel this order
-          "symbol":      "ETH/BTC",
-          "baseAsset":   "ETH",
-          "quoteAsset":  "BTC",
-          "side":        "buy",
-          "orderPrice":  "13.45",         // only available for limit and stop limit orders
-          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
-          "orderQty":    "3.5",
-          "filled":      "1.5",           // filled quantity
-          "fee":         "0.00012",       // cumulative fee paid for this order
-          "feeAsset":    "ETH",           // the asset
-          "status":      "PartiallyFilled"
+          "accountCategory":    "CASH",
+          "accountId":          "cshKAhmTHQNUKhR1pQyrDOdotE3Tsnz4",
+          "avgPrice":           "0.000000000",
+          "baseAsset":          "ETH",
+          "btmxCommission":     "0.000000000",
+          "coid":               "41g6wtPRFrJXgg6Y7vpIkcCyWhgcK0cF", // the unique identifier, you will need
+                                                                    // this value to cancel this order
+          "errorCode":          "NULL_VAL",
+          "execId":             "12452288",
+          "execInst":           "NULL_VAL",
+          "fee":                "0.000000000",                      // cumulative fee paid for this order
+          "feeAsset":           "",                                 // the asset
+          "filledQty":          "0.000000000",                      // filled quantity
+          "notional":           "0.000000000",
+          "orderPrice":         "0.310000000",                      // only available for limit and stop limit orders
+          "orderQty":           "1.000000000",
+          "orderType":          "StopLimit",
+          "quoteAsset":         "BTC",
+          "side":               "Buy",
+          "status":             "PendingNew",
+          "stopPrice":          "0.300000000",                      // only available for stop market and stop limit orders
+          "symbol":             "ETH/BTC",
+          "time":               1561129468172,
+          "userId":             "supEQeSJQllKkxYSgLOoVk7hJAX59WSz"
         }
     }
 
@@ -879,22 +899,35 @@ Successful response: list of all fills of the order specified.
       'code': 0,
       'status': 'success',     // this field will be deprecated soon
       'email': 'foo@bar.com',  // this field will be deprecated soon
-      "data": {
-          "time":        1528988100000,
-          "coid":        "xxx...xxx",     // the unique identifier, you will need
-                                          // this value to cancel this order
-          "symbol":      "ETH/BTC",
-          "baseAsset":   "ETH",
-          "quoteAsset":  "BTC",
-          "side":        "buy",
-          "orderPrice":  "13.45",         // only available for limit and stop limit orders
-          "stopPrice":   "20.05",         // only available for stop market and stop limit orders
-          "orderQty":    "3.5",
-          "filled":      "1.5",           // filled quantity
-          "fee":         "0.00012",       // cumulative fee paid for this order
-          "feeAsset":    "ETH",           // the asset
-          "status":      "PartiallyFilled"
-        }
+      "data": [
+         {
+           "ap":            "0.029062965",                          // average filled price
+           "bb":            "36851.981",                            // base asset total balance                                                            
+           "bc":            "0",                                    // if possitive, this is the BTMX commission charged by reverse mining, if negative, this is the mining output of the current fill.
+           "bpb":           "36851.981",                            // base asset pending balance
+           "btmxBal":       "0.0",                                  // optional, the BTMX balance of the current account. This field is only available when bc is non-zero.
+           "cat":           "CASH",                                 // account category: CASH/MARGIN
+           "coid":          "41g6wtPRFrJXgg6YxjqI6Qoog139Dmoi",     // client order id, (needed to cancel order)
+           "ei":            "NULL_VAL",                             // execution instruction 
+           "errorCode":     "NULL_VAL",                             // if the order is rejected, this field explains why
+           "execId":        "12562285",                             // for each user, this is a strictly increasing long integer (represented as string)
+           "f":             "78.074",                               // filled quantity, this is the aggregated quantity executed by all past fills
+           "fa":            "BTC",                                  // fee asset
+           "fee":           "0.000693608",                          // fee
+           "l":             "11.932",                               // last quantity, the quantity executed by the last fill  
+           "m":             "order",                                // message type
+           "orderType":     "Limit",                                // Limit, Market, StopLimit, StopMarket 
+           "p":             "0.029066",                             // limit price, only available for limit and stop limit orders                             
+           "q":             "100.000",                              // order quantity
+           "qb":            "98878.642957097",                      // quote asset total balance
+           "qpb":           "98877.967247508",                      // quote asset pending balance
+           "s":             "ETH/BTC",                              // symbol
+           "side":          "Buy",                                  // side
+           "status":        "PartiallyFilled",                      // order status
+           "t":             1561131458389                           // timestamp
+         },
+          ...
+      ]    
     }
 
 ### Get Deposit address of one Asset (`api_path=deposit`)
