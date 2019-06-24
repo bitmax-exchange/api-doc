@@ -24,6 +24,12 @@ public class BitMaxRestApiClient {
         client = new OkHttpClient();
     }
 
+    /**
+     * @return history of bars
+     * @param symbol trade pair
+     * @param interval bars interval
+     * @param limit max bars count
+     */
     public BarHist[] getCandlestickBars(String symbol, Interval interval, int limit) {
         long[] between = getFrom(interval, limit);
         String params = "?symbol=" + symbol + "&interval="+interval+"&from=" + between[0] + "&to=" + between[1];
@@ -42,6 +48,9 @@ public class BitMaxRestApiClient {
         }
     }
 
+    /**
+     * @return Each market summary data record contains current information about every product.
+     */
     public Product[] getProducts() {
         try {
             Response result = client.newCall(new Request.Builder()
@@ -56,7 +65,11 @@ public class BitMaxRestApiClient {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * @return two timestamps, range for bar history
+     * @param interval bars interval
+     * @param limit max bars count
+     */
     private long[] getFrom(Interval interval, int limit) {
         long time = System.currentTimeMillis();
 
