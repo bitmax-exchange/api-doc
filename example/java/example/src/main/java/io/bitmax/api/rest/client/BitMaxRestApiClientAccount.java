@@ -16,8 +16,8 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
     private Authorization authClient;
     private int accountGroup;
 
-    public BitMaxRestApiClientAccount(String apiKey, String secret, String baseUrl) {
-        authClient = new Authorization(baseUrl, apiKey, secret);
+    public BitMaxRestApiClientAccount(String apiKey, String secret) {
+        authClient = new Authorization(apiKey, secret);
         client = new OkHttpClient();
         accountGroup = getUserInfo().getAccountGroup();
     }

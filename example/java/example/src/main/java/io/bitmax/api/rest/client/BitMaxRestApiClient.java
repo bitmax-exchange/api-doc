@@ -20,6 +20,10 @@ public class BitMaxRestApiClient {
 
     OkHttpClient client;
 
+    public BitMaxRestApiClient() {
+        client = new OkHttpClient();
+    }
+
     public BarHist[] getCandlestickBars(String symbol, Interval interval, int limit) {
         long[] between = getFrom(interval, limit);
         String params = "?symbol=" + symbol + "&interval="+interval+"&from=" + between[0] + "&to=" + between[1];

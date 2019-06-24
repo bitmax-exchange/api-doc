@@ -11,9 +11,8 @@ public class AccountExample {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";
-        String baseUrl = "https://bitmax.io";
 
-        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
+        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret);
 
         int accountGroup = restClient.getUserInfo().getAccountGroup();
 
@@ -25,15 +24,16 @@ public class AccountExample {
         subscribeMessage.setRecentTradeMaxCount(200);
 
         try {
-            Authorization authClient = new Authorization(baseUrl, apiKey, secret);
+            Authorization authClient = new Authorization(apiKey, secret);
             Map<String, String> headers = authClient.getHeaderMap("api/stream", System.currentTimeMillis());
 
             BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, headers, url);
 
             listener.setSummaryCallback(response -> System.out.println("\n" + response));
+            listener.setDepthCallback(response -> System.out.println("\n" + response));
             listener.setBarCallback(response -> System.out.println("\n" + response));
             listener.setMarketTradesCallback(response -> System.out.println("\n" + response));
-            listener.setDepthCallback(response -> System.out.println("\n" + response));
+            listener.setOrderCallback(response -> System.out.println("\n" + response));
 
         } catch (Exception e) {
             System.out.println(e.toString());

@@ -6,9 +6,8 @@ public class AccountGroupExample {
     public static void main(String[] args) {
         String apiKey = "<apikey>";
         String secret = "<secret>";
-        String baseUrl = "https://bitmax.io";
 
-        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret, baseUrl);
+        BitMaxRestApiClientAccount restClient = new BitMaxRestApiClientAccount(apiKey, secret);
 
         System.out.println(restClient.getUserInfo());
     }

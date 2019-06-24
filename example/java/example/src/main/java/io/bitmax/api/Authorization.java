@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Authorization {
 
-    private String baseUrl;
     private String apiKey;
     private String secretKey;
     private Mac hmac;
@@ -19,8 +18,7 @@ public class Authorization {
     /**
      * An Authorization API Key Header for requests.
      */
-    public Authorization(String baseUrl, String apiKey, String secretKey) {
-        this.baseUrl = baseUrl;
+    public Authorization(String apiKey, String secretKey) {
         this.apiKey = apiKey;
         this.secretKey = secretKey;
 
