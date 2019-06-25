@@ -270,7 +270,7 @@ Successful response: list of all intervals currently supported by the exchange.
       "720", // 720 minutes
       "1d",  //   1 day 
       "1w",  //   1 week 
-      "1m",  //   1 month
+      "1m"   //   1 month
     ]
 
 #### Bar History Data
@@ -714,7 +714,7 @@ Request body: `application/json`
           "coid":       "xxx...xxx",
           "origCoid":   "yyy...yyy",
           "time":       1528988100000,  // timestamp, must be the same for all orders 
-          "symbol":     "ETH/BTC",
+          "symbol":     "ETH/BTC"
         },
         ...
       ]
