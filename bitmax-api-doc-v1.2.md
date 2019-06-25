@@ -1058,7 +1058,7 @@ out market data of all products every 30 seconds.
       "c":  "3.56",        // close
       "h":  "3.77",        // high
       "l":  "3.21",        // low
-      "v":  "10.234",      // volume
+      "v":  "10.234"       // volume
     }
 
 
@@ -1085,7 +1085,7 @@ market trade messages.
       "c":  "3.56",        // close
       "h":  "3.77",        // high
       "l":  "3.21",        // low
-      "v":  "10.234",      // volume
+      "v":  "10.234"       // volume
     }
 
 
@@ -1140,7 +1140,7 @@ To place a new order, you need to send to the server a `newOrderRequest`:
     {
        "messageType": "newOrderRequest",
        "time":         1528988100000, // current timestamp
-       "coid":        "xxxx...xxx"    // a 32-character unique client order Id
+       "coid":        "xxxx...xxx",   // a 32-character unique client order Id
        "symbol":      "ETH/BTC",      // symbol
        "orderPrice":  "2.23",         // order price
        "orderQty":    "34.3",         // order quantity
