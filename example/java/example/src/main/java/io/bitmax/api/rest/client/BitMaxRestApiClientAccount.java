@@ -11,17 +11,27 @@ import okhttp3.Response;
 
 import java.util.Map;
 
+/**
+ * BitMaxRestApiClientAccount private restClient for authorized users.
+ */
 public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     private Authorization authClient;
     private int accountGroup;
 
+    /**
+     * @param apiKey public API user-key
+     * @param secret secret API user-key
+     */
     public BitMaxRestApiClientAccount(String apiKey, String secret) {
         authClient = new Authorization(apiKey, secret);
         client = new OkHttpClient();
         accountGroup = getUserInfo().getAccountGroup();
     }
 
+    /**
+     * @return 'UserInfo' object that contains 'userGroup' field
+     */
     public UserInfo getUserInfo() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_INFO, System.currentTimeMillis());
 
@@ -43,6 +53,9 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
         }
     }
 
+    /**
+     * @return list of open orders
+     */
     public OpenOrdersList getOpenOrders() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDERS, System.currentTimeMillis());
 
@@ -64,6 +77,10 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
         }
     }
 
+    /**
+     * @return detailed info about specific order
+     * @param coid id of expected order
+     */
     public OrderDetails getOrder(String coid) {
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDER, System.currentTimeMillis());
 

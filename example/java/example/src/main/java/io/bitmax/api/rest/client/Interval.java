@@ -1,5 +1,8 @@
 package io.bitmax.api.rest.client;
 
+/**
+ * Interval enumeration interval's for bars history request
+ */
 public enum Interval {
     ONE_MINUTE("1"),
     FIVE_MINUTES("5"),

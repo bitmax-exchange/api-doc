@@ -9,6 +9,9 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+/**
+ * BitMaxRestApiClient public restClient for unauthorized users.
+ */
 public class BitMaxRestApiClient {
     final String URL = "https://bitmax.io/";
     final String API = "api/v1/";
@@ -65,6 +68,7 @@ public class BitMaxRestApiClient {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * @return two timestamps, range for bar history
      * @param interval bars interval
