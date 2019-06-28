@@ -6,36 +6,69 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BarHist {
 
+    /**
+     * message
+     */
     @JsonProperty("m")
     private String message;
 
+    /**
+     * symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
+    /**
+     * base asset
+     */
     @JsonProperty("ba")
     private String baseAsset;
 
+    /**
+     * quote asset
+     */
     @JsonProperty("qa")
     private String quoteAsset;
 
+    /**
+     * interval: 1/5/30/60/360/1d
+     */
     @JsonProperty("i")
     private String interval;
 
+    /**
+     * time
+     */
     @JsonProperty("t")
     private long time;
 
+    /**
+     * open
+     */
     @JsonProperty("o")
     private String open;
 
+    /**
+     * close
+     */
     @JsonProperty("c")
     private String close;
 
+    /**
+     * high
+     */
     @JsonProperty("h")
     private String high;
 
+    /**
+     * low
+     */
     @JsonProperty("l")
     private String low;
 
+    /**
+     * volume
+     */
     @JsonProperty("v")
     private String volume;
 

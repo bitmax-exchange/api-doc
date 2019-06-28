@@ -18,9 +18,15 @@ public class Product {
     @JsonProperty("quoteAsset")
     private String quoteAsset;
 
+    /**
+     * price scale - maximum precision for order price allowed to place an order, see below for details
+     */
     @JsonProperty("priceScale")
     private int priceScale;
 
+    /**
+     * quantity scale - maximum precision for order quantity allowed to place an order, see below for details
+     */
     @JsonProperty("qtyScale")
     private int qtyScale;
 
@@ -175,6 +181,6 @@ public class Product {
                 "\tmaxNotional: " + maxNotional + '\n' +
                 "\tstatus: " + status + '\n' +
                 "\tminingStatus: " + miningStatus + '\n' +
-                "\tmarginTradable: " + marginTradable ;
+                "\tmarginTradable: " + marginTradable;
     }
 }

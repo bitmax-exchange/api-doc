@@ -6,42 +6,81 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
+    /**
+     * time
+     */
     @JsonProperty("time")
     private long time;
 
+    /**
+     * the unique identifier, you will need
+     */
     @JsonProperty("coid")
     private String coid;
 
+    /**
+     * symbol
+     */
     @JsonProperty("symbol")
     private String symbol;
 
+    /**
+     * base asset
+     */
     @JsonProperty("baseAsset")
     private String baseAsset;
 
+    /**
+     * quote asset
+     */
     @JsonProperty("quoteAsset")
     private String quoteAsset;
 
+    /**
+     * order side
+     */
     @JsonProperty("side")
     private String side;
 
+    /**
+     * order price - only available for limit and stop limit orders
+     */
     @JsonProperty("orderPrice")
     private String orderPrice;
 
+    /**
+     * order stop price - only available for stop market and stop limit orders
+     */
     @JsonProperty("stopPrice")
     private String stopPrice;
 
+    /**
+     * order quantity
+     */
     @JsonProperty("orderQty")
     private String orderQty;
 
-    @JsonProperty("filled")
-    private String filled;
+    /**
+     * filled quantity
+     */
+    @JsonProperty("filledQty")
+    private String filledQty;
 
+    /**
+     * cumulative fee paid for this order
+     */
     @JsonProperty("fee")
     private String fee;
 
+    /**
+     * the asset of fee
+     */
     @JsonProperty("feeAsset")
     private String feeAsset;
 
+    /**
+     * order status
+     */
     @JsonProperty("status")
     private String status;
 
@@ -117,12 +156,12 @@ public class Order {
         this.orderQty = orderQty;
     }
 
-    public String getFilled() {
-        return filled;
+    public String getFilledQty() {
+        return filledQty;
     }
 
-    public void setFilled(String filled) {
-        this.filled = filled;
+    public void setFilledQty(String filledQty) {
+        this.filledQty = filledQty;
     }
 
     public String getFee() {
@@ -160,7 +199,7 @@ public class Order {
                 "\torderPrice: " + orderPrice + '\n' +
                 "\tstopPrice: " + stopPrice + '\n' +
                 "\torderQty: " + orderQty + '\n' +
-                "\tfilled: " + filled + '\n' +
+                "\tfilledQty: " + filledQty + '\n' +
                 "\tfee: " + fee + '\n' +
                 "\tfeeAsset: " + feeAsset + '\n' +
                 "\tstatus: " + status;

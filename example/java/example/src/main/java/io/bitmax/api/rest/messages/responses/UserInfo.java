@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserInfo {
 
+
+    /**
+     * user account group
+     */
     @JsonProperty("accountGroup")
     private int accountGroup;
 

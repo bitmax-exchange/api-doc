@@ -8,15 +8,27 @@ import java.util.Arrays;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpenOrdersList {
 
+    /**
+     * response code
+     */
     @JsonProperty("code")
     private int code;
 
+    /**
+     * response status 'will be deprecated soon'
+     */
     @JsonProperty("status")
     private String status;
 
+    /**
+     * email 'will be deprecated soon'
+     */
     @JsonProperty("email")
     private String email;
 
+    /**
+     * array with data about every open Order
+     */
     @JsonProperty("data")
     private Order[] data;
 
