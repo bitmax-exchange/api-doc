@@ -1,4 +1,4 @@
-package io.bitmax.api.websocket.messages.income;
+package io.bitmax.api.websocket.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,9 +8,15 @@ import java.util.Arrays;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MarketTrades {
 
+    /**
+     * symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
+    /**
+     * array of objects with info about every trade
+     */
     @JsonProperty("trades")
     private Trade[] trades;
 

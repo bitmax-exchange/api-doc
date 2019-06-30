@@ -1,9 +1,13 @@
-package io.bitmax.api.rest.response.templates;
+package io.bitmax.api.rest.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserInfo {
 
+
+    /**
+     * user account group
+     */
     @JsonProperty("accountGroup")
     private int accountGroup;
 

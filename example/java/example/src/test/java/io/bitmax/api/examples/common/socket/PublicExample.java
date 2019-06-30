@@ -1,9 +1,9 @@
-package io.bitmax.api.examples.common;
+package io.bitmax.api.examples.common.socket;
 
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.websocket.messages.outcome.Subscribe;
+import io.bitmax.api.websocket.messages.requests.Subscribe;
 
-public class PublicWebSocketExample {
+public class PublicExample {
 
     public static void main(String[] args) {
         String url = "wss://bitmax.io/api/public/EOS-ETH";

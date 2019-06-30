@@ -7,17 +7,18 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JavaAuthClient {
+public class Authorization {
 
-    private String baseUrl;
     private String apiKey;
     private String secretKey;
     private Mac hmac;
     private byte[] hmacKey;
     private SecretKeySpec keySpec;
 
-    public JavaAuthClient(String baseUrl, String apiKey, String secretKey) {
-        this.baseUrl = baseUrl;
+    /**
+     * An Authorization API Key Header for requests.
+     */
+    public Authorization(String apiKey, String secretKey) {
         this.apiKey = apiKey;
         this.secretKey = secretKey;
 
@@ -32,6 +33,11 @@ public class JavaAuthClient {
         }
     }
 
+    /**
+     * @return authorization headers
+     * @param url path for generating specific signature
+     * @param timestamp milliseconds since UNIX epoch in UTC
+     */
     public Map<String, String> getHeaderMap(String url, long timestamp) {
         Map<String, String> headers = new HashMap<>();
         headers.put("x-auth-key", apiKey);
@@ -40,6 +46,9 @@ public class JavaAuthClient {
         return headers;
     }
 
+    /**
+     * @return signature, signed using sha256 using the base64-decoded secret key
+     */
     private String generateSig(String url, long timestamp) {
         String prehash = timestamp + "+" + url;
         byte[] encoded = Base64.getEncoder().encode(hmac.doFinal(prehash.getBytes(StandardCharsets.UTF_8)));

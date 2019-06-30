@@ -1,4 +1,4 @@
-package io.bitmax.api.websocket.messages.income;
+package io.bitmax.api.websocket.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,15 +7,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Trade {
 
+    /**
+     * price
+     */
     @JsonProperty("p")
     private String price;
 
+    /**
+     * quantity
+     */
     @JsonProperty("q")
     private String quantity;
 
+    /**
+     * timestamp
+     */
     @JsonProperty("t")
     private long timestamp;
 
+    /**
+     * if true, the buyer is the market maker
+     */
     @JsonProperty("bm")
     private boolean marketMaker;
 

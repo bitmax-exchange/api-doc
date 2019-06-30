@@ -1,38 +1,68 @@
-package io.bitmax.api.websocket.messages.income;
+package io.bitmax.api.websocket.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Bar {
+public class Summary {
 
+    /**
+     * symbol
+     */
     @JsonProperty("s")
     private String symbol;
 
+    /**
+     * base asset
+     */
     @JsonProperty("ba")
     private String baseAsset;
 
+    /**
+     * quote asset
+     */
     @JsonProperty("qa")
     private String quoteAsset;
 
+    /**
+     * for market summary data, the interval is always 1d
+     */
     @JsonProperty("i")
     private String interval;
 
+    /**
+     * timestamp in UTC
+     */
     @JsonProperty("t")
     private long timestamp;
 
+    /**
+     * open
+     */
     @JsonProperty("o")
     private double open;
 
+    /**
+     * close
+     */
     @JsonProperty("c")
     private double close;
 
+    /**
+     * high
+     */
     @JsonProperty("h")
     private double high;
 
+    /**
+     * low
+     */
     @JsonProperty("l")
     private double low;
 
+    /**
+     * volume
+     */
     @JsonProperty("v")
     private double volume;
 
@@ -118,7 +148,7 @@ public class Bar {
 
     @Override
     public String toString() {
-        return "Bar:\n\tsymbol: " + symbol + '\n' +
+        return "Summary:\n\tsymbol: " + symbol + '\n' +
                 "\tbaseAsset: " + baseAsset + '\n' +
                 "\tquoteAsset: " + quoteAsset + '\n' +
                 "\tinterval: " + interval + '\n' +
