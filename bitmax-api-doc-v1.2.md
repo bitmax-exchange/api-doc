@@ -915,7 +915,7 @@ WebSocket API
 WebSocket entry point: 
 
 * Public: `wss://bitmax.io/api/public/[symbol]`
-* Authenticated (View and Trade permission needed): `wss://bitmax.io/<account-group>/api/stream/[symbol]`
+* Authenticated (View permission needed): `wss://bitmax.io/<account-group>/api/stream/[symbol]`
 
 Similiar to Authenticated servers, BitMax assign dedicated servers to stream data to users in the same account group  
 via websocket. For instance, user in account group 3 will subscribe all `ETH-BTC` messages via:

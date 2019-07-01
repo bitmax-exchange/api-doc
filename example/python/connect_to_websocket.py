@@ -96,13 +96,14 @@ def run(url, api_key, secret):
 
 
 if __name__ == '__main__':
-    apiKey = "[[api-key]]"
-    secret = "[[secret]]"
-    group   = "[[account-group]]"
+    api_key = ""
+    secret  = ""
+    group   = 0
 
     # Make sure your API key has view and trade permissions
     # If you do not plan to place order with websocket, try connecting with:
     # wss://bitmax.io/api/public/ETH-BTC
-    url     = f"wss://bitmax.io/{group}/api/stream/ETH-BTC"
+    #url     = f"wss://bitmax.io/{group}/api/stream/ETH-BTC"
+    url     = f"wss://btmx.com/{group}/api/stream/ETH-BTC"
     
     run(url, api_key, secret)
