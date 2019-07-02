@@ -142,7 +142,7 @@ Successful response:
 
 ### Market Depth (Level 2 Order Book Data) of One Product
 
-    GET api/v1/depth
+    GET api/v1/depth?symbol=<symbol>&n=<n>
 
 The query takes two parameters:
 
@@ -178,7 +178,7 @@ Both timestamp and sequence number are set for each symbol. Please do not compar
 
 ### Market Trades
 
-    GET api/v1/trades
+    GET api/v1/trades?symbol=<symbol>&n=<n>
 
 The query takes two parameters:
 
