@@ -734,7 +734,7 @@ Successful response: an object containing a list of `(symbol, orderId)`
 
 #### Cancel All Open Orders (`api_path=order/all`)
 
-    DELETE <account-group>/api/v1/order/all
+    DELETE <account-group>/api/v1/order/all?symbol=<symbol>&side=<side>
 
 This query sends cancel request for all open orders as specified by the user. 
 
