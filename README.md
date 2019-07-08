@@ -2,7 +2,7 @@ Bitmax | API Document
 ==============================================
 
 
-BitMax.io Global Supplemental Liquidity Provider Program 
+### BitMax.io Global Supplemental Liquidity Provider Program 
 ----------------------------------------------
 
 To further enhance platform liquidity, BitMax.io launches the Global Supplemental Liquidity Provider Program with exclusive benefits for the qualified market makers. Click [here](https://bitmaxhelp.zendesk.com/hc/en-us/articles/360021521333-BitMax-io-Global-Supplemental-Liquidity-Provider-Program) to check.
