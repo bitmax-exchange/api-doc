@@ -851,9 +851,10 @@ Successful response: list of all your orders history, (current open orders are n
 
 Remark, the query returns the latest `n` orders within the specified range. To query more history, use the timestamp of the oldest order as the new `endTime` and run the query again. 
 
-#### Get Basic Order Data of One Order (`api_path=order`)
+#### Get Basic Order Data of One Order 
 
-    GET <account-group>/api/v1/order/<coid>
+    GET <account-group>/api/v1/order/<coid>                     // api_path="order"
+    GET <account-group>/api/v1/margin/order/<coid>              // api_path="margin/order"
 
 Successful response: basic data of an open orders.
 
