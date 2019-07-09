@@ -916,7 +916,7 @@ Successful response: list of all fills of the order specified.
            "f":             "78.074",                               // filled quantity, this is the aggregated quantity executed by all past fills
            "fa":            "BTC",                                  // fee asset
            "fee":           "0.000693608",                          // fee
-           'lp':            "0.029064",                          // last price, the price executed by the last fill
+           'lp':            "0.029064",                             // last price, the price executed by the last fill
            "l":             "11.932",                               // last quantity, the quantity executed by the last fill  
            "m":             "order",                                // message type
            "orderType":     "Limit",                                // Limit, Market, StopLimit, StopMarket 
