@@ -461,6 +461,26 @@ Successful response: one object with current balance data of the asset specified
         }
     }
 
+### Get Balance of one Asset of the Margin Account (`api_path=margin/balance`)
+
+    GET <account-group>/api/v1/margin/balance/<asset>
+
+Successful response: one object with current balance data of the asset specified.
+
+    {
+      "code": 0,
+      "status": "success",     // this field will be deprecated soon
+      "email": "foo@bar.com",  // this field will be deprecated soon
+      "data": {
+            "assetCode":       "USDC",           
+            "totalAmount":     "0",
+            "availableAmount": "0",       
+            "borrowedAmount":  "0",       // Amount borrowed
+            "interest":        "0",       // Interest owed 
+            "interestRate":    "0.0003",  // Interest rate 
+            "maxTransferable": "0"        // maximum amount the user can transfer to his/her cash account
+        }
+    }
 
 ### List all Balances of the Margin Account (`api_path=margin/balance`)
 
@@ -480,8 +500,6 @@ Successful response: a list of all your current balances.
             "borrowedAmount":  "0",       // Amount borrowed
             "interest":        "0",       // Interest owed 
             "interestRate":    "0.0003",  // Interest rate 
-            "maxBorrowable":   "0",       // maximum amount the user can borrow the current asset (in addition to the current borrowed amount)
-            "maxSellable":     "0",       // maximum amount the user can sell the current asset
             "maxTransferable": "0"        // maximum amount the user can transfer to his/her cash account
         },       
         ...
