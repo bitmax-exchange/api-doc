@@ -953,7 +953,7 @@ Successful response: list of all fills of the order specified.
 
 ### Get Deposit address of one Asset (`api_path=deposit`)
 
-    POST <account-group>/api/v1/deposit/<asset>
+    POST <account-group>/api/v1/deposit
 
 Request body schema: `application/json`
 
@@ -974,6 +974,8 @@ Successful response: one object with the the deposit address associated with the
         "email": "<your-email-address>",
         "status": "success"
     }
+
+Note: It is highly recommended to use [V2 version](https://bitmax-exchange.github.io/BitMax-API-v2/#get-deposit-address-of-one-asset) of this route, especially for assets with multiple block chains such as USDT. 
 
 ### Withdrawal Request 
 
