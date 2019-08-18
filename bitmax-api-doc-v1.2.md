@@ -797,7 +797,8 @@ Successful response: List of all your open orders. (Filtering by symbol will be 
           "status":             "PendingNew",
           "stopPrice":          "0.300000000",                      // only available for stop market and stop limit orders
           "symbol":             "ETH/BTC",
-          "time":               1561129468172,
+          "time":               1566091628227,                      // The last execution time of the order
+          "sendingTime":        1566091503547,                      // The sending time of the order
           "userId":             "supEQeSJQllKkxYSgLOoVk7hJAX59WSz"
         },        
         ...
@@ -837,7 +838,7 @@ Successful response: list of all your orders history, (current open orders are n
         'hasNext': False,
         'data': [
           {
-            'time':             1553100213658,
+            'time':            1566091429000,                      // The last execution time of the order (This timestamp is in second level resolution)
             'coid':            'QgQIMJhPFrYfUf60ZTihmseTqhzzwOCx',
             'execId':          '331',
             'symbol':          'BTMX/USDT',
@@ -859,7 +860,8 @@ Successful response: list of all your orders history, (current open orders are n
             'accountId':       'ACPHERRWRIA3VQADMEAB2ZTLYAXNM3PJ',
             'accountCategory': 'CASH',
             'errorCode':       'NULL_VAL',
-            'execInst':        'NULL_VAL'
+            'execInst':        'NULL_VAL',
+            "sendingTime":     1566091382736,                      // The sending time of the order
           },
           ...
         ]
@@ -903,7 +905,8 @@ Successful response: basic data of an open orders.
           "status":             "PendingNew",
           "stopPrice":          "0.300000000",                      // only available for stop market and stop limit orders
           "symbol":             "ETH/BTC",
-          "time":               1561129468172,
+          "time":               1566091628227,                      // The last execution time of the order
+          "sendingTime":        1566091503547,                      // The sending time of the order
           "userId":             "supEQeSJQllKkxYSgLOoVk7hJAX59WSz"
         }
     }
