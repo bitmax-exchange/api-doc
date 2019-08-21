@@ -1170,7 +1170,8 @@ contains both order execution report and current balances.
       "p":        "13.45",            // limit price, only available for limit and stop limit orders
       "sp":       "14.5",             // stop price, only available for stop market and stop limit orders
       "q":        "3.5",              // order quantity
-      "l":        "0.15",             // last quantity, the quantity executed by the last fill  
+      "l":        "0.15",             // last quantity, the quantity executed by the last fill
+      "lp":       "13.25",            // last price, the price executed by the last fill
       "f":        "1.5",              // filled quantity, this is the aggregated quantity executed by all past fills
       "ap":       "13.45",            // average filled price
       "bb":       "10.00",            // base asset total balance
