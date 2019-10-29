@@ -1,14 +1,6 @@
 Bitmax | API Document
 ==============================================
 
-
-### BitMax.io Global Supplemental Liquidity Provider Program 
-----------------------------------------------
-
-To further enhance platform liquidity, BitMax.io launches the Global Supplemental Liquidity Provider Program with exclusive benefits for the qualified market makers. Click [here](https://bitmaxhelp.zendesk.com/hc/en-us/articles/360021521333-BitMax-io-Global-Supplemental-Liquidity-Provider-Program) to check.
-
-BitMax.io为提高平台流动性，现面向全球招募优秀做市商，并提供做市商专享权益，详情[点此](https://bitmaxhelp.zendesk.com/hc/zh-cn/articles/360021521333-BitMax-io%E5%81%9A%E5%B8%82%E5%95%86%E6%8B%9B%E5%8B%9F)查看。
-
 FMZ是亚洲最大的数字货币量化交易平台。   
 它支持JavaScript/Python/C++/My语言/可视化，并且支持了BitMax的API。  
 点此查看：https://www.fmz.com/api
