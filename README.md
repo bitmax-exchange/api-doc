@@ -12,15 +12,15 @@ BitMax Pro API is the latest release of APIs allowing our users to access the ex
 
 https://bitmax-exchange.github.io/bitmax-pro-api/#bitmax-pro-api-documentation
 
-API V2 (Beta Version)
+Older Release
 ----------------------------------------------
+
+### API v2 (Beta Version)
 
 You are invited to use our v2 APIs for improved API design and better support for margin trading. Please note that v2 APIs are still in beta testing and are subject to futher improvements. 
 
 Please visit: https://bitmax-exchange.github.io/BitMax-API-v2/#bitmax-api-documentation-v2
 
-Older Release
-----------------------------------------------
 
 ### v1.2 Release Note
 
