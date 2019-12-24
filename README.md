@@ -12,7 +12,7 @@ BitMax Pro API is the latest release of APIs allowing our users to access the ex
 
 https://bitmax-exchange.github.io/bitmax-pro-api/#bitmax-pro-api-documentation
 
-Older Release
+Older Releases
 ----------------------------------------------
 
 ### API v2 (Beta Version)
