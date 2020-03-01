@@ -3,8 +3,8 @@ package io.bitmax.api.examples.account.socket;
 import io.bitmax.api.Authorization;
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.websocket.messages.requests.CancelOrder;
-import io.bitmax.api.websocket.messages.requests.PlaceOrder;
+import io.bitmax.api.websocket.messages.requests.WebSocketCancelOrder;
+import io.bitmax.api.websocket.messages.requests.WebSocketPlaceOrder;
 import io.bitmax.api.websocket.messages.requests.Subscribe;
 
 import java.util.Map;
@@ -40,7 +40,7 @@ public class OrderExample {
 
             String placeCoid = "coid_" + time1;
 
-            PlaceOrder placeOrder = new PlaceOrder();
+            WebSocketPlaceOrder placeOrder = new WebSocketPlaceOrder();
             placeOrder.setMessageType("newOrderRequest");
             placeOrder.setTime(time1);
             placeOrder.setSymbol("EOS/ETH");
@@ -59,7 +59,7 @@ public class OrderExample {
 
             String cancelCoid = "coid_" + time2;
 
-            CancelOrder cancelOrder = new CancelOrder();
+            WebSocketCancelOrder cancelOrder = new WebSocketCancelOrder();
             cancelOrder.setMessageType("cancelOrderRequest");
             cancelOrder.setTime(time2);
             cancelOrder.setCoid(cancelCoid);

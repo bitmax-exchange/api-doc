@@ -5,9 +5,8 @@ import io.bitmax.api.Mapper;
 import io.bitmax.api.rest.messages.responses.OpenOrdersList;
 import io.bitmax.api.rest.messages.responses.OrderDetails;
 import io.bitmax.api.rest.messages.responses.UserInfo;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import io.bitmax.api.rest.messages.requests.RestPlaceOrderRequest;
+import okhttp3.*;
 
 import java.util.Map;
 
@@ -31,6 +30,7 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     /**
      * @return 'UserInfo' object that contains 'userGroup' field
+     * @exception RuntimeException throws if something wrong (e.g. not correct response)
      */
     public UserInfo getUserInfo() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_INFO, System.currentTimeMillis());
@@ -55,6 +55,7 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     /**
      * @return list of open orders
+     * @exception RuntimeException throws if something wrong (e.g. not correct response)
      */
     public OpenOrdersList getOpenOrders() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDERS, System.currentTimeMillis());
@@ -79,6 +80,7 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     /**
      * @return detailed info about specific order
+     * @exception RuntimeException throws if something wrong (e.g. not correct response)
      * @param coid id of expected order
      */
     public OrderDetails getOrder(String coid) {
