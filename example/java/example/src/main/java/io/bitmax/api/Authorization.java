@@ -45,6 +45,21 @@ public class Authorization {
     }
 
     /**
+     * @return authorization headers
+     * @param path path for generating specific signature
+     * @param timestamp milliseconds since UNIX epoch in UTC
+     * @param coid generated unique orderId
+     */
+    public Map<String, String> getHeaderMap(String path, long timestamp, String coid) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("x-auth-key", apiKey);
+        headers.put("x-auth-signature", generateSig(path, timestamp, coid));
+        headers.put("x-auth-timestamp", String.valueOf(timestamp));
+        headers.put("x-auth-coid", coid);
+        return headers;
+    }
+
+    /**
      * @return signature, signed using sha256 using the base64-decoded secret key
      */
     private String generateSig(String url, long timestamp) {
