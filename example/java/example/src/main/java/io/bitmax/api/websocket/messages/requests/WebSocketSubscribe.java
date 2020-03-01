@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Subscribe to webSocket
  */
-public class Subscribe {
+public class WebSocketSubscribe {
 
     /**
      * message type

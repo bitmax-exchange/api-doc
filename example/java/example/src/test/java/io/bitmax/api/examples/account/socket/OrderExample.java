@@ -5,7 +5,7 @@ import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
 import io.bitmax.api.websocket.messages.requests.WebSocketCancelOrder;
 import io.bitmax.api.websocket.messages.requests.WebSocketPlaceOrder;
-import io.bitmax.api.websocket.messages.requests.Subscribe;
+import io.bitmax.api.websocket.messages.requests.WebSocketSubscribe;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class OrderExample {
 
         String url = "wss://bitmax.io/" + accountGroup + "/api/stream/EOS-ETH";
 
-        Subscribe subscribeMessage = new Subscribe();
+        WebSocketSubscribe subscribeMessage = new WebSocketSubscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
         subscribeMessage.setRecentTradeMaxCount(200);

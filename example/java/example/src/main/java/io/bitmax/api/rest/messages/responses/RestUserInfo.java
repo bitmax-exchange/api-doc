@@ -2,7 +2,7 @@ package io.bitmax.api.rest.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserInfo {
+public class RestUserInfo {
 
 
     /**

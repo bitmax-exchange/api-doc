@@ -3,7 +3,7 @@ package io.bitmax.api.examples.account.socket;
 import io.bitmax.api.Authorization;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
-import io.bitmax.api.websocket.messages.requests.Subscribe;
+import io.bitmax.api.websocket.messages.requests.WebSocketSubscribe;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public class AccountExample {
 
         String url = "wss://bitmax.io/" + accountGroup + "/api/stream/ETH-BTC";
 
-        Subscribe subscribeMessage = new Subscribe();
+        WebSocketSubscribe subscribeMessage = new WebSocketSubscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
         subscribeMessage.setRecentTradeMaxCount(200);

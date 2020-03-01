@@ -3,7 +3,7 @@ package io.bitmax.api.websocket;
 import io.bitmax.api.Mapper;
 import io.bitmax.api.websocket.client.BitMaxApiCallback;
 import io.bitmax.api.websocket.messages.responses.*;
-import io.bitmax.api.websocket.messages.requests.Subscribe;
+import io.bitmax.api.websocket.messages.requests.WebSocketSubscribe;
 import okhttp3.*;
 import okhttp3.ws.WebSocket;
 import okhttp3.ws.WebSocketCall;
@@ -47,21 +47,21 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     /**
      * callBacks or every message type
      */
-    private BitMaxApiCallback<Summary> summaryCallback;
-    private BitMaxApiCallback<Depth> depthCallback;
-    private BitMaxApiCallback<MarketTrades> marketTradesCallback;
-    private BitMaxApiCallback<Bar> barCallback;
-    private BitMaxApiCallback<Order> orderCallback;
+    private BitMaxApiCallback<WebSocketSummary> summaryCallback;
+    private BitMaxApiCallback<WebSocketDepth> depthCallback;
+    private BitMaxApiCallback<WebSocketMarketTrades> marketTradesCallback;
+    private BitMaxApiCallback<WebSocketBar> barCallback;
+    private BitMaxApiCallback<WebSocketOrder> orderCallback;
 
     /**
      * message for subscribe to channels
      */
-    private Subscribe message;
+    private WebSocketSubscribe message;
 
     /**
      * Initialize listener for authorized user
      */
-    public BitMaxApiWebSocketListener(Subscribe message, Map<String, String> headersMap, String url) {
+    public BitMaxApiWebSocketListener(WebSocketSubscribe message, Map<String, String> headersMap, String url) {
         this.message = message;
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -79,7 +79,7 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     /**
      * Initialize listener for common messages
      */
-    public BitMaxApiWebSocketListener(Subscribe message, String url) {
+    public BitMaxApiWebSocketListener(WebSocketSubscribe message, String url) {
         this.message = message;
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -131,27 +131,27 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
         if (pongPattern.matcher(text).find()) return;
         else if (summaryPattern.matcher(text).find()) {
             if (summaryCallback != null) {
-                summaryCallback.onResponse(Mapper.asObject(text, Summary.class));
+                summaryCallback.onResponse(Mapper.asObject(text, WebSocketSummary.class));
                 return;
             }
         } else if (depthPattern.matcher(text).find()) {
             if (depthCallback != null) {
-                depthCallback.onResponse(Mapper.asObject(text, Depth.class));
+                depthCallback.onResponse(Mapper.asObject(text, WebSocketDepth.class));
                 return;
             }
         } else if (marketTradesPattern.matcher(text).find()) {
             if (marketTradesCallback != null) {
-                marketTradesCallback.onResponse(Mapper.asObject(text, MarketTrades.class));
+                marketTradesCallback.onResponse(Mapper.asObject(text, WebSocketMarketTrades.class));
                 return;
             }
         } else if (barPattern.matcher(text).find()) {
             if (barCallback != null) {
-                barCallback.onResponse(Mapper.asObject(text, Bar.class));
+                barCallback.onResponse(Mapper.asObject(text, WebSocketBar.class));
                 return;
             }
         } else if (orderPattern.matcher(text).find()) {
             if (orderCallback != null) {
-                orderCallback.onResponse(Mapper.asObject(text, Order.class));
+                orderCallback.onResponse(Mapper.asObject(text, WebSocketOrder.class));
                 return;
             }
         }
@@ -174,23 +174,23 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
         executor.shutdown();
     }
 
-    public void setSummaryCallback(BitMaxApiCallback<Summary> summaryCallback) {
+    public void setSummaryCallback(BitMaxApiCallback<WebSocketSummary> summaryCallback) {
         this.summaryCallback = summaryCallback;
     }
 
-    public void setDepthCallback(BitMaxApiCallback<Depth> depthCallback) {
+    public void setDepthCallback(BitMaxApiCallback<WebSocketDepth> depthCallback) {
         this.depthCallback = depthCallback;
     }
 
-    public void setMarketTradesCallback(BitMaxApiCallback<MarketTrades> marketTradesCallback) {
+    public void setMarketTradesCallback(BitMaxApiCallback<WebSocketMarketTrades> marketTradesCallback) {
         this.marketTradesCallback = marketTradesCallback;
     }
 
-    public void setBarCallback(BitMaxApiCallback<Bar> barCallback) {
+    public void setBarCallback(BitMaxApiCallback<WebSocketBar> barCallback) {
         this.barCallback = barCallback;
     }
 
-    public void setOrderCallback(BitMaxApiCallback<Order> orderCallback) {
+    public void setOrderCallback(BitMaxApiCallback<WebSocketOrder> orderCallback) {
         this.orderCallback = orderCallback;
     }
 }
