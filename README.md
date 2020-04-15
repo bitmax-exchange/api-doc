@@ -5,8 +5,10 @@ FMZ是亚洲最大的数字货币量化交易平台。
 它支持JavaScript/Python/C++/My语言/可视化，并且支持了BitMax的API。  
 点此查看：https://www.fmz.com/api
 
-BitMax Pro API
-----------------------------------------------
+
+## Deprecation Warning:
+
+APIs from this document have been <span style="color: red">deprecated</span>. Please use the BitMax Pro API instead.
 
 BitMax Pro API is the latest release of APIs allowing our users to access the exchange programmatically. It is a major revision of the older releases. The BitMax team re-implemented the entire backend system in support for the BitMax Pro API. It is designed to be fast, flexible, stable, and comprehensive.
 
