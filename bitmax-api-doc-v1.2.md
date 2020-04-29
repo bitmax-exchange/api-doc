@@ -1,7 +1,15 @@
 Bitmax | API Document v1.2
 ==============================================
 
-Note: we changed our API URLs on 2018-08-24. Even though the old URLs still work, you are strongly recommended to use the new URLs as described on this page.
+### Deprecation Warning
+
+APIs in this document are deprecated. The BitMax exchange will continue to support these APIs. However, no new development will be conducted except bug fixes.
+
+The latest API document can be found at:
+
+https://bitmax-exchange.github.io/bitmax-pro-api/#bitmax-pro-api-documentation
+
+
 
 RESTful APIs: Bird's-eye View
 ---------------------------------------------
