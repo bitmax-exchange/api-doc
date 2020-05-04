@@ -2,6 +2,7 @@ package io.bitmax.api.rest.client;
 
 import io.bitmax.api.Authorization;
 import io.bitmax.api.Mapper;
+import io.bitmax.api.rest.messages.requests.RestCancelOrderRequest;
 import io.bitmax.api.rest.messages.responses.RestOpenOrdersList;
 import io.bitmax.api.rest.messages.responses.RestOrderDetails;
 import io.bitmax.api.rest.messages.responses.RestUserInfo;
@@ -30,7 +31,7 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
 
     /**
      * @return 'UserInfo' object that contains 'userGroup' field
-     * @exception RuntimeException throws if something wrong (e.g. not correct response)
+     * @throws RuntimeException throws if something wrong (e.g. not correct response)
      */
     public RestUserInfo getUserInfo() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_INFO, System.currentTimeMillis());
@@ -43,19 +44,12 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
             builder.header(entry.getKey(), entry.getValue());
         }
 
-        try {
-            Response response = client.newCall(builder.build()).execute();
-
-            return Mapper.asObject(response.body().string(), RestUserInfo.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return executeRequest(builder.build(), RestUserInfo.class);
     }
 
     /**
      * @return list of open orders
-     * @exception RuntimeException throws if something wrong (e.g. not correct response)
+     * @throws RuntimeException throws if something wrong (e.g. not correct response)
      */
     public RestOpenOrdersList getOpenOrders() {
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDERS, System.currentTimeMillis());
@@ -68,20 +62,13 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
             builder.header(entry.getKey(), entry.getValue());
         }
 
-        try {
-            Response response = client.newCall(builder.build()).execute();
-
-            return Mapper.asObject(response.body().string(), RestOpenOrdersList.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return executeRequest(builder.build(), RestOpenOrdersList.class);
     }
 
     /**
-     * @return detailed info about specific order
-     * @exception RuntimeException throws if something wrong (e.g. not correct response)
      * @param coid id of expected order
+     * @return detailed info about specific order
+     * @throws RuntimeException throws if something wrong (e.g. not correct response)
      */
     public RestOrderDetails getOrder(String coid) {
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDER, System.currentTimeMillis());
@@ -94,22 +81,15 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
             builder.header(entry.getKey(), entry.getValue());
         }
 
-        try {
-            Response response = client.newCall(builder.build()).execute();
-
-            return Mapper.asObject(response.body().string(), RestOrderDetails.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return executeRequest(builder.build(), RestOrderDetails.class);
     }
 
     /**
-     * @return detailed info about order
-     * @exception RuntimeException throws if something wrong (order was not published)
      * @param order is object which contains information about order
+     * @return Response - object which contains information about result place order request
+     * @throws RuntimeException throws if something wrong (order was not published)
      */
-    public String placeOrder(RestPlaceOrderRequest order) {
+    public Response placeOrder(RestPlaceOrderRequest order) {
         long timestamp = System.currentTimeMillis();
         Map<String, String> headers = authClient.getHeaderMap(PATH_ORDER, timestamp, order.getCoid());
 
@@ -124,9 +104,43 @@ public class BitMaxRestApiClientAccount extends BitMaxRestApiClient {
         }
 
         try {
-            Response response = client.newCall(builder.build()).execute();
+            return client.newCall(builder.build()).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
-            return response.body().string();
+    /**
+     * @param order is object which contains information about order
+     * @return Response - object which contains information about result cancel order request
+     * @throws RuntimeException throws if something wrong (order was not cancelled)
+     */
+    public Response cancelOrder(RestCancelOrderRequest order) {
+        long timestamp = System.currentTimeMillis();
+        Map<String, String> headers = authClient.getHeaderMap(PATH_ORDER, timestamp, order.getCoid());
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), Mapper.asString(order));
+
+        Request.Builder builder = new Request.Builder()
+                .url(URL + accountGroup + '/' + API + PATH_ORDER)
+                .delete(body);
+
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            builder.header(entry.getKey(), entry.getValue());
+        }
+
+        try {
+            return client.newCall(builder.build()).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private <T> T executeRequest(Request request, Class<T> clazz) {
+        try {
+            return Mapper.asObject(client.newCall(request).execute().body().string(), clazz);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
