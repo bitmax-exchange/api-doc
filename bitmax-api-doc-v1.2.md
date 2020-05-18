@@ -3,6 +3,8 @@ Bitmax | API Document v1.2
 
 ### Deprecation Warning
 
+<b>The BitMax Exchange will stop supporting these APIs from August 1, 2020 onward.</b>
+
 APIs in this document are deprecated. The BitMax exchange will continue to support these APIs. However, no new development will be conducted except bug fixes.
 
 The latest API document can be found at:
