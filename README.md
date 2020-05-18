@@ -21,6 +21,8 @@ Older Releases
 
 ### API v2 (Beta Version)
 
+<b>The BitMax Exchange will stop supporting API v2 from August 1, 2020 onward.</b>
+
 You are invited to use our v2 APIs for improved API design and better support for margin trading. Please note that v2 APIs are still in beta testing and are subject to futher improvements. 
 
 Please visit: https://bitmax-exchange.github.io/BitMax-API-v2/#bitmax-api-documentation-v2
