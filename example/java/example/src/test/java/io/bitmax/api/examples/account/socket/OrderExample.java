@@ -3,9 +3,9 @@ package io.bitmax.api.examples.account.socket;
 import io.bitmax.api.Authorization;
 import io.bitmax.api.rest.client.BitMaxRestApiClientAccount;
 import io.bitmax.api.websocket.BitMaxApiWebSocketListener;
-import io.bitmax.api.websocket.messages.requests.CancelOrder;
-import io.bitmax.api.websocket.messages.requests.PlaceOrder;
-import io.bitmax.api.websocket.messages.requests.Subscribe;
+import io.bitmax.api.websocket.messages.requests.WebSocketCancelOrder;
+import io.bitmax.api.websocket.messages.requests.WebSocketPlaceOrder;
+import io.bitmax.api.websocket.messages.requests.WebSocketSubscribe;
 
 import java.util.Map;
 
@@ -20,17 +20,15 @@ public class OrderExample {
 
         String url = "wss://bitmax.io/" + accountGroup + "/api/stream/EOS-ETH";
 
-        Subscribe subscribeMessage = new Subscribe();
+        WebSocketSubscribe subscribeMessage = new WebSocketSubscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
-        subscribeMessage.setRecentTradeMaxCount(200);
 
         try {
             Authorization authClient = new Authorization(apiKey, secret);
             Map<String, String> headers = authClient.getHeaderMap("api/stream", System.currentTimeMillis());
 
-            BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, headers, url);
-
+            BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(null, headers, url, 10000);
             listener.setOrderCallback(response -> System.out.println("\n" + response));
 
             // waiting before webSocket setUp
@@ -40,12 +38,12 @@ public class OrderExample {
 
             String placeCoid = "coid_" + time1;
 
-            PlaceOrder placeOrder = new PlaceOrder();
+            WebSocketPlaceOrder placeOrder = new WebSocketPlaceOrder();
             placeOrder.setMessageType("newOrderRequest");
             placeOrder.setTime(time1);
             placeOrder.setSymbol("EOS/ETH");
             placeOrder.setCoid(placeCoid);
-            placeOrder.setOrderPrice("0.02");
+            placeOrder.setOrderPrice("0.008");
             placeOrder.setOrderQty("5.0");
             placeOrder.setOrderType("limit");
             placeOrder.setSide("buy");
@@ -59,7 +57,7 @@ public class OrderExample {
 
             String cancelCoid = "coid_" + time2;
 
-            CancelOrder cancelOrder = new CancelOrder();
+            WebSocketCancelOrder cancelOrder = new WebSocketCancelOrder();
             cancelOrder.setMessageType("cancelOrderRequest");
             cancelOrder.setTime(time2);
             cancelOrder.setCoid(cancelCoid);
@@ -68,8 +66,13 @@ public class OrderExample {
 
             listener.send(cancelOrder);
 
+            // waiting before order will be cancelled
+            Thread.sleep(1500);
+
+            listener.close();
+
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 }

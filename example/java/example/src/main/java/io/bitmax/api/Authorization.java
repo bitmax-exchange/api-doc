@@ -10,7 +10,6 @@ import java.util.Map;
 public class Authorization {
 
     private String apiKey;
-    private String secretKey;
     private Mac hmac;
     private byte[] hmacKey;
     private SecretKeySpec keySpec;
@@ -20,7 +19,6 @@ public class Authorization {
      */
     public Authorization(String apiKey, String secretKey) {
         this.apiKey = apiKey;
-        this.secretKey = secretKey;
 
         hmacKey = Base64.getDecoder().decode(secretKey);
         try {
@@ -35,14 +33,29 @@ public class Authorization {
 
     /**
      * @return authorization headers
-     * @param url path for generating specific signature
+     * @param path path for generating specific signature
      * @param timestamp milliseconds since UNIX epoch in UTC
      */
-    public Map<String, String> getHeaderMap(String url, long timestamp) {
+    public Map<String, String> getHeaderMap(String path, long timestamp) {
         Map<String, String> headers = new HashMap<>();
         headers.put("x-auth-key", apiKey);
-        headers.put("x-auth-signature", generateSig(url, timestamp));
-        headers.put("x-auth-timestamp", timestamp + "");
+        headers.put("x-auth-signature", generateSig(path, timestamp));
+        headers.put("x-auth-timestamp", String.valueOf(timestamp));
+        return headers;
+    }
+
+    /**
+     * @return authorization headers
+     * @param path path for generating specific signature
+     * @param timestamp milliseconds since UNIX epoch in UTC
+     * @param coid generated unique orderId
+     */
+    public Map<String, String> getHeaderMap(String path, long timestamp, String coid) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("x-auth-key", apiKey);
+        headers.put("x-auth-signature", generateSig(path, timestamp, coid));
+        headers.put("x-auth-timestamp", String.valueOf(timestamp));
+        headers.put("x-auth-coid", coid);
         return headers;
     }
 
@@ -50,8 +63,15 @@ public class Authorization {
      * @return signature, signed using sha256 using the base64-decoded secret key
      */
     private String generateSig(String url, long timestamp) {
-        String prehash = timestamp + "+" + url;
-        byte[] encoded = Base64.getEncoder().encode(hmac.doFinal(prehash.getBytes(StandardCharsets.UTF_8)));
-        return new String(encoded);
+        String preHash = timestamp + "+" + url;
+        return new String(Base64.getEncoder().encode(hmac.doFinal(preHash.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    /**
+     * @return signature, signed using sha256 using the base64-decoded secret key
+     */
+    private String generateSig(String url, long timestamp, String coid) {
+        String preHash = timestamp + "+" + url + "+" + coid;
+        return new String(Base64.getEncoder().encode(hmac.doFinal(preHash.getBytes(StandardCharsets.UTF_8))));
     }
 }

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenOrdersList {
+public class RestOpenOrdersList {
 
     /**
      * response code
@@ -30,7 +30,7 @@ public class OpenOrdersList {
      * array with data about every open Order
      */
     @JsonProperty("data")
-    private Order[] data;
+    private RestPlaceOrderResponse[] data;
 
     public int getCode() {
         return code;
@@ -56,11 +56,11 @@ public class OpenOrdersList {
         this.email = email;
     }
 
-    public Order[] getData() {
+    public RestPlaceOrderResponse[] getData() {
         return data;
     }
 
-    public void setData(Order[] data) {
+    public void setData(RestPlaceOrderResponse[] data) {
         this.data = data;
     }
 

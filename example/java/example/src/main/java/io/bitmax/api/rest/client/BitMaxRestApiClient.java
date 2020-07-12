@@ -1,8 +1,8 @@
 package io.bitmax.api.rest.client;
 
 import io.bitmax.api.Mapper;
-import io.bitmax.api.rest.messages.responses.BarHist;
-import io.bitmax.api.rest.messages.responses.Product;
+import io.bitmax.api.rest.messages.responses.RestBarHist;
+import io.bitmax.api.rest.messages.responses.RestProduct;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -33,7 +33,7 @@ public class BitMaxRestApiClient {
      * @param interval bars interval
      * @param limit max bars count
      */
-    public BarHist[] getCandlestickBars(String symbol, Interval interval, int limit) {
+    public RestBarHist[] getCandlestickBars(String symbol, Interval interval, int limit) {
         long[] between = getFrom(interval, limit);
         String params = "?symbol=" + symbol + "&interval="+interval+"&from=" + between[0] + "&to=" + between[1];
 
@@ -44,7 +44,7 @@ public class BitMaxRestApiClient {
                     .build()
             ).execute();
 
-            return Mapper.asObject(result.body().string(), BarHist[].class);
+            return Mapper.asObject(result.body().string(), RestBarHist[].class);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -54,7 +54,7 @@ public class BitMaxRestApiClient {
     /**
      * @return Each market summary data record contains current information about every product.
      */
-    public Product[] getProducts() {
+    public RestProduct[] getProducts() {
         try {
             Response result = client.newCall(new Request.Builder()
                     .url(URL + API + PATH_PRODUCTS)
@@ -62,7 +62,7 @@ public class BitMaxRestApiClient {
                     .build()
             ).execute();
 
-            return Mapper.asObject(result.body().string(), Product[].class);
+            return Mapper.asObject(result.body().string(), RestProduct[].class);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

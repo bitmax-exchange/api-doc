@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Cancel an Order with WebSocket
  */
-public class CancelOrder {
+public class WebSocketCancelOrder {
 
     /**
      * message type
@@ -79,7 +79,7 @@ public class CancelOrder {
 
     @Override
     public String toString() {
-        return "CancelOrder:\n\tmessageType: " + messageType +
+        return "WebSocketCancelOrder:\n\tmessageType: " + messageType +
                 "\n\ttime: " + time +
                 "\n\tcoid: " + coid +
                 "\n\tsymbol: " + symbol +

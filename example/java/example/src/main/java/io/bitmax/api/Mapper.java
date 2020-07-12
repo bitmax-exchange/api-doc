@@ -8,11 +8,11 @@ import java.io.IOException;
  * Converts json to java object and vice versa
  */
 
-public class Mapper  {
+public class Mapper {
     private static ObjectMapper mapper = new ObjectMapper();
 
     /**
-     * @param json string in json-format
+     * @param json  string in json-format
      * @param clazz class of object for converting from json to java object
      * @return an object with type <T> and data from json
      */

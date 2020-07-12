@@ -3,10 +3,8 @@ package io.bitmax.api.rest.messages.responses;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Arrays;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderDetails {
+public class RestOrderDetails {
 
     /**
      * response code
@@ -30,7 +28,7 @@ public class OrderDetails {
      * data about open Order
      */
     @JsonProperty("data")
-    private Order data;
+    private RestPlaceOrderResponse data;
 
     public int getCode() {
         return code;
@@ -56,11 +54,11 @@ public class OrderDetails {
         this.email = email;
     }
 
-    public Order getData() {
+    public RestPlaceOrderResponse getData() {
         return data;
     }
 
-    public void setData(Order data) {
+    public void setData(RestPlaceOrderResponse data) {
         this.data = data;
     }
 
