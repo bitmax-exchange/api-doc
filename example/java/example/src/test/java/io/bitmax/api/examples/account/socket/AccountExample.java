@@ -21,13 +21,12 @@ public class AccountExample {
         WebSocketSubscribe subscribeMessage = new WebSocketSubscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
-        subscribeMessage.setRecentTradeMaxCount(200);
 
         try {
             Authorization authClient = new Authorization(apiKey, secret);
             Map<String, String> headers = authClient.getHeaderMap("api/stream", System.currentTimeMillis());
 
-            BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, headers, url);
+            BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, headers, url, 5000);
 
             listener.setSummaryCallback(response -> System.out.println("\n" + response));
             listener.setDepthCallback(response -> System.out.println("\n" + response));
@@ -35,8 +34,12 @@ public class AccountExample {
             listener.setMarketTradesCallback(response -> System.out.println("\n" + response));
             listener.setOrderCallback(response -> System.out.println("\n" + response));
 
+            Thread.sleep(10000);
+
+            listener.close();
+
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 }

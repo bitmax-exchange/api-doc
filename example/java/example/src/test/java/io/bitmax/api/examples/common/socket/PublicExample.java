@@ -11,7 +11,6 @@ public class PublicExample {
         WebSocketSubscribe subscribeMessage = new WebSocketSubscribe();
         subscribeMessage.setMessageType("subscribe");
         subscribeMessage.setMarketDepthLevel(200);
-        subscribeMessage.setRecentTradeMaxCount(200);
 
         try {
             BitMaxApiWebSocketListener listener = new BitMaxApiWebSocketListener(subscribeMessage, url);
@@ -20,8 +19,13 @@ public class PublicExample {
             listener.setBarCallback(response -> System.out.println("\n" + response));
             listener.setMarketTradesCallback(response -> System.out.println("\n" + response));
             listener.setDepthCallback(response -> System.out.println("\n" + response));
+
+            Thread.sleep(10000);
+
+            listener.close();
+
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 }

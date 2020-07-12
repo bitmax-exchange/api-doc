@@ -310,30 +310,30 @@ public class WebSocketOrder {
 
     @Override
     public String toString() {
-        return "\n\tOrder:\n\t\tcoid: " + coid +
-                "\n\t\torigCoid: " + origCoid +
-                "\n\t\tsymbol: " + symbol +
-                "\n\t\texecId: " + execId +
-                "\n\t\torderType: " + orderType +
-                "\n\t\tlastQuantity: " + lastQuantity +
-                "\n\t\tbitmaxComission: " + bitmaxComission +
-                "\n\t\tbitmaxBalance: " + bitmaxBalance +
-                "\n\t\ttimestamp: " + timestamp +
-                "\n\t\tlimitPrice: " + limitPrice +
-                "\n\t\tstopPrice: " + stopPrice +
-                "\n\t\torderQuantity: " + orderQuantity +
-                "\n\t\tfilledQuantity: " + filledQuantity +
-                "\n\t\taveragePrice: " + averagePrice +
-                "\n\t\tbaseAssetTotalBalance: " + baseAssetTotalBalance +
-                "\n\t\tbaseAssetPendingBalance: " + baseAssetPendingBalance +
-                "\n\t\tquoteAssetTotalBalance: " + quoteAssetTotalBalance +
-                "\n\t\tquoteAssetPendingBalance: " + quoteAssetPendingBalance +
-                "\n\t\tfee: " + fee +
-                "\n\t\tfeeAsset: " + feeAsset +
-                "\n\t\tside: " + side +
-                "\n\t\torderStatus: " + orderStatus +
-                "\n\t\tcategory: " + category +
-                "\n\t\terrorCode: " + errorCode +
-                "\n\t\tinstruction: " + instruction;
+        return "\nOrder:\n\tcoid: " + coid +
+                "\n\torigCoid: " + origCoid +
+                "\n\tsymbol: " + symbol +
+                "\n\texecId: " + execId +
+                "\n\torderType: " + orderType +
+                "\n\tlastQuantity: " + lastQuantity +
+                "\n\tbitmaxComission: " + bitmaxComission +
+                "\n\tbitmaxBalance: " + bitmaxBalance +
+                "\n\ttimestamp: " + timestamp +
+                "\n\tlimitPrice: " + limitPrice +
+                "\n\tstopPrice: " + stopPrice +
+                "\n\torderQuantity: " + orderQuantity +
+                "\n\tfilledQuantity: " + filledQuantity +
+                "\n\taveragePrice: " + averagePrice +
+                "\n\tbaseAssetTotalBalance: " + baseAssetTotalBalance +
+                "\n\tbaseAssetPendingBalance: " + baseAssetPendingBalance +
+                "\n\tquoteAssetTotalBalance: " + quoteAssetTotalBalance +
+                "\n\tquoteAssetPendingBalance: " + quoteAssetPendingBalance +
+                "\n\tfee: " + fee +
+                "\n\tfeeAsset: " + feeAsset +
+                "\n\tside: " + side +
+                "\n\torderStatus: " + orderStatus +
+                "\n\tcategory: " + category +
+                "\n\terrorCode: " + errorCode +
+                "\n\tinstruction: " + instruction;
     }
 }
