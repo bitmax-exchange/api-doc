@@ -8,13 +8,13 @@ FMZ是亚洲最大的数字货币量化交易平台。
 
 ## Deprecation Warning:
 
-<b>The BitMax Exchange will stop supporting these APIs from August 1, 2020 onward.</b>
+<b>The BitMax Exchange has stopped supporting these APIs since August 1, 2020 onward.</b>
 
 APIs from this document have been <span style="color: red">deprecated</span>. Please use the BitMax Pro API instead.
 
 BitMax Pro API is the latest release of APIs allowing our users to access the exchange programmatically. It is a major revision of the older releases. The BitMax team re-implemented the entire backend system in support for the BitMax Pro API. It is designed to be fast, flexible, stable, and comprehensive.
 
-https://bitmax-exchange.github.io/bitmax-pro-api/#bitmax-pro-api-documentation
+https://ascendex.github.io/ascendex-pro-api/#ascendex-pro-api-documentation
 
 Older Releases
 ----------------------------------------------
