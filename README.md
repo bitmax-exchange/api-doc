@@ -1,4 +1,4 @@
-Bitmax | API Document
+Bitmax | API Document (Deprecated)
 ==============================================
 
 FMZ是亚洲最大的数字货币量化交易平台。   
