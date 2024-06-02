@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MarketTrades {
+public class WebSocketMarketTrades {
 
     /**
      * symbol
@@ -18,7 +18,7 @@ public class MarketTrades {
      * array of objects with info about every trade
      */
     @JsonProperty("trades")
-    private Trade[] trades;
+    private WebSocketTrade[] trades;
 
     public String getSymbol() {
         return symbol;
@@ -28,11 +28,11 @@ public class MarketTrades {
         this.symbol = symbol;
     }
 
-    public Trade[] getTrades() {
+    public WebSocketTrade[] getTrades() {
         return trades;
     }
 
-    public void setTrades(Trade[] trades) {
+    public void setTrades(WebSocketTrade[] trades) {
         this.trades = trades;
     }
 

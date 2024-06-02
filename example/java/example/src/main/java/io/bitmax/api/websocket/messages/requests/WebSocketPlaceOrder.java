@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
 * Place a New Order with WebSocket
 * */
-public class PlaceOrder {
+public class WebSocketPlaceOrder {
 
     /**
      * message type
@@ -163,7 +163,7 @@ public class PlaceOrder {
 
     @Override
     public String toString() {
-        return "PlaceOrder:\n\tmessageType: " + messageType +
+        return "WebSocketPlaceOrder:\n\tmessageType: " + messageType +
                 "\n\ttime: " + time +
                 "\n\tcoid: " + coid +
                 "\n\tsymbol: " + symbol +

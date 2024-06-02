@@ -1,38 +1,28 @@
 package io.bitmax.api.websocket;
 
+import com.neovisionaries.ws.client.*;
 import io.bitmax.api.Mapper;
 import io.bitmax.api.websocket.client.BitMaxApiCallback;
 import io.bitmax.api.websocket.messages.responses.*;
-import io.bitmax.api.websocket.messages.requests.Subscribe;
-import okhttp3.*;
-import okhttp3.ws.WebSocket;
-import okhttp3.ws.WebSocketCall;
-import okhttp3.ws.WebSocketListener;
-import okio.Buffer;
+import io.bitmax.api.websocket.messages.requests.WebSocketSubscribe;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
-
-import static okhttp3.ws.WebSocket.TEXT;
 
 /**
  * Represents a Listener of webSocket channels
  */
-public class BitMaxApiWebSocketListener implements WebSocketListener {
-
-    /**
-     * WebSocket executor service, execute webSocket tasks such as open/close channel and send message
-     */
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+public class BitMaxApiWebSocketListener {
 
     /**
      * WebSocket executor service, execute webSocket tasks such as open/close channel and send message
      */
     private WebSocket webSocket;
+
+    /**
+     * The timeout value in milliseconds for socket connection.
+     */
+    private static final int TIMEOUT = 5000;
 
     /**
      * patterns to determine type of message
@@ -47,150 +37,124 @@ public class BitMaxApiWebSocketListener implements WebSocketListener {
     /**
      * callBacks or every message type
      */
-    private BitMaxApiCallback<Summary> summaryCallback;
-    private BitMaxApiCallback<Depth> depthCallback;
-    private BitMaxApiCallback<MarketTrades> marketTradesCallback;
-    private BitMaxApiCallback<Bar> barCallback;
-    private BitMaxApiCallback<Order> orderCallback;
-
-    /**
-     * message for subscribe to channels
-     */
-    private Subscribe message;
+    private BitMaxApiCallback<WebSocketSummary> summaryCallback;
+    private BitMaxApiCallback<WebSocketDepth> depthCallback;
+    private BitMaxApiCallback<WebSocketMarketTrades> marketTradesCallback;
+    private BitMaxApiCallback<WebSocketBar> barCallback;
+    private BitMaxApiCallback<WebSocketOrder> orderCallback;
 
     /**
      * Initialize listener for authorized user
      */
-    public BitMaxApiWebSocketListener(Subscribe message, Map<String, String> headersMap, String url) {
-        this.message = message;
+    public BitMaxApiWebSocketListener(WebSocketSubscribe message, Map<String, String> headersMap, String url, int timeout) {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(0, TimeUnit.MILLISECONDS)
-                .build();
+        try {
+            webSocket = new WebSocketFactory()
+                    .setConnectionTimeout(timeout)
+                    .createSocket(url)
+                    .addListener(new WebSocketAdapter() {
+                        public void onTextMessage(WebSocket websocket, String message) {
+                            onMessage(message);
+                        }
 
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(Headers.of(headersMap))
-                .build();
+                        public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame,
+                                                   WebSocketFrame clientCloseFrame, boolean closedByServer) {
+                            System.out.println("Socket Disconnected!");
+                        }
+                    })
+                    .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE);
 
-        WebSocketCall.create(client, request).enqueue(this);
+            headersMap.forEach((key, val) -> webSocket.addHeader(key, val));
+
+            webSocket.connect();
+
+            if (message != null) send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Initialize listener for common messages
      */
-    public BitMaxApiWebSocketListener(Subscribe message, String url) {
-        this.message = message;
+    public BitMaxApiWebSocketListener(WebSocketSubscribe message, String url) {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(0, TimeUnit.MILLISECONDS)
-                .build();
+        try {
+            webSocket = new WebSocketFactory()
+                    .setConnectionTimeout(TIMEOUT)
+                    .createSocket(url)
+                    .addListener(new WebSocketAdapter() {
+                        public void onTextMessage(WebSocket websocket, String message) {
+                            onMessage(message);
+                        }
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+                        public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame,
+                                                   WebSocketFrame clientCloseFrame, boolean closedByServer) {
+                            System.out.println("Socket Disconnected!");
+                        }
+                    })
+                    .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE);
 
-        WebSocketCall.create(client, request).enqueue(this);
+            webSocket.connect();
+
+            if (message != null) send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-
-    @Override
-    public void onOpen(final WebSocket webSocket, Response response) {
-        executor.execute(() -> {
-            try {
-                this.webSocket = webSocket;
-                webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
-            } catch (IOException e) {
-                System.err.println("Unable to send messages: " + e.getMessage());
-            }
-        });
-    }
-
 
     public void send(Object message) {
-        executor.execute(() -> {
-            try {
-                webSocket.sendMessage(RequestBody.create(TEXT, Mapper.asString(message)));
-            } catch (IOException e) {
-                System.err.println("Unable to send messages: " + e.getMessage());
-            }
-        });
+        webSocket.sendText(Mapper.asString(message));
     }
 
+    private void onMessage(String message) {
 
-    @Override
-    public void onMessage(ResponseBody message) throws IOException {
-        String text;
-        if (message.contentType() == TEXT) {
-            text = message.string();
-        } else {
-            text = message.source().readByteString().hex();
-        }
-        message.close();
-
-        if (pongPattern.matcher(text).find()) return;
-        else if (summaryPattern.matcher(text).find()) {
+        if (summaryPattern.matcher(message).find()) {
             if (summaryCallback != null) {
-                summaryCallback.onResponse(Mapper.asObject(text, Summary.class));
-                return;
+                summaryCallback.onResponse(Mapper.asObject(message, WebSocketSummary.class));
             }
-        } else if (depthPattern.matcher(text).find()) {
+        } else if (depthPattern.matcher(message).find()) {
             if (depthCallback != null) {
-                depthCallback.onResponse(Mapper.asObject(text, Depth.class));
-                return;
+                depthCallback.onResponse(Mapper.asObject(message, WebSocketDepth.class));
             }
-        } else if (marketTradesPattern.matcher(text).find()) {
+        } else if (marketTradesPattern.matcher(message).find()) {
             if (marketTradesCallback != null) {
-                marketTradesCallback.onResponse(Mapper.asObject(text, MarketTrades.class));
-                return;
+                marketTradesCallback.onResponse(Mapper.asObject(message, WebSocketMarketTrades.class));
             }
-        } else if (barPattern.matcher(text).find()) {
+        } else if (barPattern.matcher(message).find()) {
             if (barCallback != null) {
-                barCallback.onResponse(Mapper.asObject(text, Bar.class));
-                return;
+                barCallback.onResponse(Mapper.asObject(message, WebSocketBar.class));
             }
-        } else if (orderPattern.matcher(text).find()) {
+        } else if (orderPattern.matcher(message).find()) {
             if (orderCallback != null) {
-                orderCallback.onResponse(Mapper.asObject(text, Order.class));
-                return;
+                orderCallback.onResponse(Mapper.asObject(message, WebSocketOrder.class));
             }
         }
-        System.out.println("Warn! Not found callback for message: " + text);
     }
 
-    @Override
-    public void onPong(Buffer payload) {
+    public void close() {
+        webSocket.disconnect();
     }
 
-    @Override
-    public void onClose(int code, String reason) {
-        System.out.println("CLOSE: " + code + " " + reason);
-        executor.shutdown();
-    }
-
-    @Override
-    public void onFailure(IOException e, Response response) {
-        e.printStackTrace();
-        executor.shutdown();
-    }
-
-    public void setSummaryCallback(BitMaxApiCallback<Summary> summaryCallback) {
+    public void setSummaryCallback(BitMaxApiCallback<WebSocketSummary> summaryCallback) {
         this.summaryCallback = summaryCallback;
     }
 
-    public void setDepthCallback(BitMaxApiCallback<Depth> depthCallback) {
+    public void setDepthCallback(BitMaxApiCallback<WebSocketDepth> depthCallback) {
         this.depthCallback = depthCallback;
     }
 
-    public void setMarketTradesCallback(BitMaxApiCallback<MarketTrades> marketTradesCallback) {
+    public void setMarketTradesCallback(BitMaxApiCallback<WebSocketMarketTrades> marketTradesCallback) {
         this.marketTradesCallback = marketTradesCallback;
     }
 
-    public void setBarCallback(BitMaxApiCallback<Bar> barCallback) {
+    public void setBarCallback(BitMaxApiCallback<WebSocketBar> barCallback) {
         this.barCallback = barCallback;
     }
 
-    public void setOrderCallback(BitMaxApiCallback<Order> orderCallback) {
+    public void setOrderCallback(BitMaxApiCallback<WebSocketOrder> orderCallback) {
         this.orderCallback = orderCallback;
     }
 }
